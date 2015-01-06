@@ -290,9 +290,8 @@ void OpenGLWidget::paintGL(){
     m_geometryClipmap->render();
 
     //draw our grass
-    glEnable(GL_BLEND);
-    glBlendFunc (GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
+    glEnable(GL_BLEND);
     // Draw toby's water plane
     glBlendFunc(GL_ONE, GL_ONE);
     m_modelMatrix = m_mouseGlobalTX;

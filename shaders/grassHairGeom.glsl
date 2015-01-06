@@ -15,6 +15,7 @@ uniform int numStrands;
 
 in float vertHeight[];
 in float vertNormalY[];
+in vec2 vertTexCoord[];
 
 uniform float maxHeight;
 uniform float minHeight;
@@ -115,8 +116,8 @@ void main(void)
         float A,B,C;
         for(int i=0; i<numStrands;++i){
             //gen two phsuedo random numbers
-            float r1 = rand(vec2(gl_in[i].gl_Position.xy) * i);
-            float r2 = rand(vec2(gl_in[i].gl_Position.yz) * i);
+            float r1 = rand(vertTexCoord[0] * i);
+            float r2 = rand(vertTexCoord[1] * i);
 
             //calculate our barycentric coeficients
             if(r1+r2>1.0){
