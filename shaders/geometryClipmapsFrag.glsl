@@ -119,7 +119,7 @@ void main(){
 
   if (cutout){
     vec2 dist = vertPos - cutOutLoc;
-    if ((dist.x<=0.45 && dist.x>=-0.45) && (dist.y<=0.45 && dist.y>=-0.45) ){
+    if ((dist.x<=0.5 && dist.x>=-0.5) && (dist.y<=0.5 && dist.y>=-0.5) ){
       discard;
     }
   }

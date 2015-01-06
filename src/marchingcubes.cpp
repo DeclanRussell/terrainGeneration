@@ -651,19 +651,53 @@ GLvoid marchingCubes::vNormalizeVector(GLvector &rfVectorResult, GLvector &rfVec
 
 //time to write my own function mother fucker!
 GLfloat marchingCubes::matStackSample(GLfloat fX, GLfloat fY, GLfloat fZ){
-    int xPos = fX*(m_samplePercent.first * (m_matStackSizeX-1));
-    int yPos = fZ*(m_samplePercent.second * (m_matStackSizeY-1));
-    xPos+= m_samplePos.first * (m_matStackSizeX-1);
-    yPos+= m_samplePos.second * (m_matStackSizeY-1);
+    float xPos = fX*(m_samplePercent.first * (float)(m_matStackSizeX-1));
+    float yPos = fZ*(m_samplePercent.second * (float)(m_matStackSizeY-1));
+    xPos+= m_samplePos.first * (float)(m_matStackSizeX-1);
+    yPos+= m_samplePos.second * (float)(m_matStackSizeY-1);
     //correct any rounding errors
     if(xPos>(m_matStackSizeX-1)){ std::cout<<xPos<<" "<<fX<<std::endl; xPos = (m_matStackSizeX-1); }
     if(yPos>(m_matStackSizeY-1)){ std::cout<<yPos<<" "<<fZ<<std::endl; yPos = (m_matStackSizeY-1); }
-    terrainGen::terrainType materialType = m_matStackData[xPos][yPos].matTypeAt(fY);
+
+    int floorX,floorY,xNext,yNext;
+    floorX = floor(xPos);
+    floorY = floor(yPos);
+    (floorX+1>m_matStackSizeX-1) ? xNext = floorX: xNext = floorX+1;
+    (floorY+1>m_matStackSizeY-1) ? yNext = floorY: yNext = floorY+1;
+
+    float n1,n2,n3,n4;
+    terrainGen::terrainType materialType = m_matStackData[floorX][floorY].matTypeAt(fY);
     switch(materialType){
-    case(terrainGen::AIR): return 1; break;
-    case(terrainGen::ROCK): return 1; break;
-    default: return -1; break;
+    case(terrainGen::AIR): n1= 1; break;
+    default: n1 = -1; break;
     }
+    materialType = m_matStackData[xNext][floorY].matTypeAt(fY);
+    switch(materialType){
+    case(terrainGen::AIR): n2= 1; break;
+    default: n2 = -1; break;
+    }
+    materialType = m_matStackData[floorX][yNext].matTypeAt(fY);
+    switch(materialType){
+    case(terrainGen::AIR): n3= 1; break;
+    default: n3 = -1; break;
+    }
+    materialType = m_matStackData[xNext][yNext].matTypeAt(fY);
+    switch(materialType){
+    case(terrainGen::AIR): n4= 1; break;
+    default: n4 = -1; break;
+    }
+
+
+    //bilinear interpoloation
+    float result = n1*(xNext - xPos)*(yNext - yPos) + n2*(xPos - floorX)*(yNext - yPos) + n3*(xNext - xPos)*(yPos-floorY) + n4*(xPos-floorX)*(yPos-floorY);
+    if(result==0)
+        return 0;
+    if(result>0)
+        return 1;
+    else
+        return -1;
+
+
 }
 //----------------------------------------------------------------------------------------------------------------------
 GLfloat marchingCubes::textureSample(GLfloat fX, GLfloat fY, GLfloat fZ){
@@ -930,14 +964,17 @@ void marchingCubes::vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fSca
 
                         m_position.push_back(glm::vec3(asEdgeVertex[iVertex].fX, asEdgeVertex[iVertex].fY, asEdgeVertex[iVertex].fZ));
                         m_normals.push_back(glm::vec3(asEdgeNorm[iVertex].fX,   asEdgeNorm[iVertex].fY,   asEdgeNorm[iVertex].fZ));
-                        float xTexPos, yTexPos;
+                        float xTexPos = 0, yTexPos = 0;
                         if(m_sampleMode = MC_2DMATSTACK){
-                            xTexPos = m_samplePos.first + (asEdgeVertex[iVertex].fX * (m_samplePercent.first * (float)(m_matStackSizeX-1)));
-                            yTexPos = m_samplePos.second + (asEdgeVertex[iVertex].fZ * (m_samplePercent.second * (float)(m_matStackSizeX-1)));
+                            xTexPos = m_samplePos.first + (asEdgeVertex[iVertex].fX * m_samplePercent.first);
+                            yTexPos = m_samplePos.second + (asEdgeVertex[iVertex].fZ * m_samplePercent.second);
+                            xTexPos*=4.0;
+                            yTexPos*=4.0;
+
                         }
                         else{
-                            xTexPos = m_samplePos.first + (asEdgeVertex[iVertex].fX * (m_samplePercent.first * (float)(m_heightMap.width()-1)));
-                            yTexPos = m_samplePos.second + (asEdgeVertex[iVertex].fZ * (m_samplePercent.second * (float)(m_heightMap.height()-1)));
+                            xTexPos = m_samplePos.first + (asEdgeVertex[iVertex].fX * m_samplePercent.first);
+                            yTexPos = m_samplePos.second + (asEdgeVertex[iVertex].fZ * m_samplePercent.second);
                         }
                         m_texCoords.push_back(glm::vec2(xTexPos,yTexPos));
                 }
@@ -1012,12 +1049,12 @@ void marchingCubes::vMarchTetrahedron(GLvector *pasTetrahedronPosition, GLfloat 
 
                         float xTexPos, yTexPos;
                         if(m_sampleMode = MC_2DMATSTACK){
-                            xTexPos = m_samplePos.first + (asEdgeVertex[iVertex].fX * (m_samplePercent.first * (float)(m_matStackSizeX-1)));
-                            yTexPos = m_samplePos.second + (asEdgeVertex[iVertex].fZ * (m_samplePercent.second * (float)(m_matStackSizeX-1)));
+                            xTexPos = m_samplePos.first + (asEdgeVertex[iVertex].fX * m_samplePercent.first);
+                            yTexPos = m_samplePos.second + (asEdgeVertex[iVertex].fZ * m_samplePercent.second);
                         }
                         else{
-                            xTexPos = m_samplePos.first + (asEdgeVertex[iVertex].fX * (m_samplePercent.first * (float)(m_heightMap.width()-1)));
-                            yTexPos = m_samplePos.second + (asEdgeVertex[iVertex].fZ * (m_samplePercent.second * (float)(m_heightMap.height()-1)));
+                            xTexPos = m_samplePos.first + (asEdgeVertex[iVertex].fX * m_samplePercent.first );
+                            yTexPos = m_samplePos.second + (asEdgeVertex[iVertex].fZ * m_samplePercent.second );
                         }
                         m_texCoords.push_back(glm::vec2(xTexPos,yTexPos));
                 }

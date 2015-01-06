@@ -54,6 +54,15 @@ public:
             }
             return AIR;
         }
+        float surfaceHeightAt(float _y){
+            float sum=0.0;
+            for(unsigned int i=0; i<properties.size();i++){
+                sum+=properties[i].height;
+                if(_y<sum)
+                    return sum;
+            }
+        }
+
         int arrayLocAt(float _y){
             float sum=0.0;
             for(unsigned int i=0; i<properties.size();i++){

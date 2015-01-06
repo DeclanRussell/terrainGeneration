@@ -9,7 +9,7 @@ int width=1024,height=1024;
 float INCRIMENT = 0.01;
 
 //------------------------------------------------------------------------------------------------------------------------------------------
-GeometryClipmap::GeometryClipmap(int _levels): m_gridSize(32), m_wireframe(false), m_cutout(false), m_height(1.0), m_updating(false){
+GeometryClipmap::GeometryClipmap(int _levels): m_gridSize(32), m_wireframe(false), m_cutout(false), m_height(4), m_updating(false){
     m_levels = _levels;
     m_viewPos = glm::vec3(0.0, 0.0, 0.0);
     m_xvalue = 2;
@@ -91,7 +91,8 @@ void GeometryClipmap::Initialise(){
     m_writer.SetDestFilename("textures/myPerlinHeightmap.bmp");
     m_writer.WriteDestFile();
 
-    m_heightmapTex = new Texture("textures/myPerlinHeightmap.bmp");
+//    m_heightmapTex = new Texture("textures/myPerlinHeightmap.bmp");
+    m_heightmapTex = new Texture("textures/tnd");
 //    m_heightmapTex = new Texture("textures/declanHeightmap.jpg");
 
     noise::utils::RendererNormalMap normalMapRenderer;
@@ -175,52 +176,52 @@ void GeometryClipmap::Initialise(){
 //------------------------------------------------------------------------------------------------------------------------------------------
 void GeometryClipmap::update(){
     // Generate new height map
-    if (m_updating){
-        m_zvalue -= INCRIMENT;
+//    if (m_updating){
+//        m_zvalue -= INCRIMENT;
 
-        m_heightmapBuilder.SetSourceModule(m_perlin);
-        m_heightmapBuilder.SetDestNoiseMap(m_noisemap);
-        m_heightmapBuilder.SetDestSize(512, 512);
-        m_heightmapBuilder.SetBounds(m_xvalue, m_xvalue+4.0, m_zvalue, m_zvalue+4.0);
-        m_heightmapBuilder.Build();
+//        m_heightmapBuilder.SetSourceModule(m_perlin);
+//        m_heightmapBuilder.SetDestNoiseMap(m_noisemap);
+//        m_heightmapBuilder.SetDestSize(512, 512);
+//        m_heightmapBuilder.SetBounds(m_xvalue, m_xvalue+4.0, m_zvalue, m_zvalue+4.0);
+//        m_heightmapBuilder.Build();
 
-        m_heightmap.SetSourceNoiseMap(m_noisemap);
-        m_heightmap.SetDestImage(m_image);
-        m_heightmap.Render();
+//        m_heightmap.SetSourceNoiseMap(m_noisemap);
+//        m_heightmap.SetDestImage(m_image);
+//        m_heightmap.Render();
 
-        m_writer.SetSourceImage(m_image);
-        m_writer.SetDestFilename("textures/myPerlinHeightmap.bmp");
-        m_writer.WriteDestFile();
+//        m_writer.SetSourceImage(m_image);
+//        m_writer.SetDestFilename("textures/myPerlinHeightmap.bmp");
+//        m_writer.WriteDestFile();
 
-        delete m_heightmapTex;
+//        delete m_heightmapTex;
 
-        m_heightmapTex = new Texture("textures/myPerlinHeightmap.bmp");
-//        m_heightmapTex = new Texture("textures/declanHeightmap.jpg");
+//        m_heightmapTex = new Texture("textures/myPerlinHeightmap.bmp");
+////        m_heightmapTex = new Texture("textures/declanHeightmap.jpg");
 
-        m_colourMap.SetSourceNoiseMap(m_noisemap);
-        m_colourMap.SetDestImage(m_imageColour);
-        m_colourMap.ClearGradient();
-        m_colourMap.AddGradientPoint(-1.0000, utils::Color(  50,   50, 50, 255)); // deeps
-        m_colourMap.AddGradientPoint(-0.2500, utils::Color(  110,   110, 110, 255)); // shallow
-        m_colourMap.AddGradientPoint( 0.0000, utils::Color(  140, 140, 140, 255)); // shore
-        m_colourMap.AddGradientPoint( 0.0625, utils::Color(234, 220,  194, 255)); // sand
-        m_colourMap.AddGradientPoint( 0.1250, utils::Color( 79, 106,   53, 255)); // grass
-        m_colourMap.AddGradientPoint( 0.3750, utils::Color(157, 127,   75, 255)); // dirt
-        m_colourMap.AddGradientPoint( 0.7500, utils::Color(143, 135, 124, 255)); // rock
-        m_colourMap.AddGradientPoint( 1.0000, utils::Color(255, 255, 255, 255)); // snow
-        m_colourMap.EnableLight();
-        m_colourMap.SetLightContrast(5.0);
-        m_colourMap.SetLightBrightness(2.0);
-        m_colourMap.Render();
+//        m_colourMap.SetSourceNoiseMap(m_noisemap);
+//        m_colourMap.SetDestImage(m_imageColour);
+//        m_colourMap.ClearGradient();
+//        m_colourMap.AddGradientPoint(-1.0000, utils::Color(  50,   50, 50, 255)); // deeps
+//        m_colourMap.AddGradientPoint(-0.2500, utils::Color(  110,   110, 110, 255)); // shallow
+//        m_colourMap.AddGradientPoint( 0.0000, utils::Color(  140, 140, 140, 255)); // shore
+//        m_colourMap.AddGradientPoint( 0.0625, utils::Color(234, 220,  194, 255)); // sand
+//        m_colourMap.AddGradientPoint( 0.1250, utils::Color( 79, 106,   53, 255)); // grass
+//        m_colourMap.AddGradientPoint( 0.3750, utils::Color(157, 127,   75, 255)); // dirt
+//        m_colourMap.AddGradientPoint( 0.7500, utils::Color(143, 135, 124, 255)); // rock
+//        m_colourMap.AddGradientPoint( 1.0000, utils::Color(255, 255, 255, 255)); // snow
+//        m_colourMap.EnableLight();
+//        m_colourMap.SetLightContrast(5.0);
+//        m_colourMap.SetLightBrightness(2.0);
+//        m_colourMap.Render();
 
-        m_writerColour.SetSourceImage(m_imageColour);
-        m_writerColour.SetDestFilename("textures/myPerlinColourmap.bmp");
-        m_writerColour.WriteDestFile();
+//        m_writerColour.SetSourceImage(m_imageColour);
+//        m_writerColour.SetDestFilename("textures/myPerlinColourmap.bmp");
+//        m_writerColour.WriteDestFile();
 
-        delete m_colourTex;
+//        delete m_colourTex;
 
-        m_colourTex = new Texture("textures/myPerlinColourmap.bmp");
-    }
+//        m_colourTex = new Texture("textures/myPerlinColourmap.bmp");
+//    }
 
     // Select if you want a cutout
     glUniform1i(m_cutoutLoc, m_cutout);
@@ -228,7 +229,9 @@ void GeometryClipmap::update(){
     glUniform1f(m_heightLoc, m_height);
 
     GLuint mapPosLoc = m_shaderProgram->getUniformLoc("map_position");
-    glUniform4f(mapPosLoc, -m_viewPos.x/float(2*512*m_gridSize), 0, -m_viewPos.z/float(2*512*m_gridSize), 0);
+//    std::cout<<-m_viewPos.x/float(2*512*m_gridSize)<<","<<0<<","<<-m_viewPos.z/float(2*512*m_gridSize)<<std::endl;
+
+    glUniform4f(mapPosLoc, (-m_viewPos.x/float(2*512*m_gridSize)-4), 0, (-m_viewPos.z/float(2*512*m_gridSize))-4, 0);
 
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, m_heightmapTex->getTextureID());

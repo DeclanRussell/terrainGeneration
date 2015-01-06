@@ -46,6 +46,8 @@ public:
     inline void setHeightMap(QImage _heightMap){delete m_heightmapTex; m_heightmapTex = new Texture(_heightMap);}
     // a function to set our cut our location
     inline void setCutOutPos(glm::vec2 _pos){m_cutOutPos = _pos;}
+    // sets our view pos
+    inline void setViewPos(glm::vec3 _viewPos){m_viewPos = _viewPos;}
     // VAO to store the geometry
     GLuint m_VAO;
 private:

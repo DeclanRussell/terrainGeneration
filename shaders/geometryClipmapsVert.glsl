@@ -19,11 +19,13 @@ out vec2 vertPos;
 void main(){
    vec4 pos = scale * (offset+vec4(vertexPosition, 1.0));
    vec4 pos_map = ((pos+map_position) * 0.125)+0.5;
+   pos_map /= 4.0;
+   pos_map+= 0.5;
    pos.y = float(texture(geoTexture, pos_map.xz).r + texture(geoTexture, pos_map.xz).g + texture(geoTexture, pos_map.xz).b);
    pos.y/=3.0;
    height = pos.y;
    pos.y*=heightScale;
-   texCoords = pos_map.xz;
+   texCoords = (pos_map.xz*4.0);
    position =  vec4(pos.x, 1.0, pos.z, pos.w);
    vertPos = pos.xz;
    gl_Position = MVP * pos;

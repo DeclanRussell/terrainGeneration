@@ -23,6 +23,7 @@ OpenGLWidget::OpenGLWidget(const QGLFormat _format, QWidget *_parent) : QGLWidge
     //set the center location of our meso terrain
     m_mesoCenter.first = m_mesoCenter.second = 0;
     // re-size the widget to that of the parent (in this case the GLFrame passed in on construction)
+    m_moved = false;
     this->resize(_parent->size());
 }
 //----------------------------------------------------------------------------------------------------------------------
@@ -60,9 +61,10 @@ void OpenGLWidget::initializeGL(){
 
     //create our volumetric data
     m_terrainFactory = new terrainGen(128,128);
+    m_terrainFactory->addLayerFromTexture(QImage("textures/tnd"),terrainGen::BEDROCK);
 
     // Create Geometry
-    m_geometryClipmap = new GeometryClipmap(5);
+    m_geometryClipmap = new GeometryClipmap(3);
     m_geometryClipmap->setCutout(true);
 
     // Create plane for water
@@ -75,15 +77,15 @@ void OpenGLWidget::initializeGL(){
     m_marchingCubesObject->setMatStack(m_terrainFactory->getData(),m_terrainFactory->getSizeX(),m_terrainFactory->getSizeY());
     m_marchingCubesObject->setSampleResolution(32);
 
-    m_marchingCubesObject->setSampleSize(0.125,0.125);
-    m_marchingCubesObject->setSamplePos(0.4375,0.4375);
+    m_marchingCubesObject->setSampleSize(0.0625,0.0625);
+    m_marchingCubesObject->setSamplePos(0.5-(0.0625/2.0),0.5-(0.0625/2.0));
     m_marchingCubesObject->vMarchingCubes();
 //    m_marchingCubesObject->exportGeometryObj("middleTerrain");
 
     m_grassHairFactory = new grassHair(m_marchingCubesObject->getVAO());
     m_grassHairFactory->setGrassSize(0.05);
-    m_grassHairFactory->setMaxGrassHeight(0.45);
-    m_grassHairFactory->setMinGrassHeight(0.35);
+    m_grassHairFactory->setMaxGrassHeight(0.5);
+    m_grassHairFactory->setMinGrassHeight(0.4);
     m_grassHairFactory->setMaxGrassAngle(30.0);
     m_grassHairFactory->setNumStrandsPerFace(3);
 
@@ -229,50 +231,62 @@ void OpenGLWidget::paintGL(){
     roty = glm::rotate(roty, m_spinYFace, glm::vec3(0.0, 1.0, 0.0));
 
     m_mouseGlobalTX = rotx*roty;
-    m_mouseGlobalTX = glm::translate(m_mouseGlobalTX, glm::vec3(m_modelPos.x, m_modelPos.y, m_modelPos.z));
+    m_mouseGlobalTX = glm::translate(m_mouseGlobalTX, glm::vec3(0.0, m_modelPos.y, 0.0));
 
 
     glm::mat4 mesoModelMat = m_mouseGlobalTX;
 
 
-    bool reGenMesoTerrain = false;
-    if(m_modelPos.x<m_mesoCenter.first-0.05){
-        m_mesoCenter.first-=0.1;
-        reGenMesoTerrain = true;
-    }
-    if(m_modelPos.x>m_mesoCenter.first+0.05){
-        m_mesoCenter.first+=0.1;
-        reGenMesoTerrain = true;
-    }
-    if(m_modelPos.z<m_mesoCenter.second-0.05){
-        m_mesoCenter.second-=0.1;
-        reGenMesoTerrain = true;
-    }
-    if(m_modelPos.z>m_mesoCenter.second+0.05){
-        m_mesoCenter.second+=0.1;
-        reGenMesoTerrain = true;
-    }
-    if(reGenMesoTerrain){
-        m_marchingCubesObject->setSamplePos(0.4375 - ((float)m_mesoCenter.first * 0.125),0.4375 - ((float)m_mesoCenter.second * 0.125));
+//    bool reGenMesoTerrain = false;
+//    if(m_modelPos.x<m_mesoCenter.first-0.05){
+//        m_mesoCenter.first-=0.1;
+//        reGenMesoTerrain = true;
+//    }
+//    if(m_modelPos.x>m_mesoCenter.first+0.05){
+//        m_mesoCenter.first+=0.1;
+//        reGenMesoTerrain = true;
+//    }
+//    if(m_modelPos.z<m_mesoCenter.second-0.05){
+//        m_mesoCenter.second-=0.1;
+//        reGenMesoTerrain = true;
+//    }
+//    if(m_modelPos.z>m_mesoCenter.second+0.05){
+//        m_mesoCenter.second+=0.1;
+//        reGenMesoTerrain = true;
+//    }
+//    if(reGenMesoTerrain){
+//        m_marchingCubesObject->setSamplePos(0.4375 - ((float)m_mesoCenter.first * 0.125),0.4375 - ((float)m_mesoCenter.second * 0.125));
+//        m_marchingCubesObject->vMarchingCubes();
+//    }
+
+
+    if(m_moved){
+        glm::vec3 trans = (m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
+        trans/=(2*512*32);
+        trans/= 32.0;
+    //    std::cout<<"trans "<<trans.x<<","<<trans.z<<std::endl;
+        m_marchingCubesObject->setSamplePos(0.505-(0.0625/2.0) - trans.x,0.505-(0.0625/2.0) + trans.z);
         m_marchingCubesObject->vMarchingCubes();
+        m_moved = false;
     }
-
-
-
+    mesoModelMat = glm::scale(mesoModelMat,glm::vec3(1.0,4.0,1.0));
     mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5 - m_mesoCenter.first,0.0,-0.5 - m_mesoCenter.second));
 
 
-    //draw out meso terrain
+//    //draw out meso terrain
     m_marchingCubesObject->draw(mesoModelMat, m_cam);
 
     glm::mat4 macroModelMat = m_mouseGlobalTX;
     //now draw toby's geomtry clipmap
     macroModelMat = glm::scale(macroModelMat, glm::vec3(-1.0, 1.0, 1.0));
     macroModelMat = glm::rotate(macroModelMat, pi, glm::vec3(0.0,1.0,0.0));
+    glm::vec3 camPos = m_modelPos*glm::vec3(10000.0,10000.0,-10000.0);
+//    std::cout<<"camPos "<<camPos.x<<","<<camPos.y<<","<<camPos.z<<std::endl;
+    m_geometryClipmap->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
     m_geometryClipmap->loadMatricesToShader(macroModelMat, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
     m_geometryClipmap->setWireframe(false);
     m_geometryClipmap->setCutout(true);
-    m_geometryClipmap->setCutOutPos(glm::vec2(-m_modelPos.x,m_modelPos.z));
+    //m_geometryClipmap->setCutOutPos(glm::vec2(-m_modelPos.x,m_modelPos.z));
     m_geometryClipmap->render();
 
     //draw our grass
@@ -314,8 +328,32 @@ void OpenGLWidget::mouseMoveEvent (QMouseEvent * _event)
 
     m_origXPos=_event->x();
     m_origYPos=_event->y();
-    m_modelPos.x += INCREMENT * diffX;
-    m_modelPos.z += INCREMENT * diffY;
+
+    glm::mat4 rotx;
+    glm::mat4 roty;
+    glm::vec3 forwards(0.0, 0.5, 0.5);
+    glm::vec3 up(0.0,1.0,0.0);
+    glm::vec4 strafe(glm::cross(up,forwards),0.0);
+    glm::vec4 forwardVec4(forwards,1.0);
+    glm::vec4 upVec4(up,1.0);
+    glm::mat4 rotFinal;
+
+
+    rotx = glm::rotate(rotx, (float)(-1.0*m_spinXFace), glm::vec3(1.0, 0.0, 0.0));
+    roty = glm::rotate(roty, (float)(-1.0*m_spinYFace), glm::vec3(0.0, 1.0, 0.0));
+    rotFinal = /*rotx */roty;
+
+    forwards = glm::vec3(rotFinal * forwardVec4);
+    strafe = rotFinal * strafe;
+    forwards = glm::normalize(forwards);
+    glm::vec3 normStrafe = glm::normalize(glm::vec3(strafe));
+
+    forwards*= (INCREMENT * diffY);
+    normStrafe*= (INCREMENT * diffX);
+
+    m_modelPos.x += forwards.x + normStrafe.x;
+    m_modelPos.z += forwards.z + normStrafe.z;
+    m_moved = true;
 
    }
   else if(m_translate && _event->buttons() == Qt::MiddleButton){
@@ -370,7 +408,7 @@ void OpenGLWidget::mouseReleaseEvent ( QMouseEvent * _event )
 void OpenGLWidget::keyPressEvent(QKeyEvent *_event){
     glm::mat4 rotx;
     glm::mat4 roty;
-    glm::vec3 forwards(0.0, 0.5, 2.0);
+    glm::vec3 forwards(0.0, 0.5, 0.5);
     glm::vec3 up(0.0,1.0,0.0);
     glm::vec4 strafe(glm::cross(up,forwards),1.0);
     glm::vec4 forwardVec4(forwards,1.0);
@@ -402,6 +440,7 @@ void OpenGLWidget::keyPressEvent(QKeyEvent *_event){
             forwards*=0.1;
             m_modelPos.x+=forwards.x;
             m_modelPos.z+=forwards.z;
+            m_moved = true;
 
         break;
         case Qt::Key_S:
@@ -413,6 +452,7 @@ void OpenGLWidget::keyPressEvent(QKeyEvent *_event){
             forwards*=0.1;
             m_modelPos.x-=forwards.x;
             m_modelPos.z-=forwards.z;
+            m_moved = true;
         break;
         case Qt::Key_A:
             rotx = glm::rotate(rotx, (float)(-1.0*m_spinXFace), glm::vec3(1.0, 0.0, 0.0));
@@ -424,6 +464,7 @@ void OpenGLWidget::keyPressEvent(QKeyEvent *_event){
 
             m_modelPos.x+= strafe.x;
             m_modelPos.z+= strafe.z;
+            m_moved = true;
 
         break;
         case Qt::Key_D:
@@ -436,6 +477,7 @@ void OpenGLWidget::keyPressEvent(QKeyEvent *_event){
 
             m_modelPos.x-= strafe.x;
             m_modelPos.z-= strafe.z;
+            m_moved = true;
         break;
 
     }
