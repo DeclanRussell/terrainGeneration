@@ -81,7 +81,7 @@ void main(){
   refractionColour += baseColour * depthValue * invertedFresnal;
 
   fragColour = calcFog(reflectionColour + refractionColour);
-//  fragColour = texture(reflectMap, TexCoords);
-//  fragColour = texture(refractMap, TexCoords);
+//  fragColour = texture(reflectMap, projCoord.xy);
+//  fragColour = texture(refractMap, projCoord.xy);
 }
 

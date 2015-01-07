@@ -21,6 +21,7 @@ GeometryClipmap::GeometryClipmap(int _levels): m_gridSize(32), m_wireframe(false
 //------------------------------------------------------------------------------------------------------------------------------------------
 GeometryClipmap::~GeometryClipmap(){
     delete m_shaderProgram;
+    delete m_clippedProgram;
     delete m_heightmapTex;
     delete m_normalmapTex;
     delete m_colourTex;
@@ -65,8 +66,36 @@ void GeometryClipmap::createShader(){
     glUniform1f(grassHeightLoc, 0.5);
     glUniform1f(rockHeightLoc, 0.7);
     glUniform1f(fogMinLoc, 3.0);
-    glUniform1f(fogMaxLoc, 4.0);
+    glUniform1f(fogMaxLoc, 5.0);
 
+    //------------------------------------------------------------------------------------------------------------------------
+    m_clippedProgram = new ShaderProgram();
+    m_vertShader = new Shader("shaders/GeometryClippedVert.glsl", GL_VERTEX_SHADER);
+    m_fragShader = new Shader("shaders/geometryClipmapsFrag.glsl", GL_FRAGMENT_SHADER);
+
+    m_clippedProgram->attachShader(m_vertShader);
+    m_clippedProgram->attachShader(m_fragShader);
+    m_clippedProgram->bindFragDataLocation(0, "fragColour");
+    m_clippedProgram->link();
+    m_clippedProgram->use();
+
+    delete m_vertShader;
+    delete m_fragShader;
+
+    m_clippedCutoutLoc = m_clippedProgram->getUniformLoc("cutout");
+    m_clippedHeightLoc = m_clippedProgram->getUniformLoc("heightScale");
+    fogMinLoc = m_clippedProgram->getUniformLoc("fogMin");
+    fogMaxLoc = m_clippedProgram->getUniformLoc("fogMax");
+
+    mudHeightLoc = m_clippedProgram->getUniformLoc("mudHeight");
+    grassHeightLoc = m_clippedProgram->getUniformLoc("grassHeight");
+    rockHeightLoc = m_clippedProgram->getUniformLoc("rockHeight");
+
+    glUniform1f(mudHeightLoc, 0.4);
+    glUniform1f(grassHeightLoc, 0.5);
+    glUniform1f(rockHeightLoc, 0.7);
+    glUniform1f(fogMinLoc, 3.0);
+    glUniform1f(fogMaxLoc, 4.0);
     // driver info
     std::cout<<"GL_VERSION: "<<glGetString(GL_VERSION)<<std::endl;
     std::cout<<"GL_RENDERER: "<<glGetString(GL_RENDERER)<<std::endl;
@@ -79,8 +108,7 @@ void GeometryClipmap::Initialise(){
     m_heightmapBuilder.SetSourceModule(m_perlin);
     m_heightmapBuilder.SetDestNoiseMap(m_noisemap);
     m_heightmapBuilder.SetDestSize(1024, 1024);
-    //heightmapBuilder.SetBounds(m_xvalue, m_xvalue+4.0, m_zvalue, m_zvalue+4.0);
-    m_heightmapBuilder.SetBounds(2.0, 6.0, 2.0, 6.0);
+    m_heightmapBuilder.SetBounds(m_xvalue, m_xvalue+4.0, m_zvalue, m_zvalue+4.0);
     m_heightmapBuilder.Build();
 
     m_heightmap.SetSourceNoiseMap(m_noisemap);
@@ -91,8 +119,8 @@ void GeometryClipmap::Initialise(){
     m_writer.SetDestFilename("textures/myPerlinHeightmap.bmp");
     m_writer.WriteDestFile();
 
-//    m_heightmapTex = new Texture("textures/myPerlinHeightmap.bmp");
-    m_heightmapTex = new Texture("textures/tnd");
+    m_heightmapTex = new Texture("textures/myPerlinHeightmap.bmp");
+//    m_heightmapTex = new Texture("textures/tnd");
 //    m_heightmapTex = new Texture("textures/declanHeightmap.jpg");
 
     noise::utils::RendererNormalMap normalMapRenderer;
@@ -175,62 +203,17 @@ void GeometryClipmap::Initialise(){
 }
 //------------------------------------------------------------------------------------------------------------------------------------------
 void GeometryClipmap::update(){
-    // Generate new height map
-//    if (m_updating){
-//        m_zvalue -= INCRIMENT;
-
-//        m_heightmapBuilder.SetSourceModule(m_perlin);
-//        m_heightmapBuilder.SetDestNoiseMap(m_noisemap);
-//        m_heightmapBuilder.SetDestSize(512, 512);
-//        m_heightmapBuilder.SetBounds(m_xvalue, m_xvalue+4.0, m_zvalue, m_zvalue+4.0);
-//        m_heightmapBuilder.Build();
-
-//        m_heightmap.SetSourceNoiseMap(m_noisemap);
-//        m_heightmap.SetDestImage(m_image);
-//        m_heightmap.Render();
-
-//        m_writer.SetSourceImage(m_image);
-//        m_writer.SetDestFilename("textures/myPerlinHeightmap.bmp");
-//        m_writer.WriteDestFile();
-
-//        delete m_heightmapTex;
-
-//        m_heightmapTex = new Texture("textures/myPerlinHeightmap.bmp");
-////        m_heightmapTex = new Texture("textures/declanHeightmap.jpg");
-
-//        m_colourMap.SetSourceNoiseMap(m_noisemap);
-//        m_colourMap.SetDestImage(m_imageColour);
-//        m_colourMap.ClearGradient();
-//        m_colourMap.AddGradientPoint(-1.0000, utils::Color(  50,   50, 50, 255)); // deeps
-//        m_colourMap.AddGradientPoint(-0.2500, utils::Color(  110,   110, 110, 255)); // shallow
-//        m_colourMap.AddGradientPoint( 0.0000, utils::Color(  140, 140, 140, 255)); // shore
-//        m_colourMap.AddGradientPoint( 0.0625, utils::Color(234, 220,  194, 255)); // sand
-//        m_colourMap.AddGradientPoint( 0.1250, utils::Color( 79, 106,   53, 255)); // grass
-//        m_colourMap.AddGradientPoint( 0.3750, utils::Color(157, 127,   75, 255)); // dirt
-//        m_colourMap.AddGradientPoint( 0.7500, utils::Color(143, 135, 124, 255)); // rock
-//        m_colourMap.AddGradientPoint( 1.0000, utils::Color(255, 255, 255, 255)); // snow
-//        m_colourMap.EnableLight();
-//        m_colourMap.SetLightContrast(5.0);
-//        m_colourMap.SetLightBrightness(2.0);
-//        m_colourMap.Render();
-
-//        m_writerColour.SetSourceImage(m_imageColour);
-//        m_writerColour.SetDestFilename("textures/myPerlinColourmap.bmp");
-//        m_writerColour.WriteDestFile();
-
-//        delete m_colourTex;
-
-//        m_colourTex = new Texture("textures/myPerlinColourmap.bmp");
-//    }
 
     // Select if you want a cutout
     glUniform1i(m_cutoutLoc, m_cutout);
+    glUniform1i(m_clippedCutoutLoc, m_cutout);
     // Set height of terrain
     glUniform1f(m_heightLoc, m_height);
+    glUniform1i(m_clippedHeightLoc, m_height);
 
     GLuint mapPosLoc = m_shaderProgram->getUniformLoc("map_position");
-//    std::cout<<-m_viewPos.x/float(2*512*m_gridSize)<<","<<0<<","<<-m_viewPos.z/float(2*512*m_gridSize)<<std::endl;
-
+    glUniform4f(mapPosLoc, (-m_viewPos.x/float(2*512*m_gridSize)-4), 0, (-m_viewPos.z/float(2*512*m_gridSize))-4, 0);
+    mapPosLoc = m_clippedProgram->getUniformLoc("map_position");
     glUniform4f(mapPosLoc, (-m_viewPos.x/float(2*512*m_gridSize)-4), 0, (-m_viewPos.z/float(2*512*m_gridSize))-4, 0);
 
     glActiveTexture(GL_TEXTURE0);
@@ -250,38 +233,70 @@ void GeometryClipmap::update(){
 
     m_geoTextureLoc = m_shaderProgram->getUniformLoc("geoTexture");
     glUniform1i(m_geoTextureLoc, 0);
+    m_clippedGeoTextureLoc = m_clippedProgram->getUniformLoc("geoTexture");
+    glUniform1i(m_clippedGeoTextureLoc, 0);
 
     GLuint texture2Loc = m_shaderProgram->getUniformLoc("grassTexture");
+    glUniform1i(texture2Loc, 1);
+    texture2Loc = m_clippedProgram->getUniformLoc("grassTexture");
     glUniform1i(texture2Loc, 1);
 
     GLuint textureRockLoc = m_shaderProgram->getUniformLoc("rockTexture");
     glUniform1i(textureRockLoc, 2);
+    textureRockLoc = m_clippedProgram->getUniformLoc("rockTexture");
+    glUniform1i(textureRockLoc, 2);
 
     GLuint textureSnowLoc = m_shaderProgram->getUniformLoc("snowTexture");
+    glUniform1i(textureSnowLoc, 3);
+    textureSnowLoc = m_clippedProgram->getUniformLoc("snowTexture");
     glUniform1i(textureSnowLoc, 3);
 
     GLuint textureMudLoc = m_shaderProgram->getUniformLoc("mudTexture");
     glUniform1i(textureMudLoc, 4);
+    textureMudLoc = m_clippedProgram->getUniformLoc("mudTexture");
+    glUniform1i(textureMudLoc, 4);
 
     m_normalGeoTexLoc = m_shaderProgram->getUniformLoc("normalMap");
     glUniform1i(m_normalGeoTexLoc, 5);
+    m_clippedNormalGeoLoc = m_clippedProgram->getUniformLoc("normalMap");
+    glUniform1i(m_clippedNormalGeoLoc, 5);
 
     m_colourLoc = m_shaderProgram->getUniformLoc("colourMap");
     glUniform1i(m_colourLoc, 6);
+    m_clippedColourLoc = m_clippedProgram->getUniformLoc("colourMap");
+    glUniform1i(m_clippedColourLoc, 6);
 
 }
 //------------------------------------------------------------------------------------------------------------------------------------------
 void GeometryClipmap::loadMatricesToShader(glm::mat4 _modelMatrix, glm::mat4 _viewMatrix, glm::mat4 _projectionMatrix){
     m_shaderProgram->use();
     GLuint normalMatrixLoc = m_shaderProgram->getUniformLoc("normalMatrix");
+    GLuint modelLoc = m_shaderProgram->getUniformLoc("modelMatrix");
     glm::mat4 modelViewMatrix = _viewMatrix * _modelMatrix;
     glm::mat4 normalMatrix = glm::inverseTranspose(modelViewMatrix);
     glm::mat4 modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
     glUniformMatrix4fv(m_modelViewLoc, 1, GL_FALSE, glm::value_ptr(modelViewMatrix));
     glUniformMatrix4fv(normalMatrixLoc, 1, GL_FALSE, glm::value_ptr(normalMatrix));
     glUniformMatrix4fv(m_modelViewProjectionLoc, 1, GL_FALSE, glm::value_ptr(modelViewProjectionMatrix));
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(_modelMatrix));
 }
+void GeometryClipmap::loadClippedMatricesToShader(glm::mat4 _modelMatrix, glm::mat4 _viewMatrix, glm::mat4 _projectionMatrix){
+    m_clippedProgram->use();
 
+    GLuint modelViewLoc = m_clippedProgram->getUniformLoc("MV");
+    GLuint MVPLoc = m_clippedProgram->getUniformLoc("MVP");
+    GLuint normalMatrixLoc = m_clippedProgram->getUniformLoc("normalMatrix");
+    GLuint modelLoc = m_clippedProgram->getUniformLoc("modelMatrix");
+
+    glm::mat4 modelViewMatrix = _viewMatrix * _modelMatrix;
+    glm::mat4 normalMatrix = glm::inverseTranspose(modelViewMatrix);
+    glm::mat4 modelViewProjectionMatrix = _projectionMatrix * _viewMatrix * _modelMatrix;
+
+    glUniformMatrix4fv(modelLoc, 1, GL_FALSE, glm::value_ptr(_modelMatrix));
+    glUniformMatrix4fv(modelViewLoc, 1, GL_FALSE, glm::value_ptr(modelViewMatrix));
+    glUniformMatrix4fv(normalMatrixLoc, 1, GL_FALSE, glm::value_ptr(normalMatrix));
+    glUniformMatrix4fv(MVPLoc, 1, GL_FALSE, glm::value_ptr(modelViewProjectionMatrix));
+}
 void GeometryClipmap::render(){
     update();
     float sxy=2; //scale x/y
@@ -293,9 +308,13 @@ void GeometryClipmap::render(){
         glm::vec3 scale(sxy, sxy, sxy);
         GLuint scaleLoc = m_shaderProgram->getUniformLoc("scale");
         glUniform4f(scaleLoc, scale.x, scale.y, scale.z, 1.0);
+        scaleLoc = m_clippedProgram->getUniformLoc("scale");
+        glUniform4f(scaleLoc, scale.x, scale.y, scale.z, 1.0);
 
         GLuint cutOutPosLoc = m_shaderProgram->getUniformLoc("cutOutLoc");
         glUniform2f(cutOutPosLoc,m_cutOutPos.x,m_cutOutPos.y);
+        cutOutPosLoc = m_clippedProgram->getUniformLoc("cutOutLoc");
+        glUniform2f(cutOutPosLoc, m_cutOutPos.x, m_cutOutPos.y);
 
         for (int k=-2; k<2; ++k) {
             for (int j=-2; j<2; ++j){
@@ -311,6 +330,9 @@ void GeometryClipmap::render(){
                 // render
                 GLuint offsetLoc = m_shaderProgram->getUniformLoc("offset");
                 glUniform4f(offsetLoc, offset.x, 0.0, offset.z, 0.0);
+                offsetLoc = m_clippedProgram->getUniformLoc("offset");
+                glUniform4f(offsetLoc, offset.x, 0.0, offset.z, 0.0);
+
                 glBindVertexArray(m_VAO);
                 if (m_wireframe){
                     glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);

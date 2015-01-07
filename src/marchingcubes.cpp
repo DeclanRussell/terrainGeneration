@@ -228,14 +228,14 @@ void marchingCubes::loadMatricesToShader(glm::mat4 _modelMatrix, Camera *_cam){
 // rather than in pages and pages of unrolled code.
 
 //a2fVertexOffset lists the positions, relative to vertex0, of each of the 8 vertices of a cube
-static const GLfloat a2fVertexOffset[8][3]
+static const GLfloat a2fVertexOffset[8][3] =
 {
     {0.0, 0.0, 0.0},{1.0, 0.0, 0.0},{1.0, 1.0, 0.0},{0.0, 1.0, 0.0},
     {0.0, 0.0, 1.0},{1.0, 0.0, 1.0},{1.0, 1.0, 1.0},{0.0, 1.0, 1.0}
 };
 //----------------------------------------------------------------------------------------------------------------------
 //a2iEdgeConnection lists the index of the endpoint vertices for each of the 12 edges of the cube
-static const GLint a2iEdgeConnection[12][2]
+static const GLint a2iEdgeConnection[12][2] =
 {
         {0,1}, {1,2}, {2,3}, {3,0},
         {4,5}, {5,6}, {6,7}, {7,4},
@@ -243,7 +243,7 @@ static const GLint a2iEdgeConnection[12][2]
 };
 //----------------------------------------------------------------------------------------------------------------------
 //a2fEdgeDirection lists the direction vector (vertex1-vertex0) for each edge in the cube
-static const GLfloat a2fEdgeDirection[12][3]
+static const GLfloat a2fEdgeDirection[12][3] =
 {
         {1.0, 0.0, 0.0},{0.0, 1.0, 0.0},{-1.0, 0.0, 0.0},{0.0, -1.0, 0.0},
         {1.0, 0.0, 0.0},{0.0, 1.0, 0.0},{-1.0, 0.0, 0.0},{0.0, -1.0, 0.0},
@@ -251,14 +251,14 @@ static const GLfloat a2fEdgeDirection[12][3]
 };
 //----------------------------------------------------------------------------------------------------------------------
 //a2iTetrahedronEdgeConnection lists the index of the endpoint vertices for each of the 6 edges of the tetrahedron
-static const GLint a2iTetrahedronEdgeConnection[6][2]
+static const GLint a2iTetrahedronEdgeConnection[6][2] =
 {
         {0,1},  {1,2},  {2,0},  {0,3},  {1,3},  {2,3}
 };
 //----------------------------------------------------------------------------------------------------------------------
 //a2iTetrahedronEdgeConnection lists the index of verticies from a cube
 // that made up each of the six tetrahedrons within the cube
-static const GLint a2iTetrahedronsInACube[6][4]
+static const GLint a2iTetrahedronsInACube[6][4] =
 {
         {0,5,1,6},
         {0,1,2,6},

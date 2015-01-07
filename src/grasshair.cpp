@@ -19,6 +19,10 @@ grassHair::grassHair(GLuint _VAO){
     m_maxAngle = 90.0;
     createShader();
 }
+grassHair::~grassHair(){
+    delete m_shaderProgram;
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 void grassHair::createShader(){
     //create our shader program

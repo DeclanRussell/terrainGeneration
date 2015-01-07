@@ -5,8 +5,8 @@ Camera::Camera(glm::vec3 _pos){
    m_up = glm::vec3(0.0, 1.0, 0.0);
    m_fov = 45.0;
    m_aspect = 720.0/576.0;
-   m_projectionMatrix = glm::perspective(m_fov, m_aspect, 0.0001f, 350.0f);
-   lookAt(m_position, glm::vec3(0.0, 0.5, 0.0), m_up);
+   m_projectionMatrix = glm::perspective(m_fov, m_aspect, 0.1f, 350.0f);
+   lookAt(m_position, glm::vec3(0.0, 0.0, 0.0), m_up);
 }
 
 Camera::~Camera(){
@@ -25,9 +25,9 @@ void Camera::setProjectionMatrix(float _fov, float _aspect, float _near, float _
 }
 
 void Camera::setShape(float aspect){
-    setProjectionMatrix(m_fov, m_aspect, 0.0001f, 350.0f);
+    setProjectionMatrix(m_fov, m_aspect, 0.1f, 350.0f);
 }
 
 void Camera::setShape(float _w, float _h){
-    setProjectionMatrix(m_fov, _w/_h, 0.0001f, 350.0f);
+    setProjectionMatrix(m_fov, _w/_h, 0.1f, 350.0f);
 }

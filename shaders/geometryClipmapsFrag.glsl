@@ -98,7 +98,7 @@ vec4 calcColour(){
 vec3 calcFog(vec3 texColour){
   float dist = length(position.xyz);
   vec3 rayDir = normalize(-position.xyz);
-  vec3 sunDir = vec3(0.0, -0.3, 1.0);
+  vec3 sunDir = vec3(0.0, -0.3, -1.0);
   float fogAmount = exp( 1.0 -dist*1.0 );
   float sunAmount = max(dot( rayDir, sunDir ), 0.0 );
   vec3  fogColour  = mix(vec3(0.6, 0.7, 0.8), vec3(1.0,0.9, 0.7), pow(sunAmount,8.0) );
@@ -112,9 +112,8 @@ vec3 calcFog(vec3 texColour){
 
 void main(){
   vec3 texColour = texture(colourMap, texCoords).rgb;
-//  vec3 texColour = texture(geoTexture, texCoords).rgb;
-//  vec3 colour = calcFog(texColour);
   vec3 colour = calcFog(vec3(calcColour()));
+//  vec3 colour = vec3(calcColour());
   fragColour = vec4(colour, 1.0);
 
   if (cutout){

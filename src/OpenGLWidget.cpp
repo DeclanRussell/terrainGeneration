@@ -6,6 +6,7 @@
 #define pi 3.14159265f
 
 const static float INCREMENT=0.01;
+const static float ZOOM = 0.1;
 
 OpenGLWidget::OpenGLWidget(const QGLFormat _format, QWidget *_parent) : QGLWidget(_format,_parent){
     // set this widget to have the initial keyboard focus
@@ -29,8 +30,12 @@ OpenGLWidget::OpenGLWidget(const QGLFormat _format, QWidget *_parent) : QGLWidge
 //----------------------------------------------------------------------------------------------------------------------
 OpenGLWidget::~OpenGLWidget(){
     delete m_cam;
-
-
+    delete m_skybox;
+    delete m_water;
+    delete m_geometryClipmap;
+    delete m_terrainFactory;
+    delete m_marchingCubesObject;
+    delete m_grassHairFactory;
 }
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::initializeGL(){
@@ -41,27 +46,26 @@ void OpenGLWidget::initializeGL(){
         std::cerr<<"GLEW IS NOT OK!!! "<<std::endl;
     }
 #endif
-
     glClearColor(0.4f, 0.4f, 0.7f, 1.0f);
     // enable depth testing for drawing
-    glEnable(GL_DEPTH_TEST);
+    glEnable(GL_DEPTH_TEST );
     // enable multisampling for smoother drawing
     //glEnable(GL_MULTISAMPLE);
+    glEnable(GL_CLIP_PLANE0);
 
     // as re-size is not explicitly called we need to do this.
     glViewport(0,0,width(),height());
-
 
     // Initialise the model matrix
     m_modelMatrix = glm::mat4(1.0);
 
     // Initialize the camera
-    glm::vec3 pos(0.0, 0.5, 0.5);
+    glm::vec3 pos(0.0, 5.0, 0.1);
     m_cam = new Camera(pos);
 
     //create our volumetric data
     m_terrainFactory = new terrainGen(128,128);
-    m_terrainFactory->addLayerFromTexture(QImage("textures/tnd"),terrainGen::BEDROCK);
+    m_terrainFactory->addLayerFromTexture(QImage("textures/myPerlinHeightmap"),terrainGen::BEDROCK);
 
     // Create Geometry
     m_geometryClipmap = new GeometryClipmap(3);
@@ -71,7 +75,6 @@ void OpenGLWidget::initializeGL(){
     m_water = new Water();
 
     m_marchingCubesObject = new marchingCubes();
-
     m_marchingCubesObject->setMode(marchingCubes::MC_2DMATSTACK);
     //std::cout<<m_terrainFactory->getSizeX()<<" "<<m_terrainFactory->getSizeY()<<std::endl;
     m_marchingCubesObject->setMatStack(m_terrainFactory->getData(),m_terrainFactory->getSizeX(),m_terrainFactory->getSizeY());
@@ -89,118 +92,166 @@ void OpenGLWidget::initializeGL(){
     m_grassHairFactory->setMaxGrassAngle(30.0);
     m_grassHairFactory->setNumStrandsPerFace(3);
 
+    // Crate the skybox object
+    m_skybox = new Skybox();
 
     glEnable(GL_DEPTH_TEST); // for removal of hidden surfaces
 
+    genFBOs();
 
     startTimer(0);
 }
 //----------------------------------------------------------------------------------------------------------------------
-void OpenGLWidget::createShader(){
-    // Create a shader program
-    m_shaderProgram = new ShaderProgram();
-    m_vertexShader = new Shader("shaders/terrainVert.glsl", GL_VERTEX_SHADER);
-    m_fragmentShader = new Shader("shaders/terrainFrag.glsl", GL_FRAGMENT_SHADER);
+void OpenGLWidget::genFBOs(){
+    // Gen framebuffer
+    glGenFramebuffers(1, &m_reflectFB);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_reflectFB);
 
-    m_shaderProgram->attachShader(m_vertexShader);
-    m_shaderProgram->attachShader(m_fragmentShader);
-    m_shaderProgram->bindFragDataLocation(0, "fragColour");
-    m_shaderProgram->link();
-    m_shaderProgram->use();
+    // Bind texture to FBO
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, *(m_water->getReflectTex()), 0);
 
-    delete m_vertexShader;
-    delete m_fragmentShader;
+    // Set the targets for the fragment shader output
+    GLenum drawBufs[] = {GL_COLOR_ATTACHMENT0};
+    glDrawBuffers(1, drawBufs);
 
-    m_projLoc = m_shaderProgram->getUniformLoc("projectionMatrix");
-    m_normalLoc = m_shaderProgram->getUniformLoc("normalMatrix");
-    m_modelViewProjectionLoc = m_shaderProgram->getUniformLoc("modelViewProjectionMatrix");
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 
-    GLuint lightPosLoc = m_shaderProgram->getUniformLoc("light.position");
-    GLuint lightIntLoc = m_shaderProgram->getUniformLoc("light.intensity");
-    GLuint kdLoc = m_shaderProgram->getUniformLoc("Kd");
-    GLuint kaLoc = m_shaderProgram->getUniformLoc("Ka");
-    GLuint ksLoc = m_shaderProgram->getUniformLoc("Ks");
-    GLuint shininessLoc = m_shaderProgram->getUniformLoc("shininess");
+    // Gen framebuffer
+    glGenFramebuffers(1, &m_refractFB);
+    glBindFramebuffer(GL_FRAMEBUFFER, m_refractFB);
 
-    glUniform4f(lightPosLoc, 1.0, 1.0, 1.0, 1.0);
-    glUniform3f(lightIntLoc, 0.8, 0.8, 0.8);
-    glUniform3f(kdLoc, 0.5, 0.5, 0.5);
-    glUniform3f(kaLoc, 0.5, 0.5, 0.5);
-    glUniform3f(ksLoc, 1.0, 1.0, 1.0);
-    glUniform1f(shininessLoc, 100.0);
+    // Bind texture to FBO
+    glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D,*(m_water->getRefractTex()), 0);
 
-    // Set our mesh colouring information based on texture splatting
-    GLuint mudHeight = m_shaderProgram->getUniformLoc("mudHeight");
-    GLuint grassHeight = m_shaderProgram->getUniformLoc("grassHeight");
-    GLuint rockHeight = m_shaderProgram->getUniformLoc("rockHeight");
-    GLuint mudColour = m_shaderProgram->getUniformLoc("mudColour");
-    GLuint grassColour = m_shaderProgram->getUniformLoc("grassColour");
-    GLuint rockColour = m_shaderProgram->getUniformLoc("rockColour");
-    GLuint snowColour = m_shaderProgram->getUniformLoc("snowColour");
+    // Set the targets for the fragment shader output
+    glDrawBuffers(1, drawBufs);
 
-    //set our height bands
-    glUniform1f(mudHeight,0.1);
-    glUniform1f(grassHeight,0.3);
-    glUniform1f(rockHeight,0.6);
-
-    //set the colours of our materials
-    glUniform4f(mudColour, 0.0, 0.5, 0.0,1.0);
-    glUniform4f(grassColour, 0.0, 0.5, 0.0,1.0);
-    glUniform4f(rockColour, 0.5, 0.5, 0.5,1.0);
-    glUniform4f(snowColour, 1.0, 1.0, 1.0,1.0);
-
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }
-
 //----------------------------------------------------------------------------------------------------------------------
-void OpenGLWidget::createTreeShader(){
-    // Create a shader program
-    m_treeShader = new ShaderProgram();
-    m_vertexShader = new Shader("shaders/TreeVert.glsl", GL_VERTEX_SHADER);
-    m_fragmentShader = new Shader("shaders/TreeFrag.glsl", GL_FRAGMENT_SHADER);
+void OpenGLWidget::renderReflections(){
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    // Set the viewpoint equal to the size of the texture
+    glViewport(0, 0, 512, 512);
 
-    m_treeShader->attachShader(m_vertexShader);
-    m_treeShader->attachShader(m_fragmentShader);
-    m_treeShader->bindFragDataLocation(0, "fragColour");
-    m_treeShader->link();
-    m_treeShader->use();
+    glm::mat4 rotx;
+    glm::mat4 roty;
 
-    delete m_vertexShader;
-    delete m_fragmentShader;
+    rotx = glm::rotate(rotx, m_spinXFace, glm::vec3(1.0, 0.0, 0.0));
+    roty = glm::rotate(roty, m_spinYFace, glm::vec3(0.0, 1.0, 0.0));
 
-    //send our tree textures to the gpu
-    m_barkTex = new Texture("textures/bark1.tga");
-    m_barkTex->bind(4);
+    m_mouseGlobalTX = rotx*roty;
+    m_mouseGlobalTX[3][1] = m_modelPos.y;
 
-    m_leavesTex = new Texture("textures/leafs1.tga");
-    m_leavesTex->bind(5);
+    //Render the skybox;
+    glm::mat4 modelMatrix = glm::mat4(1.0);
+    modelMatrix = m_mouseGlobalTX;
+    modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0, -1.5, 0.0));
+    modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0, 3.0, 0.0));
+    modelMatrix = glm::scale(modelMatrix , glm::vec3(100.0, 100.0, 100.0));
 
-    //get our uniform locations
-    GLuint lightPosTreeLoc = m_treeShader->getUniformLoc("light.position");
-    GLuint lightIntTreeLoc = m_treeShader->getUniformLoc("light.intensity");
-    GLuint kdTreeLoc = m_treeShader->getUniformLoc("Kd");
-    GLuint kaTreeLoc = m_treeShader->getUniformLoc("Ka");
-    GLuint ksTreeLoc = m_treeShader->getUniformLoc("Ks");
-    GLuint shininessTreeLoc = m_treeShader->getUniformLoc("shininess");
-    GLuint barkTreeLoc = m_treeShader->getUniformLoc("bark");
-    GLuint leavesTreeLoc = m_treeShader->getUniformLoc("leaves");
+    // Reflect the modelMatrix
+    modelMatrix = glm::scale(modelMatrix, glm::vec3(1.0, -1.0, 1.0));
 
-    //set our uniforms
-    glm::vec4 lightPositon(1.0, -3.0, 1.0, 1.0);
-    glm::vec3 lightIntensity(1.0, 1.0, 1.0);
-    glUniform4f(lightPosTreeLoc,lightPositon.x, lightPositon.y, lightPositon.z, lightPositon.w);
-    glUniform3f(lightIntTreeLoc, lightIntensity.x, lightIntensity.y, lightIntensity.z);
-    glUniform3f(kdTreeLoc, 0.5, 0.5, 0.5);
-    glUniform3f(kaTreeLoc, 0.5, 0.5, 0.5);
-    glUniform3f(ksTreeLoc, 1.0, 1.0, 1.0);
-    glUniform1f(shininessTreeLoc, 10.0);
-    //texture uniform positions
-//    std::cout<<"bark handle location "<<barkTreeLoc<<std::endl;
-//    std::cout<<"leaves handle location "<<leavesTreeLoc<<std::endl;
-    glUniform1i(barkTreeLoc, 4);
-    glUniform1i(leavesTreeLoc, 5);
+    m_skybox->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
+    m_skybox->render();
+
+    glm::mat4 mesoModelMat = m_mouseGlobalTX;
+
+    if(m_moved){
+        glm::vec3 trans = (m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
+        trans/=(2*512*32);
+        trans/= 32.0;
+        m_marchingCubesObject->setSamplePos(0.505-(0.0625/2.0) - trans.x,0.505-(0.0625/2.0) + trans.z);
+        m_marchingCubesObject->vMarchingCubes();
+        m_moved = false;
+    }
+    mesoModelMat = glm::scale(mesoModelMat,glm::vec3(1.0,4.0,1.0));
+    mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5 - m_mesoCenter.first,0.0,-0.5 - m_mesoCenter.second));
+
+    // Reflect the modelMatrix
+    mesoModelMat = glm::scale(mesoModelMat, glm::vec3(1.0, -1.0, 1.0));
+
+    //draw out meso terrain
+//    m_marchingCubesObject->draw(mesoModelMat, m_cam);
+
+    glm::mat4 macroModelMat = m_mouseGlobalTX;
+
+    //now draw toby's geomtry clipmap
+    macroModelMat = glm::scale(macroModelMat, glm::vec3(-1.0, 1.0, 1.0));
+    macroModelMat = glm::rotate(macroModelMat, pi, glm::vec3(0.0,1.0,0.0));
+
+    // Reflect the modelMatrix
+    macroModelMat = glm::scale(macroModelMat, glm::vec3(1.0, -1.0, 1.0));
+    macroModelMat = glm::translate(macroModelMat, glm::vec3(0.0, -3.0, 0.0));
+
+    m_geometryClipmap->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
+    m_geometryClipmap->loadClippedMatricesToShader(macroModelMat, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
+    m_geometryClipmap->setWireframe(false);
+    m_geometryClipmap->setCutout(true);
+    //m_geometryClipmap->setCutOutPos(glm::vec2(-m_modelPos.x,m_modelPos.z));
+    m_geometryClipmap->render();
+
+    //draw our grass
+//    m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
 }
+//----------------------------------------------------------------------------------------------------------------------
+void OpenGLWidget::renderRefractions(){
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
+    glViewport(0, 0, 512, 512);
 
+    glm::mat4 rotx;
+    glm::mat4 roty;
+
+    rotx = glm::rotate(rotx, m_spinXFace, glm::vec3(1.0, 0.0, 0.0));
+    roty = glm::rotate(roty, m_spinYFace, glm::vec3(0.0, 1.0, 0.0));
+
+    m_mouseGlobalTX = rotx*roty;
+    m_mouseGlobalTX[3][1] = m_modelPos.y;
+
+    glm::mat4 modelMatrix = glm::mat4(1.0);
+    modelMatrix = m_mouseGlobalTX;
+    modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0, 3.0, 0.0));
+    modelMatrix = glm::scale(modelMatrix , glm::vec3(100.0, 100.0, 100.0));
+    m_skybox->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
+    m_skybox->render();
+
+    glm::mat4 mesoModelMat = m_mouseGlobalTX;
+
+    if(m_moved){
+        glm::vec3 trans = (m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
+        trans/=(2*512*32);
+        trans/= 32.0;
+        m_marchingCubesObject->setSamplePos(0.505-(0.0625/2.0) - trans.x,0.505-(0.0625/2.0) + trans.z);
+        m_marchingCubesObject->vMarchingCubes();
+        m_moved = false;
+    }
+    mesoModelMat = glm::scale(mesoModelMat,glm::vec3(1.0,4.0,1.0));
+    mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5 - m_mesoCenter.first,0.0,-0.5 - m_mesoCenter.second));
+
+    //draw our meso terrain
+    m_marchingCubesObject->draw(mesoModelMat, m_cam);
+
+    glm::mat4 macroModelMat = m_mouseGlobalTX;
+
+    //now draw toby's geomtry clipmap
+    macroModelMat = glm::scale(macroModelMat, glm::vec3(-1.0, 1.0, 1.0));
+    macroModelMat = glm::rotate(macroModelMat, pi, glm::vec3(0.0,1.0,0.0));
+
+    m_geometryClipmap->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
+    m_geometryClipmap->loadMatricesToShader(macroModelMat, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
+    m_geometryClipmap->setWireframe(false);
+    m_geometryClipmap->setCutout(true);
+    //m_geometryClipmap->setCutOutPos(glm::vec2(-m_modelPos.x,m_modelPos.z));
+    m_geometryClipmap->render();
+
+    //draw our grass
+    m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
+
+}
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::resizeGL(const int _w, const int _h){
     // set the viewport for openGL
@@ -217,10 +268,17 @@ void OpenGLWidget::timerEvent(QTimerEvent *){
     }
     updateGL();
 }
-
 //----------------------------------------------------------------------------------------------------------------------
-void OpenGLWidget::paintGL(){
+void OpenGLWidget::paintGL(){   
+    glBindFramebuffer(GL_FRAMEBUFFER, m_reflectFB);
+    renderReflections();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
+    glBindFramebuffer(GL_FRAMEBUFFER, m_refractFB);
+    renderRefractions();
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
+
+    glViewport(0, 0, width()*devicePixelRatio(), height()*devicePixelRatio());
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     //Initialise the model matrix
 
@@ -231,40 +289,14 @@ void OpenGLWidget::paintGL(){
     roty = glm::rotate(roty, m_spinYFace, glm::vec3(0.0, 1.0, 0.0));
 
     m_mouseGlobalTX = rotx*roty;
-    m_mouseGlobalTX = glm::translate(m_mouseGlobalTX, glm::vec3(0.0, m_modelPos.y, 0.0));
-
+    m_mouseGlobalTX[3][1] = m_modelPos.y;
 
     glm::mat4 mesoModelMat = m_mouseGlobalTX;
-
-
-//    bool reGenMesoTerrain = false;
-//    if(m_modelPos.x<m_mesoCenter.first-0.05){
-//        m_mesoCenter.first-=0.1;
-//        reGenMesoTerrain = true;
-//    }
-//    if(m_modelPos.x>m_mesoCenter.first+0.05){
-//        m_mesoCenter.first+=0.1;
-//        reGenMesoTerrain = true;
-//    }
-//    if(m_modelPos.z<m_mesoCenter.second-0.05){
-//        m_mesoCenter.second-=0.1;
-//        reGenMesoTerrain = true;
-//    }
-//    if(m_modelPos.z>m_mesoCenter.second+0.05){
-//        m_mesoCenter.second+=0.1;
-//        reGenMesoTerrain = true;
-//    }
-//    if(reGenMesoTerrain){
-//        m_marchingCubesObject->setSamplePos(0.4375 - ((float)m_mesoCenter.first * 0.125),0.4375 - ((float)m_mesoCenter.second * 0.125));
-//        m_marchingCubesObject->vMarchingCubes();
-//    }
-
 
     if(m_moved){
         glm::vec3 trans = (m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
         trans/=(2*512*32);
         trans/= 32.0;
-    //    std::cout<<"trans "<<trans.x<<","<<trans.z<<std::endl;
         m_marchingCubesObject->setSamplePos(0.505-(0.0625/2.0) - trans.x,0.505-(0.0625/2.0) + trans.z);
         m_marchingCubesObject->vMarchingCubes();
         m_moved = false;
@@ -272,16 +304,16 @@ void OpenGLWidget::paintGL(){
     mesoModelMat = glm::scale(mesoModelMat,glm::vec3(1.0,4.0,1.0));
     mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5 - m_mesoCenter.first,0.0,-0.5 - m_mesoCenter.second));
 
-
-//    //draw out meso terrain
+    //draw our meso terrain
     m_marchingCubesObject->draw(mesoModelMat, m_cam);
 
     glm::mat4 macroModelMat = m_mouseGlobalTX;
+
     //now draw toby's geomtry clipmap
+//    macroModelMat = glm::translate(macroModelMat, glm::vec3(0.0, -1.5, 0.0));
     macroModelMat = glm::scale(macroModelMat, glm::vec3(-1.0, 1.0, 1.0));
     macroModelMat = glm::rotate(macroModelMat, pi, glm::vec3(0.0,1.0,0.0));
-    glm::vec3 camPos = m_modelPos*glm::vec3(10000.0,10000.0,-10000.0);
-//    std::cout<<"camPos "<<camPos.x<<","<<camPos.y<<","<<camPos.z<<std::endl;
+
     m_geometryClipmap->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
     m_geometryClipmap->loadMatricesToShader(macroModelMat, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
     m_geometryClipmap->setWireframe(false);
@@ -291,17 +323,20 @@ void OpenGLWidget::paintGL(){
 
     //draw our grass
     m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
-    glEnable(GL_BLEND);
-    // Draw toby's water plane
-    glBlendFunc(GL_ONE, GL_ONE);
-    m_modelMatrix = m_mouseGlobalTX;
-    m_modelMatrix = glm::translate(m_modelMatrix, glm::vec3(0.0, 1.5, 0.0));
-    m_modelMatrix = glm::scale(m_modelMatrix, glm::vec3(80.0, 80.0, 80.0));
-    m_water->loadMatricesToShader(m_modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
-//    m_water->render();
-    glDisable(GL_BLEND);
 
+    glm::mat4 modelMatrix = glm::mat4(1.0);
+    modelMatrix = m_mouseGlobalTX;
+    modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0, 3.0, 0.0));
+    modelMatrix = glm::scale(modelMatrix , glm::vec3(100.0, 100.0, 100.0));
+    m_skybox->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
+    m_skybox->render();
 
+    modelMatrix = glm::mat4(1.0);
+    modelMatrix = m_mouseGlobalTX;
+    modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0, 1.5, 0.0));
+    modelMatrix = glm::scale(modelMatrix, glm::vec3(8.0, 1.0, 8.0));
+    m_water->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
+    m_water->render();
 }
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::mouseMoveEvent (QMouseEvent * _event)
@@ -403,6 +438,18 @@ void OpenGLWidget::mouseReleaseEvent ( QMouseEvent * _event )
     m_translate=false;
   }
 }
+//----------------------------------------------------------------------------------------------------------------------
+void OpenGLWidget::wheelEvent(QWheelEvent *_event){
+    if(_event->delta() > 0)
+    {
+        m_modelPos.y+=ZOOM;
+    }
+    else if(_event->delta() <0 )
+    {
+        m_modelPos.y-=ZOOM;
+    }
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::keyPressEvent(QKeyEvent *_event){
     glm::mat4 rotx;
@@ -509,8 +556,5 @@ void OpenGLWidget::loadMatricesToShader(ShaderProgram *_currentShader){
     glUniformMatrix4fv(m_projLoc, 1, false, glm::value_ptr(projectionMatrix));
     glUniformMatrix3fv(m_normalLoc, 1, false, glm::value_ptr(m_normalMatrix));
     glUniformMatrix4fv(m_modelViewProjectionLoc, 1, false, glm::value_ptr(m_modelViewProjectionMatrix));
-
-
-
 }
 

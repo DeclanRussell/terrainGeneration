@@ -25,6 +25,11 @@ terrainGen::terrainGen(int _sizeX, int _sizeY)
     m_progressBarSet = false;
 
 }
+
+terrainGen::~terrainGen(){
+    delete m_terrainData;
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 void terrainGen::createTerrainFromNoise(){
     //make sure our data structure is clear
