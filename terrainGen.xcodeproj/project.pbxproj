@@ -1,0 +1,2514 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+		D7BA7D76DAB5DD13389D6332 = {
+			buildActionMask = 2147483647;
+			files = (
+				);
+			generatedFileNames = (
+				);
+			isa = PBXShellScriptBuildPhase;
+			name = "Qt Qmake";
+			neededFileNames = (
+				);
+			shellPath = "/bin/sh";
+			shellScript = "make\ -C\ /Users/Toby/Documents/University/Year_3/Assignments/terrainGeneration\ -f\ \'terrainGen.xcodeproj/qt_makeqmake.mak\'";
+		};
+		7EC3C68A81EFFF79B6CA22AC = {
+			isa = PBXFileReference;
+			name = "main.cpp";
+			path = "src/main.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		FD1638E377D97C82BDB438FB = {
+			fileRef = "7EC3C68A81EFFF79B6CA22AC";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		585CFECF0CE15AC75BE3038E = {
+			isa = PBXFileReference;
+			name = "mainwindow.cpp";
+			path = "src/mainwindow.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		72224D8B8032363B160DB2F4 = {
+			fileRef = "585CFECF0CE15AC75BE3038E";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		71EC10E9E8DEF25623533B36 = {
+			isa = PBXFileReference;
+			name = "Camera.cpp";
+			path = "src/Camera.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		AF9AB281CD47FF422A01DACD = {
+			fileRef = "71EC10E9E8DEF25623533B36";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		BD335D9EE1E6EF55E0ADDDBB = {
+			isa = PBXFileReference;
+			name = "ShaderUtils.cpp";
+			path = "src/ShaderUtils.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		AE56D81941D642106D9934BE = {
+			fileRef = "BD335D9EE1E6EF55E0ADDDBB";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		826B7EC7532F6AC74516E7F0 = {
+			isa = PBXFileReference;
+			name = "TextureUtils.cpp";
+			path = "src/TextureUtils.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		95D7C62E8D311FCA0963510F = {
+			fileRef = "826B7EC7532F6AC74516E7F0";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		1BB853488F467C61F331F702 = {
+			isa = PBXFileReference;
+			name = "ShaderProgram.cpp";
+			path = "src/ShaderProgram.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		20D22E6A3902B1EB4D4BC56D = {
+			fileRef = "1BB853488F467C61F331F702";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		75E4F0C3A47BAAD187EF7B7A = {
+			isa = PBXFileReference;
+			name = "Texture.cpp";
+			path = "src/Texture.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		EA38C410667329AD1F5D67EF = {
+			fileRef = "75E4F0C3A47BAAD187EF7B7A";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		7CE6CB6286A30D8525B0215E = {
+			isa = PBXFileReference;
+			name = "OpenGLWidget.cpp";
+			path = "src/OpenGLWidget.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		EC80FDC59C940B70774802F9 = {
+			fileRef = "7CE6CB6286A30D8525B0215E";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		C44D3DA19A412CDC120489DA = {
+			isa = PBXFileReference;
+			name = "Shader.cpp";
+			path = "src/Shader.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		DBBF07B0ED610C1DDDBA9A7D = {
+			fileRef = "C44D3DA19A412CDC120489DA";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		3E128FBEE267263828B2D63B = {
+			isa = PBXFileReference;
+			name = "marchingcubes.cpp";
+			path = "src/marchingcubes.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		FA899CEA0BC3739C9BF0DC55 = {
+			fileRef = "3E128FBEE267263828B2D63B";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		C55B7032B81EDD210DCC0E89 = {
+			isa = PBXFileReference;
+			name = "perlinnoise.cpp";
+			path = "src/perlinnoise.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		7EAB8A425EDF554D95F3B970 = {
+			fileRef = "C55B7032B81EDD210DCC0E89";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		EFAD9059E20D39B30561DB68 = {
+			isa = PBXFileReference;
+			name = "terraingen.cpp";
+			path = "src/terraingen.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		8FD67F2D0754EC2720A41D2C = {
+			fileRef = "EFAD9059E20D39B30561DB68";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		65787DAC82F496974DD85F4B = {
+			isa = PBXFileReference;
+			name = "Grass.cpp";
+			path = "src/Grass.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		F0C9426A10EE537C3AC6EB0E = {
+			fileRef = "65787DAC82F496974DD85F4B";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		BE67D58EEB91B8F198D27A6B = {
+			isa = PBXFileReference;
+			name = "Trees.cpp";
+			path = "src/Trees.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		B1B06B701B83CB21CB83EF31 = {
+			fileRef = "BE67D58EEB91B8F198D27A6B";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		35FB253B1D737A1E429F5BB4 = {
+			isa = PBXFileReference;
+			name = "Model.cpp";
+			path = "src/Model.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		C11BEDB64556096077F1BA37 = {
+			fileRef = "35FB253B1D737A1E429F5BB4";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		7D3EB94E36A77478A96F914D = {
+			isa = PBXFileReference;
+			name = "grasshair.cpp";
+			path = "src/grasshair.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		EA52C87507AD71E3B2B2F9ED = {
+			fileRef = "7D3EB94E36A77478A96F914D";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		9748B68FFF58FACB201EA5CD = {
+			isa = PBXFileReference;
+			name = "GeometryClipmap.cpp";
+			path = "src/GeometryClipmap.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		39FDD339E2894B23B883620C = {
+			fileRef = "9748B68FFF58FACB201EA5CD";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		6CC1AFAACB0C0406E2D0025A = {
+			isa = PBXFileReference;
+			name = "Water.cpp";
+			path = "src/Water.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		731BCDC205790E12FF764C0D = {
+			fileRef = "6CC1AFAACB0C0406E2D0025A";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		72CAC4335D328A75CEA7A604 = {
+			isa = PBXFileReference;
+			name = "noiseutils.cpp";
+			path = "src/noiseutils.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		C30501F8CB2C051F19F91F18 = {
+			fileRef = "72CAC4335D328A75CEA7A604";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		246F61388AE3771697E78214 = {
+			isa = PBXFileReference;
+			name = "Bmp.cpp";
+			path = "src/Bmp.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		A5CF0E451C49BC1D0C7ECA27 = {
+			fileRef = "246F61388AE3771697E78214";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		E47AC60BA7328A17B8A143D4 = {
+			isa = PBXFileReference;
+			name = "arrayoperations.cpp";
+			path = "accidentalnoise/src/arrayoperations.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		EA8FC45BF45EF996551EAEFA = {
+			fileRef = "E47AC60BA7328A17B8A143D4";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		18013DC37486F4BF12459568 = {
+			isa = PBXFileReference;
+			name = "cellulargen.cpp";
+			path = "accidentalnoise/src/cellulargen.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		2997205541600674017BDD8D = {
+			fileRef = "18013DC37486F4BF12459568";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		A18338D0511065E505E7DA57 = {
+			isa = PBXFileReference;
+			name = "hsv.cpp";
+			path = "accidentalnoise/src/hsv.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		4B67B89D82537CED4A53F06E = {
+			fileRef = "A18338D0511065E505E7DA57";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		206523CEB59E4E17A9D11604 = {
+			isa = PBXFileReference;
+			name = "implicitautocorrect.cpp";
+			path = "accidentalnoise/src/implicitautocorrect.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		93287689FA37F09EF918CFB7 = {
+			fileRef = "206523CEB59E4E17A9D11604";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		31F6AD06FBA636B524FDC009 = {
+			isa = PBXFileReference;
+			name = "implicitbasisfunction.cpp";
+			path = "accidentalnoise/src/implicitbasisfunction.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		EA5644D5D28FAC02D29E56AA = {
+			fileRef = "31F6AD06FBA636B524FDC009";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		7687CFBE7C244442F9332962 = {
+			isa = PBXFileReference;
+			name = "implicitbias.cpp";
+			path = "accidentalnoise/src/implicitbias.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		CA2C528B6A85759BCD23D6F4 = {
+			fileRef = "7687CFBE7C244442F9332962";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		2EF5A623C126335363C117D2 = {
+			isa = PBXFileReference;
+			name = "implicitblend.cpp";
+			path = "accidentalnoise/src/implicitblend.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		3D0EC52E7F57B0F92F22651D = {
+			fileRef = "2EF5A623C126335363C117D2";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		E55CE9F2C9A92A6C01B7B0CA = {
+			isa = PBXFileReference;
+			name = "implicitbrightcontrast.cpp";
+			path = "accidentalnoise/src/implicitbrightcontrast.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		CAEF60C93872B973467CB856 = {
+			fileRef = "E55CE9F2C9A92A6C01B7B0CA";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		2D64F1116828372C24D88FC3 = {
+			isa = PBXFileReference;
+			name = "implicitcache.cpp";
+			path = "accidentalnoise/src/implicitcache.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		6E8215B88FF24E57859C252E = {
+			fileRef = "2D64F1116828372C24D88FC3";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		EE0DA6A34BAF7F311F4314D6 = {
+			isa = PBXFileReference;
+			name = "implicitcellular.cpp";
+			path = "accidentalnoise/src/implicitcellular.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		127D7AC3D3AB613A67FC8350 = {
+			fileRef = "EE0DA6A34BAF7F311F4314D6";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		566577341B73C0A69045732A = {
+			isa = PBXFileReference;
+			name = "implicitclamp.cpp";
+			path = "accidentalnoise/src/implicitclamp.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		B05DEC9052A3A0364D8C1AB2 = {
+			fileRef = "566577341B73C0A69045732A";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		6238EAF96BB5E65D7FEA4F50 = {
+			isa = PBXFileReference;
+			name = "implicitcombiner.cpp";
+			path = "accidentalnoise/src/implicitcombiner.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		A646F1C23983CFF22985ACD4 = {
+			fileRef = "6238EAF96BB5E65D7FEA4F50";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		9715368331B7CC828B0C4B4C = {
+			isa = PBXFileReference;
+			name = "implicitconstant.cpp";
+			path = "accidentalnoise/src/implicitconstant.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		B9733564DC5C23A63729E5ED = {
+			fileRef = "9715368331B7CC828B0C4B4C";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		97BBD13FD782ECD05AE9AAFA = {
+			isa = PBXFileReference;
+			name = "implicitcos.cpp";
+			path = "accidentalnoise/src/implicitcos.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		F3705E344427175E4FAE85EC = {
+			fileRef = "97BBD13FD782ECD05AE9AAFA";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		51BA6B0C4AB40FBEBE106931 = {
+			isa = PBXFileReference;
+			name = "implicitcurve.cpp";
+			path = "accidentalnoise/src/implicitcurve.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		6D5282ABC305D1A8427F764F = {
+			fileRef = "51BA6B0C4AB40FBEBE106931";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		2E15F11F13EB448FC1455110 = {
+			isa = PBXFileReference;
+			name = "implicitextractrgbachannel.cpp";
+			path = "accidentalnoise/src/implicitextractrgbachannel.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		B05460749571CD2993739B99 = {
+			fileRef = "2E15F11F13EB448FC1455110";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		53E7C8EC2F817C8DCED3A523 = {
+			isa = PBXFileReference;
+			name = "implicitfloor.cpp";
+			path = "accidentalnoise/src/implicitfloor.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		870FF30EA48BE8B4C8F738DD = {
+			fileRef = "53E7C8EC2F817C8DCED3A523";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		22E8C4351D2BEE92270653CB = {
+			isa = PBXFileReference;
+			name = "implicitfractal.cpp";
+			path = "accidentalnoise/src/implicitfractal.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		B522132F22E3E0393622ED09 = {
+			fileRef = "22E8C4351D2BEE92270653CB";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		EDCDA3E72E321F7566226145 = {
+			isa = PBXFileReference;
+			name = "implicitfunctiongradient.cpp";
+			path = "accidentalnoise/src/implicitfunctiongradient.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		1C10F66EEB4DAA906ED70F55 = {
+			fileRef = "EDCDA3E72E321F7566226145";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		6230E67A86548485312F087A = {
+			isa = PBXFileReference;
+			name = "implicitgain.cpp";
+			path = "accidentalnoise/src/implicitgain.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		36BD42D8842D9BECB4E753B8 = {
+			fileRef = "6230E67A86548485312F087A";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		938588E83D1627100CB766AE = {
+			isa = PBXFileReference;
+			name = "implicitgradient.cpp";
+			path = "accidentalnoise/src/implicitgradient.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		6977DDA529CF0DCC4280CD1B = {
+			fileRef = "938588E83D1627100CB766AE";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		926D69A9CDAC717A7856A50C = {
+			isa = PBXFileReference;
+			name = "implicitmagnitude.cpp";
+			path = "accidentalnoise/src/implicitmagnitude.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		7164C0B814F04A657977CF80 = {
+			fileRef = "926D69A9CDAC717A7856A50C";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		0D73EDA5E1CD4BBDCE6A5DBC = {
+			isa = PBXFileReference;
+			name = "implicitmodulebase.cpp";
+			path = "accidentalnoise/src/implicitmodulebase.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		CCAEEC566CD3343A82807920 = {
+			fileRef = "0D73EDA5E1CD4BBDCE6A5DBC";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		C44727D755A7AA4082A9773B = {
+			isa = PBXFileReference;
+			name = "implicitnormalizecoords.cpp";
+			path = "accidentalnoise/src/implicitnormalizecoords.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		E7036FB87945873485229EA6 = {
+			fileRef = "C44727D755A7AA4082A9773B";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		260B36748FC9A5C2C4417751 = {
+			isa = PBXFileReference;
+			name = "implicitpow.cpp";
+			path = "accidentalnoise/src/implicitpow.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		32FD8D402F9CE55C44E1AFA1 = {
+			fileRef = "260B36748FC9A5C2C4417751";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		8DD3AC1F939271B87F06B661 = {
+			isa = PBXFileReference;
+			name = "implicitrgbadotproduct.cpp";
+			path = "accidentalnoise/src/implicitrgbadotproduct.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		4061051D650D7842DBAF0CFB = {
+			fileRef = "8DD3AC1F939271B87F06B661";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		A212C671335F2E56E9C88FFE = {
+			isa = PBXFileReference;
+			name = "implicitrotatedomain.cpp";
+			path = "accidentalnoise/src/implicitrotatedomain.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		A2FE3EC926429359E91EF4B9 = {
+			fileRef = "A212C671335F2E56E9C88FFE";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		646C176A2D2B77454E0B8C8F = {
+			isa = PBXFileReference;
+			name = "implicitsawtooth.cpp";
+			path = "accidentalnoise/src/implicitsawtooth.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		F783C741D7DE06FC88C06E92 = {
+			fileRef = "646C176A2D2B77454E0B8C8F";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		9398DFF6BD1C0A0CCBB43A35 = {
+			isa = PBXFileReference;
+			name = "implicitscaledomain.cpp";
+			path = "accidentalnoise/src/implicitscaledomain.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		BE25A79D29EAC0DEA200C029 = {
+			fileRef = "9398DFF6BD1C0A0CCBB43A35";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		F2A4E4B9AFE624B72C036FDD = {
+			isa = PBXFileReference;
+			name = "implicitscaleoffset.cpp";
+			path = "accidentalnoise/src/implicitscaleoffset.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		D8A12F96C333EEF8D024201A = {
+			fileRef = "F2A4E4B9AFE624B72C036FDD";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		9480613C3F618E6136AE7C89 = {
+			isa = PBXFileReference;
+			name = "implicitselect.cpp";
+			path = "accidentalnoise/src/implicitselect.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		F189C66934F3AA9EFA3DC206 = {
+			fileRef = "9480613C3F618E6136AE7C89";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		E8CC94B6D34673DA4ACD4944 = {
+			isa = PBXFileReference;
+			name = "implicitsin.cpp";
+			path = "accidentalnoise/src/implicitsin.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		267D4F4EA785A5643AB27121 = {
+			fileRef = "E8CC94B6D34673DA4ACD4944";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		9489B8405AB71BB53E2246D8 = {
+			isa = PBXFileReference;
+			name = "implicitsphere.cpp";
+			path = "accidentalnoise/src/implicitsphere.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		D3420FEFF2EA4C96797E9AFF = {
+			fileRef = "9489B8405AB71BB53E2246D8";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		B0421AB585E2E2E8755B005F = {
+			isa = PBXFileReference;
+			name = "implicittiers.cpp";
+			path = "accidentalnoise/src/implicittiers.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		B85C72FF6150E954D999CECD = {
+			fileRef = "B0421AB585E2E2E8755B005F";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		4008DF6DFCF5259B16D825E1 = {
+			isa = PBXFileReference;
+			name = "implicittranslatedomain.cpp";
+			path = "accidentalnoise/src/implicittranslatedomain.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		7E67E399145E05F182C00100 = {
+			fileRef = "4008DF6DFCF5259B16D825E1";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		B142A16B1337B9DB6DE4B162 = {
+			isa = PBXFileReference;
+			name = "implicittriangle.cpp";
+			path = "accidentalnoise/src/implicittriangle.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		B58C3FA8271BC59ADE324B60 = {
+			fileRef = "B142A16B1337B9DB6DE4B162";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		C2CB2626319910EDC9F0F7BD = {
+			isa = PBXFileReference;
+			name = "mapping.cpp";
+			path = "accidentalnoise/src/mapping.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		92241CCB0C75D26BC9A34B4C = {
+			fileRef = "C2CB2626319910EDC9F0F7BD";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		D7B89F89716610EBF50DA0D5 = {
+			isa = PBXFileReference;
+			name = "noise_gen.cpp";
+			path = "accidentalnoise/src/noise_gen.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		96266FE94F7EF922FC188890 = {
+			fileRef = "D7B89F89716610EBF50DA0D5";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		6FA5CE3AE879D8F47320786D = {
+			isa = PBXFileReference;
+			name = "noise_lut.cpp";
+			path = "accidentalnoise/src/noise_lut.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		D8EAE3C30C2DEA1DFE93CA45 = {
+			fileRef = "6FA5CE3AE879D8F47320786D";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		628C99CB03F488D1DD352ABC = {
+			isa = PBXFileReference;
+			name = "rasterization.cpp";
+			path = "accidentalnoise/src/rasterization.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		449DF0369E236BB5D2D955F1 = {
+			fileRef = "628C99CB03F488D1DD352ABC";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		E124969E0D6B76277EB3EDD1 = {
+			isa = PBXFileReference;
+			name = "rgbablend.cpp";
+			path = "accidentalnoise/src/rgbablend.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		EF1B843DEBAFADD6C9F895C3 = {
+			fileRef = "E124969E0D6B76277EB3EDD1";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		0F830F6B972E770F1B6B0694 = {
+			isa = PBXFileReference;
+			name = "rgbablendops.cpp";
+			path = "accidentalnoise/src/rgbablendops.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		0B3E6CAC611625E7DCCCB747 = {
+			fileRef = "0F830F6B972E770F1B6B0694";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		5A03DD2CDE2E1ADF291DB094 = {
+			isa = PBXFileReference;
+			name = "rgbacolorops.cpp";
+			path = "accidentalnoise/src/rgbacolorops.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		2D6B8C718CADBC22CDE3E14B = {
+			fileRef = "5A03DD2CDE2E1ADF291DB094";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		CE64C3723A779949470EA107 = {
+			isa = PBXFileReference;
+			name = "rgbacomposechannels.cpp";
+			path = "accidentalnoise/src/rgbacomposechannels.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		3CE7473431CFAAB5B5FF45FD = {
+			fileRef = "CE64C3723A779949470EA107";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		3859DDB9B0D8097BB6428F8F = {
+			isa = PBXFileReference;
+			name = "rgbaconstant.cpp";
+			path = "accidentalnoise/src/rgbaconstant.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		9226A8F8007D73350FEDB410 = {
+			fileRef = "3859DDB9B0D8097BB6428F8F";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		7E0226B0D745D137CDDE0B24 = {
+			isa = PBXFileReference;
+			name = "rgbacurve.cpp";
+			path = "accidentalnoise/src/rgbacurve.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		993BD225D3CC7A6A18219152 = {
+			fileRef = "7E0226B0D745D137CDDE0B24";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		E0E1BA37E7E41068EEA0C421 = {
+			isa = PBXFileReference;
+			name = "rgbahsvtorgba.cpp";
+			path = "accidentalnoise/src/rgbahsvtorgba.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		10D95E9368F2A91A57001420 = {
+			fileRef = "E0E1BA37E7E41068EEA0C421";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		92BB963C8DDB1820138EA6D0 = {
+			isa = PBXFileReference;
+			name = "rgbaimplicitgrayscale.cpp";
+			path = "accidentalnoise/src/rgbaimplicitgrayscale.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		CD0BAA8D033C2705EA1F3641 = {
+			fileRef = "92BB963C8DDB1820138EA6D0";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		8705B1BBEE26F273975630CB = {
+			isa = PBXFileReference;
+			name = "rgbanormalize.cpp";
+			path = "accidentalnoise/src/rgbanormalize.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		81DB9062D17E48617B9D3BFC = {
+			fileRef = "8705B1BBEE26F273975630CB";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		E05B62D6058A968C40406936 = {
+			isa = PBXFileReference;
+			name = "rgbargbatohsv.cpp";
+			path = "accidentalnoise/src/rgbargbatohsv.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		9B820D5AEAD7BC92FFD748C8 = {
+			fileRef = "E05B62D6058A968C40406936";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		CC72337BC455B24AD2B011CF = {
+			isa = PBXFileReference;
+			name = "rgbarotatecolor.cpp";
+			path = "accidentalnoise/src/rgbarotatecolor.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		963EBC804A5768053195DF0B = {
+			fileRef = "CC72337BC455B24AD2B011CF";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		6D5BD4C537448DD7D9D7EE56 = {
+			isa = PBXFileReference;
+			name = "rgbaselect.cpp";
+			path = "accidentalnoise/src/rgbaselect.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		3D8C68F7F3BA7A7B06C53CB8 = {
+			fileRef = "6D5BD4C537448DD7D9D7EE56";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		76B050FA7131DB940B00B7FB = {
+			isa = PBXFileReference;
+			name = "moc_mainwindow.cpp";
+			path = "moc/moc_mainwindow.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		A5D1F72F053F5D3FC8AADD02 = {
+			fileRef = "76B050FA7131DB940B00B7FB";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		21EBD2526E7E7CAC9A4C0880 = {
+			isa = PBXFileReference;
+			name = "moc_OpenGLWidget.cpp";
+			path = "moc/moc_OpenGLWidget.cpp";
+			refType = 4;
+			lastKnownFileType = "sourcecode.cpp.cpp";
+		};
+		B4ACA51F040A4C6AE059BB6D = {
+			fileRef = "21EBD2526E7E7CAC9A4C0880";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		4B1F4F9ED72E56B25CB57240 = {
+			isa = PBXFileReference;
+			name = "ui_mainwindow.h";
+			path = "ui/ui_mainwindow.h";
+			refType = 4;
+		};
+		C2A0490CB468462912D05EDF = {
+			isa = PBXFileReference;
+			name = "mainwindow.h";
+			path = "include/mainwindow.h";
+			refType = 4;
+		};
+		120702DEB4C716C04901F98B = {
+			isa = PBXFileReference;
+			name = "Camera.h";
+			path = "include/Camera.h";
+			refType = 4;
+		};
+		12DF3948ABAB45456D8F9975 = {
+			isa = PBXFileReference;
+			name = "ShaderUtils.h";
+			path = "include/ShaderUtils.h";
+			refType = 4;
+		};
+		4974F235324B2AA5E7C03C7C = {
+			isa = PBXFileReference;
+			name = "TextureUtils.h";
+			path = "include/TextureUtils.h";
+			refType = 4;
+		};
+		270A778F2E064EEE105785A7 = {
+			isa = PBXFileReference;
+			name = "ShaderProgram.h";
+			path = "include/ShaderProgram.h";
+			refType = 4;
+		};
+		3DFC72550F7EEF7F249AFC00 = {
+			isa = PBXFileReference;
+			name = "Texture.h";
+			path = "include/Texture.h";
+			refType = 4;
+		};
+		84365E4C94BFDEFDEC771184 = {
+			isa = PBXFileReference;
+			name = "OpenGLWidget.h";
+			path = "include/OpenGLWidget.h";
+			refType = 4;
+		};
+		C5EAA939B5347D5E5C03EB57 = {
+			isa = PBXFileReference;
+			name = "Shader.h";
+			path = "include/Shader.h";
+			refType = 4;
+		};
+		87F391ACEE1985F7CA076C55 = {
+			isa = PBXFileReference;
+			name = "marchingcubes.h";
+			path = "include/marchingcubes.h";
+			refType = 4;
+		};
+		FFF9A10399FB09262EEC31DC = {
+			isa = PBXFileReference;
+			name = "perlinnoise.h";
+			path = "include/perlinnoise.h";
+			refType = 4;
+		};
+		083A89A683396A563AD1F909 = {
+			isa = PBXFileReference;
+			name = "terraingen.h";
+			path = "include/terraingen.h";
+			refType = 4;
+		};
+		08E08C07E75E2886124C3227 = {
+			isa = PBXFileReference;
+			name = "Trees.h";
+			path = "include/Trees.h";
+			refType = 4;
+		};
+		A0B24AF898363E6C06416674 = {
+			isa = PBXFileReference;
+			name = "Grass.h";
+			path = "include/Grass.h";
+			refType = 4;
+		};
+		2CE46FC5C9673C2BA77323F4 = {
+			isa = PBXFileReference;
+			name = "Model.h";
+			path = "include/Model.h";
+			refType = 4;
+		};
+		C7D320E81EA446B91116B5A6 = {
+			isa = PBXFileReference;
+			name = "grasshair.h";
+			path = "include/grasshair.h";
+			refType = 4;
+		};
+		44FE3AFC445FF413D479E4B9 = {
+			isa = PBXFileReference;
+			name = "GeometryClipmap.h";
+			path = "include/GeometryClipmap.h";
+			refType = 4;
+		};
+		3769356E27D51FFB050BC1D1 = {
+			isa = PBXFileReference;
+			name = "Water.h";
+			path = "include/Water.h";
+			refType = 4;
+		};
+		8E857E028281433971DCBBCA = {
+			isa = PBXFileReference;
+			name = "noiseutils.h";
+			path = "include/noiseutils.h";
+			refType = 4;
+		};
+		33E4E929A8B0D20A9F434A8A = {
+			isa = PBXFileReference;
+			name = "Bmp.h";
+			path = "include/Bmp.h";
+			refType = 4;
+		};
+		1881299ED64D0775509A8070 = {
+			isa = PBXFileReference;
+			name = "anl.h";
+			path = "accidentalnoise/include/anl.h";
+			refType = 4;
+		};
+		F06AC1ED89C1AA93665F0C00 = {
+			isa = PBXFileReference;
+			name = "arrayoperations.h";
+			path = "accidentalnoise/include/arrayoperations.h";
+			refType = 4;
+		};
+		8576EF2C125DBA5EE839816E = {
+			isa = PBXFileReference;
+			name = "cellulargen.h";
+			path = "accidentalnoise/include/cellulargen.h";
+			refType = 4;
+		};
+		2BBDDF06E18DB02162597672 = {
+			isa = PBXFileReference;
+			name = "hsv.h";
+			path = "accidentalnoise/include/hsv.h";
+			refType = 4;
+		};
+		E85A55421D950C8F45E30232 = {
+			isa = PBXFileReference;
+			name = "implicitautocorrect.h";
+			path = "accidentalnoise/include/implicitautocorrect.h";
+			refType = 4;
+		};
+		7BB4ADB0BD4E2DD8027305C3 = {
+			isa = PBXFileReference;
+			name = "implicitbasisfunction.h";
+			path = "accidentalnoise/include/implicitbasisfunction.h";
+			refType = 4;
+		};
+		77E8DBF43F0F22FB1BFE88F1 = {
+			isa = PBXFileReference;
+			name = "implicitbias.h";
+			path = "accidentalnoise/include/implicitbias.h";
+			refType = 4;
+		};
+		6E8D7D048E324113AD83FC6E = {
+			isa = PBXFileReference;
+			name = "implicitblend.h";
+			path = "accidentalnoise/include/implicitblend.h";
+			refType = 4;
+		};
+		6371E598FC335C2C3633566A = {
+			isa = PBXFileReference;
+			name = "implicitbrightcontrast.h";
+			path = "accidentalnoise/include/implicitbrightcontrast.h";
+			refType = 4;
+		};
+		FD40542252BBA086AF566BAF = {
+			isa = PBXFileReference;
+			name = "implicitcache.h";
+			path = "accidentalnoise/include/implicitcache.h";
+			refType = 4;
+		};
+		073E87EA8237024FB9E83249 = {
+			isa = PBXFileReference;
+			name = "implicitcellular.h";
+			path = "accidentalnoise/include/implicitcellular.h";
+			refType = 4;
+		};
+		C556C938CB28DE59E95488C8 = {
+			isa = PBXFileReference;
+			name = "implicitclamp.h";
+			path = "accidentalnoise/include/implicitclamp.h";
+			refType = 4;
+		};
+		242D63572DEA80D4B7184A2C = {
+			isa = PBXFileReference;
+			name = "implicitcombiner.h";
+			path = "accidentalnoise/include/implicitcombiner.h";
+			refType = 4;
+		};
+		D98E2191F9E34AA70AEAF261 = {
+			isa = PBXFileReference;
+			name = "implicitconstant.h";
+			path = "accidentalnoise/include/implicitconstant.h";
+			refType = 4;
+		};
+		85531A915920D36518EE0548 = {
+			isa = PBXFileReference;
+			name = "implicitcos.h";
+			path = "accidentalnoise/include/implicitcos.h";
+			refType = 4;
+		};
+		E1A33518756A0BE54474166B = {
+			isa = PBXFileReference;
+			name = "implicitcurve.h";
+			path = "accidentalnoise/include/implicitcurve.h";
+			refType = 4;
+		};
+		648DCF91B720DD799F6B1BD2 = {
+			isa = PBXFileReference;
+			name = "implicitextractrgbachannel.h";
+			path = "accidentalnoise/include/implicitextractrgbachannel.h";
+			refType = 4;
+		};
+		8D8878E3E468518CCB7D2DA3 = {
+			isa = PBXFileReference;
+			name = "implicitfloor.h";
+			path = "accidentalnoise/include/implicitfloor.h";
+			refType = 4;
+		};
+		A6A867CE2A06941E6EEFF374 = {
+			isa = PBXFileReference;
+			name = "implicitfractal.h";
+			path = "accidentalnoise/include/implicitfractal.h";
+			refType = 4;
+		};
+		8D9F98C4AD0FA439B9DDAD5C = {
+			isa = PBXFileReference;
+			name = "implicitfunctiongradient.h";
+			path = "accidentalnoise/include/implicitfunctiongradient.h";
+			refType = 4;
+		};
+		4EF6355D674D1F672DDFA4FE = {
+			isa = PBXFileReference;
+			name = "implicitgain.h";
+			path = "accidentalnoise/include/implicitgain.h";
+			refType = 4;
+		};
+		4DC590A76EC308E33FE75D1C = {
+			isa = PBXFileReference;
+			name = "implicitgradient.h";
+			path = "accidentalnoise/include/implicitgradient.h";
+			refType = 4;
+		};
+		E5480FF436C67F5BED2BAE28 = {
+			isa = PBXFileReference;
+			name = "implicitmagnitude.h";
+			path = "accidentalnoise/include/implicitmagnitude.h";
+			refType = 4;
+		};
+		284C8A3AA67681D8764472BA = {
+			isa = PBXFileReference;
+			name = "implicitmodifier.h";
+			path = "accidentalnoise/include/implicitmodifier.h";
+			refType = 4;
+		};
+		133BB767864B1FA6C6D86C24 = {
+			isa = PBXFileReference;
+			name = "implicitmodulebase.h";
+			path = "accidentalnoise/include/implicitmodulebase.h";
+			refType = 4;
+		};
+		2E3BCE1F28AF25F8CB8C453F = {
+			isa = PBXFileReference;
+			name = "implicitnormalizecoords.h";
+			path = "accidentalnoise/include/implicitnormalizecoords.h";
+			refType = 4;
+		};
+		E5D466F4486676BB102286A0 = {
+			isa = PBXFileReference;
+			name = "implicitpow.h";
+			path = "accidentalnoise/include/implicitpow.h";
+			refType = 4;
+		};
+		FB32CABE843F9E3F3C0A76E8 = {
+			isa = PBXFileReference;
+			name = "implicitrgbadotproduct.h";
+			path = "accidentalnoise/include/implicitrgbadotproduct.h";
+			refType = 4;
+		};
+		D8C871887F1B8BFB58589DF2 = {
+			isa = PBXFileReference;
+			name = "implicitrotatedomain.h";
+			path = "accidentalnoise/include/implicitrotatedomain.h";
+			refType = 4;
+		};
+		FC014CE1E3989D139E9259C0 = {
+			isa = PBXFileReference;
+			name = "implicitsawtooth.h";
+			path = "accidentalnoise/include/implicitsawtooth.h";
+			refType = 4;
+		};
+		1201DCB025977AC7AF598BF6 = {
+			isa = PBXFileReference;
+			name = "implicitscaledomain.h";
+			path = "accidentalnoise/include/implicitscaledomain.h";
+			refType = 4;
+		};
+		2C1A111E3A6E787A01E27E77 = {
+			isa = PBXFileReference;
+			name = "implicitscaleoffset.h";
+			path = "accidentalnoise/include/implicitscaleoffset.h";
+			refType = 4;
+		};
+		5AAEE6D130831A4CAE8F9E2A = {
+			isa = PBXFileReference;
+			name = "implicitselect.h";
+			path = "accidentalnoise/include/implicitselect.h";
+			refType = 4;
+		};
+		DBAF1CC3BA38196C4844A9E7 = {
+			isa = PBXFileReference;
+			name = "implicitsin.h";
+			path = "accidentalnoise/include/implicitsin.h";
+			refType = 4;
+		};
+		B7AA412C0D2540864DD8D6CD = {
+			isa = PBXFileReference;
+			name = "implicitsphere.h";
+			path = "accidentalnoise/include/implicitsphere.h";
+			refType = 4;
+		};
+		F78B8039FC1B37C8D83CA4E1 = {
+			isa = PBXFileReference;
+			name = "implicittiers.h";
+			path = "accidentalnoise/include/implicittiers.h";
+			refType = 4;
+		};
+		1C5E6B88805297C0649EE122 = {
+			isa = PBXFileReference;
+			name = "implicittransform.h";
+			path = "accidentalnoise/include/implicittransform.h";
+			refType = 4;
+		};
+		00EBD9A1384FFAC78E387BD0 = {
+			isa = PBXFileReference;
+			name = "implicittranslatedomain.h";
+			path = "accidentalnoise/include/implicittranslatedomain.h";
+			refType = 4;
+		};
+		F951D9C2B8D5DF1CB8E85870 = {
+			isa = PBXFileReference;
+			name = "implicittriangle.h";
+			path = "accidentalnoise/include/implicittriangle.h";
+			refType = 4;
+		};
+		383B6ADD7133AD63B1C25CAD = {
+			isa = PBXFileReference;
+			name = "mapping.h";
+			path = "accidentalnoise/include/mapping.h";
+			refType = 4;
+		};
+		9F3F9F4D3BDB87C4C65AA333 = {
+			isa = PBXFileReference;
+			name = "noise_gen.h";
+			path = "accidentalnoise/include/noise_gen.h";
+			refType = 4;
+		};
+		20CAED96888E2C5B6D51AFF7 = {
+			isa = PBXFileReference;
+			name = "noise_lut.h";
+			path = "accidentalnoise/include/noise_lut.h";
+			refType = 4;
+		};
+		F0A9931CF94BEDDC578BFE87 = {
+			isa = PBXFileReference;
+			name = "noiselut.h";
+			path = "accidentalnoise/include/noiselut.h";
+			refType = 4;
+		};
+		4A184F8783D17E5AB246B171 = {
+			isa = PBXFileReference;
+			name = "random_gen.h";
+			path = "accidentalnoise/include/random_gen.h";
+			refType = 4;
+		};
+		FB78F851284B542A2B84540A = {
+			isa = PBXFileReference;
+			name = "rasterization.h";
+			path = "accidentalnoise/include/rasterization.h";
+			refType = 4;
+		};
+		4E175C2BAFDED8DA268AB985 = {
+			isa = PBXFileReference;
+			name = "rgba.h";
+			path = "accidentalnoise/include/rgba.h";
+			refType = 4;
+		};
+		403A978A5FE5CD04DBD581B7 = {
+			isa = PBXFileReference;
+			name = "rgbablend.h";
+			path = "accidentalnoise/include/rgbablend.h";
+			refType = 4;
+		};
+		40CDE5EDA7CEFB28C97260AF = {
+			isa = PBXFileReference;
+			name = "rgbablendops.h";
+			path = "accidentalnoise/include/rgbablendops.h";
+			refType = 4;
+		};
+		D6DFB474222FCDA2E1B6018C = {
+			isa = PBXFileReference;
+			name = "rgbacolorops.h";
+			path = "accidentalnoise/include/rgbacolorops.h";
+			refType = 4;
+		};
+		CA04690680A295A5612ABF23 = {
+			isa = PBXFileReference;
+			name = "rgbacomposechannels.h";
+			path = "accidentalnoise/include/rgbacomposechannels.h";
+			refType = 4;
+		};
+		D96F58D20110E2F762DE6CE3 = {
+			isa = PBXFileReference;
+			name = "rgbaconstant.h";
+			path = "accidentalnoise/include/rgbaconstant.h";
+			refType = 4;
+		};
+		6F776617FBCC4797FAD03B14 = {
+			isa = PBXFileReference;
+			name = "rgbacurve.h";
+			path = "accidentalnoise/include/rgbacurve.h";
+			refType = 4;
+		};
+		04F8451F23FC83F9321806CA = {
+			isa = PBXFileReference;
+			name = "rgbahsvtorgba.h";
+			path = "accidentalnoise/include/rgbahsvtorgba.h";
+			refType = 4;
+		};
+		3CFBFB5162FA088EEC038FAD = {
+			isa = PBXFileReference;
+			name = "rgbaimplicitgrayscale.h";
+			path = "accidentalnoise/include/rgbaimplicitgrayscale.h";
+			refType = 4;
+		};
+		7A67D428503B07BB49897CE4 = {
+			isa = PBXFileReference;
+			name = "rgbamodulebase.h";
+			path = "accidentalnoise/include/rgbamodulebase.h";
+			refType = 4;
+		};
+		B7A44B51148B2CE5C3ACAC68 = {
+			isa = PBXFileReference;
+			name = "rgbanormalize.h";
+			path = "accidentalnoise/include/rgbanormalize.h";
+			refType = 4;
+		};
+		DE6422CE2714CE67BE1AB9DC = {
+			isa = PBXFileReference;
+			name = "rgbargbatohsv.h";
+			path = "accidentalnoise/include/rgbargbatohsv.h";
+			refType = 4;
+		};
+		97A074C0E6B96D4090DF479B = {
+			isa = PBXFileReference;
+			name = "rgbarotatecolor.h";
+			path = "accidentalnoise/include/rgbarotatecolor.h";
+			refType = 4;
+		};
+		5C8AD17444B12B2FC2E912DB = {
+			isa = PBXFileReference;
+			name = "rgbaselect.h";
+			path = "accidentalnoise/include/rgbaselect.h";
+			refType = 4;
+		};
+		5E2DE3BDC0130A81F1C97CF0 = {
+			isa = PBXFileReference;
+			name = "utility.h";
+			path = "accidentalnoise/include/utility.h";
+			refType = 4;
+		};
+		F2BBD8BA491A0BB8D397B6E1 = {
+			isa = PBXFileReference;
+			name = "vectortypes.h";
+			path = "accidentalnoise/include/vectortypes.h";
+			refType = 4;
+		};
+		54531FE0653B6D63427BF7A9 = {
+			isa = PBXFileReference;
+			name = "terrainGen.pro";
+			path = "terrainGen.pro";
+			refType = 4;
+		};
+		44BBB7E2DCFA1695A94616E9 = {
+			isa = PBXFileReference;
+			name = "mainwindow.ui";
+			path = "ui/mainwindow.ui";
+			refType = 4;
+		};
+		B67C871D0EFD65AB2FED2829 = {
+			fileRef = "44BBB7E2DCFA1695A94616E9";
+			isa = PBXBuildFile;
+			settings = {
+				ATTRIBUTES = (
+					);
+			};
+		};
+		883D7615C4D2DE3FA1218F12 = {
+			isa = PBXGroup;
+			children = (
+				"3B5C31E0476CF26CC94CDADA",
+				"4FFE4AC327825FB2623B23AF");
+			name = "Headers";
+			refType = 4;
+		};
+		4FFE4AC327825FB2623B23AF = {
+			isa = PBXGroup;
+			children = (
+				"B616FA9AA3490887CDF4FB73");
+			name = "accidentalnoise";
+			refType = 4;
+		};
+		B616FA9AA3490887CDF4FB73 = {
+			isa = PBXGroup;
+			children = (
+				"1881299ED64D0775509A8070",
+				"F06AC1ED89C1AA93665F0C00",
+				"8576EF2C125DBA5EE839816E",
+				"2BBDDF06E18DB02162597672",
+				"E85A55421D950C8F45E30232",
+				"7BB4ADB0BD4E2DD8027305C3",
+				"77E8DBF43F0F22FB1BFE88F1",
+				"6E8D7D048E324113AD83FC6E",
+				"6371E598FC335C2C3633566A",
+				"FD40542252BBA086AF566BAF",
+				"073E87EA8237024FB9E83249",
+				"C556C938CB28DE59E95488C8",
+				"242D63572DEA80D4B7184A2C",
+				"D98E2191F9E34AA70AEAF261",
+				"85531A915920D36518EE0548",
+				"E1A33518756A0BE54474166B",
+				"648DCF91B720DD799F6B1BD2",
+				"8D8878E3E468518CCB7D2DA3",
+				"A6A867CE2A06941E6EEFF374",
+				"8D9F98C4AD0FA439B9DDAD5C",
+				"4EF6355D674D1F672DDFA4FE",
+				"4DC590A76EC308E33FE75D1C",
+				"E5480FF436C67F5BED2BAE28",
+				"284C8A3AA67681D8764472BA",
+				"133BB767864B1FA6C6D86C24",
+				"2E3BCE1F28AF25F8CB8C453F",
+				"E5D466F4486676BB102286A0",
+				"FB32CABE843F9E3F3C0A76E8",
+				"D8C871887F1B8BFB58589DF2",
+				"FC014CE1E3989D139E9259C0",
+				"1201DCB025977AC7AF598BF6",
+				"2C1A111E3A6E787A01E27E77",
+				"5AAEE6D130831A4CAE8F9E2A",
+				"DBAF1CC3BA38196C4844A9E7",
+				"B7AA412C0D2540864DD8D6CD",
+				"F78B8039FC1B37C8D83CA4E1",
+				"1C5E6B88805297C0649EE122",
+				"00EBD9A1384FFAC78E387BD0",
+				"F951D9C2B8D5DF1CB8E85870",
+				"383B6ADD7133AD63B1C25CAD",
+				"9F3F9F4D3BDB87C4C65AA333",
+				"20CAED96888E2C5B6D51AFF7",
+				"F0A9931CF94BEDDC578BFE87",
+				"4A184F8783D17E5AB246B171",
+				"FB78F851284B542A2B84540A",
+				"4E175C2BAFDED8DA268AB985",
+				"403A978A5FE5CD04DBD581B7",
+				"40CDE5EDA7CEFB28C97260AF",
+				"D6DFB474222FCDA2E1B6018C",
+				"CA04690680A295A5612ABF23",
+				"D96F58D20110E2F762DE6CE3",
+				"6F776617FBCC4797FAD03B14",
+				"04F8451F23FC83F9321806CA",
+				"3CFBFB5162FA088EEC038FAD",
+				"7A67D428503B07BB49897CE4",
+				"B7A44B51148B2CE5C3ACAC68",
+				"DE6422CE2714CE67BE1AB9DC",
+				"97A074C0E6B96D4090DF479B",
+				"5C8AD17444B12B2FC2E912DB",
+				"5E2DE3BDC0130A81F1C97CF0",
+				"F2BBD8BA491A0BB8D397B6E1");
+			name = "include";
+			refType = 4;
+		};
+		3B5C31E0476CF26CC94CDADA = {
+			isa = PBXGroup;
+			children = (
+				"C2A0490CB468462912D05EDF",
+				"120702DEB4C716C04901F98B",
+				"12DF3948ABAB45456D8F9975",
+				"4974F235324B2AA5E7C03C7C",
+				"270A778F2E064EEE105785A7",
+				"3DFC72550F7EEF7F249AFC00",
+				"84365E4C94BFDEFDEC771184",
+				"C5EAA939B5347D5E5C03EB57",
+				"87F391ACEE1985F7CA076C55",
+				"FFF9A10399FB09262EEC31DC",
+				"083A89A683396A563AD1F909",
+				"08E08C07E75E2886124C3227",
+				"A0B24AF898363E6C06416674",
+				"2CE46FC5C9673C2BA77323F4",
+				"C7D320E81EA446B91116B5A6",
+				"44FE3AFC445FF413D479E4B9",
+				"3769356E27D51FFB050BC1D1",
+				"8E857E028281433971DCBBCA",
+				"33E4E929A8B0D20A9F434A8A");
+			name = "include";
+			refType = 4;
+		};
+		3ABAC0A6A3509B1277A16853 = {
+			isa = PBXGroup;
+			children = (
+				"44BBB7E2DCFA1695A94616E9");
+			name = "ui";
+			refType = 4;
+		};
+		7CB7B78DB50C36BB22A67BCB = {
+			isa = PBXGroup;
+			children = (
+				"152E58E0E52D5211989DFFF7");
+			name = "accidentalnoise";
+			refType = 4;
+		};
+		152E58E0E52D5211989DFFF7 = {
+			isa = PBXGroup;
+			children = (
+				"E47AC60BA7328A17B8A143D4",
+				"18013DC37486F4BF12459568",
+				"A18338D0511065E505E7DA57",
+				"206523CEB59E4E17A9D11604",
+				"31F6AD06FBA636B524FDC009",
+				"7687CFBE7C244442F9332962",
+				"2EF5A623C126335363C117D2",
+				"E55CE9F2C9A92A6C01B7B0CA",
+				"2D64F1116828372C24D88FC3",
+				"EE0DA6A34BAF7F311F4314D6",
+				"566577341B73C0A69045732A",
+				"6238EAF96BB5E65D7FEA4F50",
+				"9715368331B7CC828B0C4B4C",
+				"97BBD13FD782ECD05AE9AAFA",
+				"51BA6B0C4AB40FBEBE106931",
+				"2E15F11F13EB448FC1455110",
+				"53E7C8EC2F817C8DCED3A523",
+				"22E8C4351D2BEE92270653CB",
+				"EDCDA3E72E321F7566226145",
+				"6230E67A86548485312F087A",
+				"938588E83D1627100CB766AE",
+				"926D69A9CDAC717A7856A50C",
+				"0D73EDA5E1CD4BBDCE6A5DBC",
+				"C44727D755A7AA4082A9773B",
+				"260B36748FC9A5C2C4417751",
+				"8DD3AC1F939271B87F06B661",
+				"A212C671335F2E56E9C88FFE",
+				"646C176A2D2B77454E0B8C8F",
+				"9398DFF6BD1C0A0CCBB43A35",
+				"F2A4E4B9AFE624B72C036FDD",
+				"9480613C3F618E6136AE7C89",
+				"E8CC94B6D34673DA4ACD4944",
+				"9489B8405AB71BB53E2246D8",
+				"B0421AB585E2E2E8755B005F",
+				"4008DF6DFCF5259B16D825E1",
+				"B142A16B1337B9DB6DE4B162",
+				"C2CB2626319910EDC9F0F7BD",
+				"D7B89F89716610EBF50DA0D5",
+				"6FA5CE3AE879D8F47320786D",
+				"628C99CB03F488D1DD352ABC",
+				"E124969E0D6B76277EB3EDD1",
+				"0F830F6B972E770F1B6B0694",
+				"5A03DD2CDE2E1ADF291DB094",
+				"CE64C3723A779949470EA107",
+				"3859DDB9B0D8097BB6428F8F",
+				"7E0226B0D745D137CDDE0B24",
+				"E0E1BA37E7E41068EEA0C421",
+				"92BB963C8DDB1820138EA6D0",
+				"8705B1BBEE26F273975630CB",
+				"E05B62D6058A968C40406936",
+				"CC72337BC455B24AD2B011CF",
+				"6D5BD4C537448DD7D9D7EE56");
+			name = "src";
+			refType = 4;
+		};
+		06674E1DE8D3EB6E763DFFDA = {
+			isa = PBXGroup;
+			children = (
+				"7EC3C68A81EFFF79B6CA22AC",
+				"585CFECF0CE15AC75BE3038E",
+				"71EC10E9E8DEF25623533B36",
+				"BD335D9EE1E6EF55E0ADDDBB",
+				"826B7EC7532F6AC74516E7F0",
+				"1BB853488F467C61F331F702",
+				"75E4F0C3A47BAAD187EF7B7A",
+				"7CE6CB6286A30D8525B0215E",
+				"C44D3DA19A412CDC120489DA",
+				"3E128FBEE267263828B2D63B",
+				"C55B7032B81EDD210DCC0E89",
+				"EFAD9059E20D39B30561DB68",
+				"65787DAC82F496974DD85F4B",
+				"BE67D58EEB91B8F198D27A6B",
+				"35FB253B1D737A1E429F5BB4",
+				"7D3EB94E36A77478A96F914D",
+				"9748B68FFF58FACB201EA5CD",
+				"6CC1AFAACB0C0406E2D0025A",
+				"72CAC4335D328A75CEA7A604",
+				"246F61388AE3771697E78214");
+			name = "src";
+			refType = 4;
+		};
+		198F590C93BDB8DF52CC1017 = {
+			isa = PBXGroup;
+			children = (
+				"76B050FA7131DB940B00B7FB",
+				"21EBD2526E7E7CAC9A4C0880");
+			name = "moc";
+			refType = 4;
+		};
+		17FD8125313B1C322301D843 = {
+			isa = PBXGroup;
+			children = (
+				"4B1F4F9ED72E56B25CB57240");
+			name = "ui";
+			refType = 4;
+		};
+		FB61758D0F0FDA4BA867C3D5 = {
+			isa = PBXGroup;
+			children = (
+				"06674E1DE8D3EB6E763DFFDA",
+				"7CB7B78DB50C36BB22A67BCB");
+			name = "Sources";
+			refType = 4;
+		};
+		EEC299C65D5017EB9DD513B0 = {
+			isa = PBXGroup;
+			children = (
+				"3ABAC0A6A3509B1277A16853");
+			name = "Sources [UIC]";
+			refType = 4;
+		};
+		7CABE3C80E79AD2B307756D2 = {
+			isa = PBXGroup;
+			children = (
+				"54531FE0653B6D63427BF7A9");
+			name = "Sources [qmake]";
+			refType = 4;
+		};
+		46E892BBB6BB6952967E0561 = {
+			isa = PBXGroup;
+			children = (
+				"198F590C93BDB8DF52CC1017",
+				"17FD8125313B1C322301D843");
+			name = "Temporary Sources";
+			refType = 4;
+		};
+		A0A52A2ADF7A1E2A99738674 = {
+			buildActionMask = 2147483647;
+			files = (
+				);
+			generatedFileNames = (
+				"FD1638E377D97C82BDB438FB",
+				"72224D8B8032363B160DB2F4",
+				"AF9AB281CD47FF422A01DACD",
+				"AE56D81941D642106D9934BE",
+				"95D7C62E8D311FCA0963510F",
+				"20D22E6A3902B1EB4D4BC56D",
+				"EA38C410667329AD1F5D67EF",
+				"EC80FDC59C940B70774802F9",
+				"DBBF07B0ED610C1DDDBA9A7D",
+				"FA899CEA0BC3739C9BF0DC55",
+				"7EAB8A425EDF554D95F3B970",
+				"8FD67F2D0754EC2720A41D2C",
+				"F0C9426A10EE537C3AC6EB0E",
+				"B1B06B701B83CB21CB83EF31",
+				"C11BEDB64556096077F1BA37",
+				"EA52C87507AD71E3B2B2F9ED",
+				"39FDD339E2894B23B883620C",
+				"731BCDC205790E12FF764C0D",
+				"C30501F8CB2C051F19F91F18",
+				"A5CF0E451C49BC1D0C7ECA27",
+				"EA8FC45BF45EF996551EAEFA",
+				"2997205541600674017BDD8D",
+				"4B67B89D82537CED4A53F06E",
+				"93287689FA37F09EF918CFB7",
+				"EA5644D5D28FAC02D29E56AA",
+				"CA2C528B6A85759BCD23D6F4",
+				"3D0EC52E7F57B0F92F22651D",
+				"CAEF60C93872B973467CB856",
+				"6E8215B88FF24E57859C252E",
+				"127D7AC3D3AB613A67FC8350",
+				"B05DEC9052A3A0364D8C1AB2",
+				"A646F1C23983CFF22985ACD4",
+				"B9733564DC5C23A63729E5ED",
+				"F3705E344427175E4FAE85EC",
+				"6D5282ABC305D1A8427F764F",
+				"B05460749571CD2993739B99",
+				"870FF30EA48BE8B4C8F738DD",
+				"B522132F22E3E0393622ED09",
+				"1C10F66EEB4DAA906ED70F55",
+				"36BD42D8842D9BECB4E753B8",
+				"6977DDA529CF0DCC4280CD1B",
+				"7164C0B814F04A657977CF80",
+				"CCAEEC566CD3343A82807920",
+				"E7036FB87945873485229EA6",
+				"32FD8D402F9CE55C44E1AFA1",
+				"4061051D650D7842DBAF0CFB",
+				"A2FE3EC926429359E91EF4B9",
+				"F783C741D7DE06FC88C06E92",
+				"BE25A79D29EAC0DEA200C029",
+				"D8A12F96C333EEF8D024201A",
+				"F189C66934F3AA9EFA3DC206",
+				"267D4F4EA785A5643AB27121",
+				"D3420FEFF2EA4C96797E9AFF",
+				"B85C72FF6150E954D999CECD",
+				"7E67E399145E05F182C00100",
+				"B58C3FA8271BC59ADE324B60",
+				"92241CCB0C75D26BC9A34B4C",
+				"96266FE94F7EF922FC188890",
+				"D8EAE3C30C2DEA1DFE93CA45",
+				"449DF0369E236BB5D2D955F1",
+				"EF1B843DEBAFADD6C9F895C3",
+				"0B3E6CAC611625E7DCCCB747",
+				"2D6B8C718CADBC22CDE3E14B",
+				"3CE7473431CFAAB5B5FF45FD",
+				"9226A8F8007D73350FEDB410",
+				"993BD225D3CC7A6A18219152",
+				"10D95E9368F2A91A57001420",
+				"CD0BAA8D033C2705EA1F3641",
+				"81DB9062D17E48617B9D3BFC",
+				"9B820D5AEAD7BC92FFD748C8",
+				"963EBC804A5768053195DF0B",
+				"3D8C68F7F3BA7A7B06C53CB8",
+				"A5D1F72F053F5D3FC8AADD02",
+				"B4ACA51F040A4C6AE059BB6D");
+			isa = PBXShellScriptBuildPhase;
+			name = "Qt Preprocessors";
+			neededFileNames = (
+				"FD1638E377D97C82BDB438FB",
+				"72224D8B8032363B160DB2F4",
+				"AF9AB281CD47FF422A01DACD",
+				"AE56D81941D642106D9934BE",
+				"95D7C62E8D311FCA0963510F",
+				"20D22E6A3902B1EB4D4BC56D",
+				"EA38C410667329AD1F5D67EF",
+				"EC80FDC59C940B70774802F9",
+				"DBBF07B0ED610C1DDDBA9A7D",
+				"FA899CEA0BC3739C9BF0DC55",
+				"7EAB8A425EDF554D95F3B970",
+				"8FD67F2D0754EC2720A41D2C",
+				"F0C9426A10EE537C3AC6EB0E",
+				"B1B06B701B83CB21CB83EF31",
+				"C11BEDB64556096077F1BA37",
+				"EA52C87507AD71E3B2B2F9ED",
+				"39FDD339E2894B23B883620C",
+				"731BCDC205790E12FF764C0D",
+				"C30501F8CB2C051F19F91F18",
+				"A5CF0E451C49BC1D0C7ECA27",
+				"EA8FC45BF45EF996551EAEFA",
+				"2997205541600674017BDD8D",
+				"4B67B89D82537CED4A53F06E",
+				"93287689FA37F09EF918CFB7",
+				"EA5644D5D28FAC02D29E56AA",
+				"CA2C528B6A85759BCD23D6F4",
+				"3D0EC52E7F57B0F92F22651D",
+				"CAEF60C93872B973467CB856",
+				"6E8215B88FF24E57859C252E",
+				"127D7AC3D3AB613A67FC8350",
+				"B05DEC9052A3A0364D8C1AB2",
+				"A646F1C23983CFF22985ACD4",
+				"B9733564DC5C23A63729E5ED",
+				"F3705E344427175E4FAE85EC",
+				"6D5282ABC305D1A8427F764F",
+				"B05460749571CD2993739B99",
+				"870FF30EA48BE8B4C8F738DD",
+				"B522132F22E3E0393622ED09",
+				"1C10F66EEB4DAA906ED70F55",
+				"36BD42D8842D9BECB4E753B8",
+				"6977DDA529CF0DCC4280CD1B",
+				"7164C0B814F04A657977CF80",
+				"CCAEEC566CD3343A82807920",
+				"E7036FB87945873485229EA6",
+				"32FD8D402F9CE55C44E1AFA1",
+				"4061051D650D7842DBAF0CFB",
+				"A2FE3EC926429359E91EF4B9",
+				"F783C741D7DE06FC88C06E92",
+				"BE25A79D29EAC0DEA200C029",
+				"D8A12F96C333EEF8D024201A",
+				"F189C66934F3AA9EFA3DC206",
+				"267D4F4EA785A5643AB27121",
+				"D3420FEFF2EA4C96797E9AFF",
+				"B85C72FF6150E954D999CECD",
+				"7E67E399145E05F182C00100",
+				"B58C3FA8271BC59ADE324B60",
+				"92241CCB0C75D26BC9A34B4C",
+				"96266FE94F7EF922FC188890",
+				"D8EAE3C30C2DEA1DFE93CA45",
+				"449DF0369E236BB5D2D955F1",
+				"EF1B843DEBAFADD6C9F895C3",
+				"0B3E6CAC611625E7DCCCB747",
+				"2D6B8C718CADBC22CDE3E14B",
+				"3CE7473431CFAAB5B5FF45FD",
+				"9226A8F8007D73350FEDB410",
+				"993BD225D3CC7A6A18219152",
+				"10D95E9368F2A91A57001420",
+				"CD0BAA8D033C2705EA1F3641",
+				"81DB9062D17E48617B9D3BFC",
+				"9B820D5AEAD7BC92FFD748C8",
+				"963EBC804A5768053195DF0B",
+				"3D8C68F7F3BA7A7B06C53CB8",
+				"A5D1F72F053F5D3FC8AADD02",
+				"B4ACA51F040A4C6AE059BB6D");
+			shellPath = "/bin/sh";
+			shellScript = "make\ -C\ /Users/Toby/Documents/University/Year_3/Assignments/terrainGeneration\ -f\ \'terrainGen.xcodeproj/qt_preprocess.mak\'";
+		};
+		C29B8785722055ED95EF7B57 = {
+			buildActionMask = 2147483647;
+			files = (
+				"FD1638E377D97C82BDB438FB",
+				"72224D8B8032363B160DB2F4",
+				"AF9AB281CD47FF422A01DACD",
+				"AE56D81941D642106D9934BE",
+				"95D7C62E8D311FCA0963510F",
+				"20D22E6A3902B1EB4D4BC56D",
+				"EA38C410667329AD1F5D67EF",
+				"EC80FDC59C940B70774802F9",
+				"DBBF07B0ED610C1DDDBA9A7D",
+				"FA899CEA0BC3739C9BF0DC55",
+				"7EAB8A425EDF554D95F3B970",
+				"8FD67F2D0754EC2720A41D2C",
+				"F0C9426A10EE537C3AC6EB0E",
+				"B1B06B701B83CB21CB83EF31",
+				"C11BEDB64556096077F1BA37",
+				"EA52C87507AD71E3B2B2F9ED",
+				"39FDD339E2894B23B883620C",
+				"731BCDC205790E12FF764C0D",
+				"C30501F8CB2C051F19F91F18",
+				"A5CF0E451C49BC1D0C7ECA27",
+				"EA8FC45BF45EF996551EAEFA",
+				"2997205541600674017BDD8D",
+				"4B67B89D82537CED4A53F06E",
+				"93287689FA37F09EF918CFB7",
+				"EA5644D5D28FAC02D29E56AA",
+				"CA2C528B6A85759BCD23D6F4",
+				"3D0EC52E7F57B0F92F22651D",
+				"CAEF60C93872B973467CB856",
+				"6E8215B88FF24E57859C252E",
+				"127D7AC3D3AB613A67FC8350",
+				"B05DEC9052A3A0364D8C1AB2",
+				"A646F1C23983CFF22985ACD4",
+				"B9733564DC5C23A63729E5ED",
+				"F3705E344427175E4FAE85EC",
+				"6D5282ABC305D1A8427F764F",
+				"B05460749571CD2993739B99",
+				"870FF30EA48BE8B4C8F738DD",
+				"B522132F22E3E0393622ED09",
+				"1C10F66EEB4DAA906ED70F55",
+				"36BD42D8842D9BECB4E753B8",
+				"6977DDA529CF0DCC4280CD1B",
+				"7164C0B814F04A657977CF80",
+				"CCAEEC566CD3343A82807920",
+				"E7036FB87945873485229EA6",
+				"32FD8D402F9CE55C44E1AFA1",
+				"4061051D650D7842DBAF0CFB",
+				"A2FE3EC926429359E91EF4B9",
+				"F783C741D7DE06FC88C06E92",
+				"BE25A79D29EAC0DEA200C029",
+				"D8A12F96C333EEF8D024201A",
+				"F189C66934F3AA9EFA3DC206",
+				"267D4F4EA785A5643AB27121",
+				"D3420FEFF2EA4C96797E9AFF",
+				"B85C72FF6150E954D999CECD",
+				"7E67E399145E05F182C00100",
+				"B58C3FA8271BC59ADE324B60",
+				"92241CCB0C75D26BC9A34B4C",
+				"96266FE94F7EF922FC188890",
+				"D8EAE3C30C2DEA1DFE93CA45",
+				"449DF0369E236BB5D2D955F1",
+				"EF1B843DEBAFADD6C9F895C3",
+				"0B3E6CAC611625E7DCCCB747",
+				"2D6B8C718CADBC22CDE3E14B",
+				"3CE7473431CFAAB5B5FF45FD",
+				"9226A8F8007D73350FEDB410",
+				"993BD225D3CC7A6A18219152",
+				"10D95E9368F2A91A57001420",
+				"CD0BAA8D033C2705EA1F3641",
+				"81DB9062D17E48617B9D3BFC",
+				"9B820D5AEAD7BC92FFD748C8",
+				"963EBC804A5768053195DF0B",
+				"3D8C68F7F3BA7A7B06C53CB8",
+				"A5D1F72F053F5D3FC8AADD02",
+				"B4ACA51F040A4C6AE059BB6D");
+			isa = PBXSourcesBuildPhase;
+			name = "Build Sources";
+		};
+		22C11C470431D37C8299E900 = {
+			isa = PBXFileReference;
+			name = "assimp";
+			path = "/opt/local/lib/libassimp.3.0.0.dylib";
+			refType = 0;
+		};
+		35DD5DC89BA936214A76C2B6 = {
+			fileRef = "22C11C470431D37C8299E900";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		C374004D45E01156F931B37D = {
+			isa = PBXFrameworkReference;
+			name = "QtOpenGL.framework";
+			path = "/Library/Frameworks/QtOpenGL.framework";
+			refType = 0;
+		};
+		450A0D11527AF164AEFE7377 = {
+			fileRef = "C374004D45E01156F931B37D";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		9B36DA7E32F0304E780E7972 = {
+			isa = PBXFrameworkReference;
+			name = "QtGui.framework";
+			path = "/Library/Frameworks/QtGui.framework";
+			refType = 0;
+		};
+		501667F26B3C1FF6767A7C12 = {
+			fileRef = "9B36DA7E32F0304E780E7972";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		7BC2E65A5E699A5E5D834CA2 = {
+			isa = PBXFrameworkReference;
+			name = "QtCore.framework";
+			path = "/Library/Frameworks/QtCore.framework";
+			refType = 0;
+		};
+		069D05B0128AE5DC7EE31738 = {
+			fileRef = "7BC2E65A5E699A5E5D834CA2";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		DA18A6831232F53228631AD1 = {
+			isa = PBXFrameworkReference;
+			name = "OpenGL.framework";
+			path = "/System/Library/Frameworks/OpenGL.framework";
+			refType = 0;
+		};
+		BCEF71E1EDFB18DA77DC750B = {
+			fileRef = "DA18A6831232F53228631AD1";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		C6766F86E49E9C8701C8E637 = {
+			isa = PBXFrameworkReference;
+			name = "AGL.framework";
+			path = "/System/Library/Frameworks/AGL.framework";
+			refType = 0;
+		};
+		0C6D4628EE0B0D1479A20551 = {
+			fileRef = "C6766F86E49E9C8701C8E637";
+			isa = PBXBuildFile;
+			settings = {
+			};
+		};
+		ED1E82605DD74B483AF3C982 = {
+			children = (
+				"22C11C470431D37C8299E900",
+				"C374004D45E01156F931B37D",
+				"9B36DA7E32F0304E780E7972",
+				"7BC2E65A5E699A5E5D834CA2",
+				"DA18A6831232F53228631AD1",
+				"C6766F86E49E9C8701C8E637");
+			isa = PBXGroup;
+			name = "External Frameworks and Libraries";
+			path = "";
+			refType = 4;
+		};
+		2A1043669E6E5A7426EA502A = {
+			buildActionMask = 2147483647;
+			files = (
+				"35DD5DC89BA936214A76C2B6",
+				"450A0D11527AF164AEFE7377",
+				"501667F26B3C1FF6767A7C12",
+				"069D05B0128AE5DC7EE31738",
+				"BCEF71E1EDFB18DA77DC750B",
+				"0C6D4628EE0B0D1479A20551");
+			isa = PBXFrameworksBuildPhase;
+			name = "Frameworks & Libraries";
+		};
+		05596AB53D8D521C69802C27 = {
+			children = (
+				"FB61758D0F0FDA4BA867C3D5",
+				"46E892BBB6BB6952967E0561",
+				"883D7615C4D2DE3FA1218F12",
+				"7CABE3C80E79AD2B307756D2",
+				"EEC299C65D5017EB9DD513B0",
+				"ED1E82605DD74B483AF3C982");
+			isa = PBXGroup;
+			name = "terrainGen";
+			path = "";
+			refType = 4;
+		};
+		07595852A06B5891B000639E = {
+			isa = PBXFileReference;
+			explicitFileType = "wrapper.executable";
+			path = "terrainGen";
+			refType = 3;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		068F80C7519D0528FB08E821 = {
+			children = (
+				"07595852A06B5891B000639E");
+			isa = PBXGroup;
+			name = "Products";
+			refType = 4;
+		};
+		DDDD6AE9A21768DDB3E642A7 = {
+			buildPhases = (
+				"D7BA7D76DAB5DD13389D6332",
+				"A0A52A2ADF7A1E2A99738674",
+				"C29B8785722055ED95EF7B57",
+				"2A1043669E6E5A7426EA502A");
+			buildSettings = {
+				CC = "/usr/bin/gcc";
+				CPLUSPLUS = "/usr/bin/g++";
+				LEXFLAGS = "";
+				YACCFLAGS = "-d";
+				OTHER_REZFLAGS = "";
+				SECTORDER_FLAGS = "";
+				WARNING_CFLAGS = "";
+				PREBINDING = NO;
+				BUILD_ROOT = "/Users/Toby/Documents/University/Year_3/Assignments/terrainGeneration";
+				OTHER_LDFLAGS = (
+						"-headerpad_max_install_names",
+						"-L/Library/Frameworks",
+						"-F/Library/Frameworks",
+						"-L/opt/local/lib",
+						"-lGLEW",
+						"-lnoise",
+						"-L/usr/local/lib");
+				DYLIB_CURRENT_VERSION = "1.0.0";
+				DYLIB_COMPATIBILITY_VERSION = "1.0";
+				MACOSX_DEPLOYMENT_TARGET = "10.4";
+				OBJROOT = "obj/";
+				PRODUCT_NAME = "terrainGen";
+			};
+			conditionalBuildSettings = {
+			};
+			dependencies = (
+				);
+			productReference = "07595852A06B5891B000639E";
+			shouldUseHeadermap = 1;
+			buildConfigurationList = 17B3380A4D6A7D415E7F2E1E;
+			isa = PBXNativeTarget;
+			productType = "com.apple.product-type.tool";
+			name = "terrainGen";
+			productName = "terrainGen";
+			startupPath = "<<ProjectDirectory>>";
+		};
+		4B72B24813252891014BCF61 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = "NO";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "YES";
+				GCC_OPTIMIZATION_LEVEL = "0";
+				PRODUCT_NAME = "terrainGen";
+				HEADER_SEARCH_PATHS = (
+					"/Library/Frameworks/QtCore.framework/Versions/4/Headers",
+					"/usr/include/QtCore",
+					"/Library/Frameworks/QtGui.framework/Versions/4/Headers",
+					"/usr/include/QtGui",
+					"/Library/Frameworks/QtOpenGL.framework/Versions/4/Headers",
+					"/usr/include/QtOpenGL",
+					"/usr/include",
+					"include",
+					"/opt/local/include",
+					"/home/i7709212/customlibs/glm",
+					"accidentalnoise/include",
+					"/usr/local/include",
+					"/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers",
+					"/System/Library/Frameworks/AGL.framework/Headers",
+					"moc",
+					"ui",
+					"/usr/local/include",
+					"/System/Library/Frameworks/CarbonCore.framework/Headers",
+					"/usr/local/Qt4.8/mkspecs/macx-xcode");
+				LIBRARY_SEARCH_PATHS = (
+					"/Library/Frameworks",
+					"/opt/local/lib",
+					"/usr/local/lib",
+					"/System/Library/Frameworks/");
+				FRAMEWORK_SEARCH_PATHS = (
+					"/Library/Frameworks",
+					"/Library/Frameworks");
+				INFOPLIST_FILE = "Info.plist";
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-g",
+					"-Wall",
+					"-W",
+					"-DDARWIN",
+					"-DQT_OPENGL_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+					"-DQT_SHARED");
+				OTHER_CPLUSPLUSFLAGS = (
+					"-pipe",
+					"-msse",
+					"-msse2",
+					"-msse3",
+					"-arch",
+					"x86_64",
+					"-g",
+					"-Wall",
+					"-W",
+					"-Wno-unused-parameter",
+					"-DDARWIN",
+					"-DQT_OPENGL_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+					"-DQT_SHARED");
+				OTHER_LDFLAGS = (
+						"-headerpad_max_install_names",
+						"-L/Library/Frameworks",
+						"-F/Library/Frameworks",
+						"-L/opt/local/lib",
+						"-lGLEW",
+						"-lnoise",
+						"-L/usr/local/lib");
+				ARCHS = "x86_64";
+			};
+			name = "Debug";
+		};
+		BEC09A62E69C3553534FF35E = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = "NO";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "YES";
+				GCC_OPTIMIZATION_LEVEL = "0";
+				PRODUCT_NAME = "terrainGen";
+				PRODUCT_NAME = "terrainGen";
+			};
+			name = "Debug";
+		};
+		2C641C3335766025DD51B7BD = {
+			buildRules = (
+				);
+			buildSettings = {
+				COPY_PHASE_STRIP = "NO";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "YES";
+				GCC_OPTIMIZATION_LEVEL = "0";
+				PRODUCT_NAME = "terrainGen";
+			};
+			isa = "PBXBuildStyle";
+			name = "Debug";
+		};
+		D70590BEB531B51029F711BB = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = "YES";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "NO";
+				PRODUCT_NAME = "terrainGen";
+				HEADER_SEARCH_PATHS = (
+					"/Library/Frameworks/QtCore.framework/Versions/4/Headers",
+					"/usr/include/QtCore",
+					"/Library/Frameworks/QtGui.framework/Versions/4/Headers",
+					"/usr/include/QtGui",
+					"/Library/Frameworks/QtOpenGL.framework/Versions/4/Headers",
+					"/usr/include/QtOpenGL",
+					"/usr/include",
+					"include",
+					"/opt/local/include",
+					"/home/i7709212/customlibs/glm",
+					"accidentalnoise/include",
+					"/usr/local/include",
+					"/System/Library/Frameworks/OpenGL.framework/Versions/A/Headers",
+					"/System/Library/Frameworks/AGL.framework/Headers",
+					"moc",
+					"ui",
+					"/usr/local/include",
+					"/System/Library/Frameworks/CarbonCore.framework/Headers",
+					"/usr/local/Qt4.8/mkspecs/macx-xcode");
+				LIBRARY_SEARCH_PATHS = (
+					"/Library/Frameworks",
+					"/opt/local/lib",
+					"/usr/local/lib",
+					"/System/Library/Frameworks/");
+				FRAMEWORK_SEARCH_PATHS = (
+					"/Library/Frameworks",
+					"/Library/Frameworks");
+				INFOPLIST_FILE = "Info.plist";
+				OTHER_CFLAGS = (
+					"-pipe",
+					"-g",
+					"-Wall",
+					"-W",
+					"-DDARWIN",
+					"-DQT_OPENGL_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+					"-DQT_SHARED");
+				OTHER_CPLUSPLUSFLAGS = (
+					"-pipe",
+					"-msse",
+					"-msse2",
+					"-msse3",
+					"-arch",
+					"x86_64",
+					"-g",
+					"-Wall",
+					"-W",
+					"-Wno-unused-parameter",
+					"-DDARWIN",
+					"-DQT_OPENGL_LIB",
+					"-DQT_GUI_LIB",
+					"-DQT_CORE_LIB",
+					"-DQT_SHARED");
+				OTHER_LDFLAGS = (
+						"-headerpad_max_install_names",
+						"-L/Library/Frameworks",
+						"-F/Library/Frameworks",
+						"-L/opt/local/lib",
+						"-lGLEW",
+						"-lnoise",
+						"-L/usr/local/lib");
+				ARCHS = "x86_64";
+			};
+			name = "Release";
+		};
+		8C7174830A1E4DCBA0332EC1 = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = "YES";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "NO";
+				PRODUCT_NAME = "terrainGen";
+				PRODUCT_NAME = "terrainGen";
+			};
+			name = "Release";
+		};
+		26DE8D2AEA4B3714B41E931F = {
+			buildRules = (
+				);
+			buildSettings = {
+				COPY_PHASE_STRIP = "YES";
+				GCC_GENERATE_DEBUGGING_SYMBOLS = "NO";
+				PRODUCT_NAME = "terrainGen";
+			};
+			isa = "PBXBuildStyle";
+			name = "Release";
+		};
+		CC82A9286117DFED018F418F = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				"4B72B24813252891014BCF61",
+				"D70590BEB531B51029F711BB");
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationIsName = "Debug";
+		};
+		17B3380A4D6A7D415E7F2E1E = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				"BEC09A62E69C3553534FF35E",
+				"8C7174830A1E4DCBA0332EC1");
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationIsName = "Debug";
+		};
+		91B15E841AA80083484172DE = {
+			buildStyles = (
+				"2C641C3335766025DD51B7BD",
+				"26DE8D2AEA4B3714B41E931F");
+			hasScannedForEncodings = 1;
+			isa = PBXProject;
+			mainGroup = "05596AB53D8D521C69802C27";
+			buildConfigurationList = "CC82A9286117DFED018F418F";
+			projectDirPath = "";
+			targets = (
+				"DDDD6AE9A21768DDB3E642A7");
+		};
+	};
+	rootObject = "91B15E841AA80083484172DE";
+}

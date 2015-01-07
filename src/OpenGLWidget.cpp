@@ -158,25 +158,6 @@ void OpenGLWidget::renderReflections(){
     m_skybox->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
     m_skybox->render();
 
-    glm::mat4 mesoModelMat = m_mouseGlobalTX;
-
-    if(m_moved){
-        glm::vec3 trans = (m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
-        trans/=(2*512*32);
-        trans/= 32.0;
-        m_marchingCubesObject->setSamplePos(0.505-(0.0625/2.0) - trans.x,0.505-(0.0625/2.0) + trans.z);
-        m_marchingCubesObject->vMarchingCubes();
-        m_moved = false;
-    }
-    mesoModelMat = glm::scale(mesoModelMat,glm::vec3(1.0,4.0,1.0));
-    mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5 - m_mesoCenter.first,0.0,-0.5 - m_mesoCenter.second));
-
-    // Reflect the modelMatrix
-    mesoModelMat = glm::scale(mesoModelMat, glm::vec3(1.0, -1.0, 1.0));
-
-    //draw out meso terrain
-//    m_marchingCubesObject->draw(mesoModelMat, m_cam);
-
     glm::mat4 macroModelMat = m_mouseGlobalTX;
 
     //now draw toby's geomtry clipmap
@@ -190,12 +171,10 @@ void OpenGLWidget::renderReflections(){
     m_geometryClipmap->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
     m_geometryClipmap->loadClippedMatricesToShader(macroModelMat, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
     m_geometryClipmap->setWireframe(false);
-    m_geometryClipmap->setCutout(true);
+    m_geometryClipmap->setCutout(false);
     //m_geometryClipmap->setCutOutPos(glm::vec2(-m_modelPos.x,m_modelPos.z));
     m_geometryClipmap->render();
 
-    //draw our grass
-//    m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
 }
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::renderRefractions(){
@@ -289,6 +268,7 @@ void OpenGLWidget::paintGL(){
     roty = glm::rotate(roty, m_spinYFace, glm::vec3(0.0, 1.0, 0.0));
 
     m_mouseGlobalTX = rotx*roty;
+//    m_mouseGlobalTX = glm::translate(m_mouseGlobalTX, glm::vec3(0.0, m_modelPos.y, 0.0));
     m_mouseGlobalTX[3][1] = m_modelPos.y;
 
     glm::mat4 mesoModelMat = m_mouseGlobalTX;
@@ -301,8 +281,8 @@ void OpenGLWidget::paintGL(){
         m_marchingCubesObject->vMarchingCubes();
         m_moved = false;
     }
-    mesoModelMat = glm::scale(mesoModelMat,glm::vec3(1.0,4.0,1.0));
-    mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5 - m_mesoCenter.first,0.0,-0.5 - m_mesoCenter.second));
+    mesoModelMat = glm::scale(mesoModelMat,glm::vec3(2.0,4.0,2.0));
+    mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5,0.0,-0.5));
 
     //draw our meso terrain
     m_marchingCubesObject->draw(mesoModelMat, m_cam);
@@ -310,7 +290,6 @@ void OpenGLWidget::paintGL(){
     glm::mat4 macroModelMat = m_mouseGlobalTX;
 
     //now draw toby's geomtry clipmap
-//    macroModelMat = glm::translate(macroModelMat, glm::vec3(0.0, -1.5, 0.0));
     macroModelMat = glm::scale(macroModelMat, glm::vec3(-1.0, 1.0, 1.0));
     macroModelMat = glm::rotate(macroModelMat, pi, glm::vec3(0.0,1.0,0.0));
 

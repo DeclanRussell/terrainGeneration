@@ -65,8 +65,8 @@ void GeometryClipmap::createShader(){
     glUniform1f(mudHeightLoc, 0.4);
     glUniform1f(grassHeightLoc, 0.5);
     glUniform1f(rockHeightLoc, 0.7);
-    glUniform1f(fogMinLoc, 3.0);
-    glUniform1f(fogMaxLoc, 5.0);
+    glUniform1f(fogMinLoc, 2.0);
+    glUniform1f(fogMaxLoc, 4.0);
 
     //------------------------------------------------------------------------------------------------------------------------
     m_clippedProgram = new ShaderProgram();
