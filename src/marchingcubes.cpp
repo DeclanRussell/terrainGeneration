@@ -87,19 +87,19 @@ void marchingCubes::createShader(){
     glUniform3f(kdLoc, 0.5, 0.5, 0.5);
     glUniform3f(kaLoc, 0.5, 0.5, 0.5);
     glUniform3f(ksLoc, 0.5, 0.5, 0.5);
-    glUniform1f(shininessLoc, 10.0);
+    glUniform1f(shininessLoc, 1.0);
 
     // create our textures
-    m_mudTex = new Texture("textures/mudTexture.png");
+    m_mudTex = new Texture("textures/mudTexture");
     m_mudTex->bind(0);
 
-    m_grassTex = new Texture("textures/grassTexture.jpg");
+    m_grassTex = new Texture("textures/grassTexture");
     m_grassTex->bind(1);
 
-    m_rockTex = new Texture("textures/rockTexture.jpg");
+    m_rockTex = new Texture("textures/rockTexture");
     m_rockTex->bind(2);
 
-    m_snowTex = new Texture("textures/snowTexture.jpg");
+    m_snowTex = new Texture("textures/snowTexture");
     m_snowTex->bind(3);
 
 
@@ -963,7 +963,7 @@ void marchingCubes::vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fSca
 //                        glVertex3f(asEdgeVertex[iVertex].fX, asEdgeVertex[iVertex].fY, asEdgeVertex[iVertex].fZ);
 
                         m_position.push_back(glm::vec3(asEdgeVertex[iVertex].fX, asEdgeVertex[iVertex].fY, asEdgeVertex[iVertex].fZ));
-                        m_normals.push_back(glm::vec3(asEdgeNorm[iVertex].fX,   asEdgeNorm[iVertex].fY,   asEdgeNorm[iVertex].fZ));
+                        //m_normals.push_back(glm::vec3(asEdgeNorm[iVertex].fX,   asEdgeNorm[iVertex].fY,   asEdgeNorm[iVertex].fZ));
                         float xTexPos = 0, yTexPos = 0;
                         if(m_sampleMode = MC_2DMATSTACK){
                             xTexPos = m_samplePos.first + (asEdgeVertex[iVertex].fX * m_samplePercent.first);
@@ -978,6 +978,15 @@ void marchingCubes::vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fSca
                         }
                         m_texCoords.push_back(glm::vec2(xTexPos,yTexPos));
                 }
+                glm::vec3 v1 = m_position[m_position.size()-1];
+                glm::vec3 v2 = m_position[m_position.size()-2];
+                glm::vec3 v3 = m_position[m_position.size()-3];
+                glm::vec3 e1 = v2-v1;
+                glm::vec3 e2 = v3-v1;
+                glm::vec3 normal = glm::normalize(glm::cross(e1,e2));
+                m_normals.push_back(normal);
+                m_normals.push_back(normal);
+                m_normals.push_back(normal);
         }
 }
 //----------------------------------------------------------------------------------------------------------------------

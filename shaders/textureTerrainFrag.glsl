@@ -88,6 +88,6 @@ vec4 calcColour(){
 
 void  main(){
    vec4 colour = calcColour();
-   colour = colour*vec4(ads(),1.0);
+   //colour = colour*vec4(ads(),1.0);
    fragColour = colour;// * texture(tex, TexCoords);
 }

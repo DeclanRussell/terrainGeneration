@@ -100,7 +100,6 @@ OTHER_FILES += \
     shaders/terrainVert.glsl \
     shaders/textureTerrainFrag.glsl \
     shaders/textureTerrainVert.glsl \
-    textures/grassTexture.jpg \
     textures/rockTexture.jpg \
     textures/snowTexture.jpg \
     textures/mudTexture.png \
@@ -128,4 +127,5 @@ OTHER_FILES += \
     shaders/ripplesVert.glsl \
     textures/water_dudv.jpg \
     textures/water_normal.jpg \
-    shaders/GeometryClippedVert.glsl
+    shaders/GeometryClippedVert.glsl \
+    textures/grassTexture.jpg

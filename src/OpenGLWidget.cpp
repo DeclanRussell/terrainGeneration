@@ -87,8 +87,8 @@ void OpenGLWidget::initializeGL(){
 
     m_grassHairFactory = new grassHair(m_marchingCubesObject->getVAO());
     m_grassHairFactory->setGrassSize(0.05);
-    m_grassHairFactory->setMaxGrassHeight(0.5);
-    m_grassHairFactory->setMinGrassHeight(0.4);
+    m_grassHairFactory->setMaxGrassHeight(0.45);
+    m_grassHairFactory->setMinGrassHeight(0.38);
     m_grassHairFactory->setMaxGrassAngle(30.0);
     m_grassHairFactory->setNumStrandsPerFace(3);
 
@@ -208,7 +208,7 @@ void OpenGLWidget::renderRefractions(){
         m_marchingCubesObject->vMarchingCubes();
         m_moved = false;
     }
-    mesoModelMat = glm::scale(mesoModelMat,glm::vec3(1.0,4.0,1.0));
+    mesoModelMat = glm::scale(mesoModelMat,glm::vec3(2.0,4.0,2.0));
     mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5 - m_mesoCenter.first,0.0,-0.5 - m_mesoCenter.second));
 
     //draw our meso terrain
@@ -223,7 +223,7 @@ void OpenGLWidget::renderRefractions(){
     m_geometryClipmap->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
     m_geometryClipmap->loadMatricesToShader(macroModelMat, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
     m_geometryClipmap->setWireframe(false);
-    m_geometryClipmap->setCutout(true);
+    m_geometryClipmap->setCutout(false);
     //m_geometryClipmap->setCutOutPos(glm::vec2(-m_modelPos.x,m_modelPos.z));
     m_geometryClipmap->render();
 
@@ -277,7 +277,7 @@ void OpenGLWidget::paintGL(){
         glm::vec3 trans = (m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
         trans/=(2*512*32);
         trans/= 32.0;
-        m_marchingCubesObject->setSamplePos(0.505-(0.0625/2.0) - trans.x,0.505-(0.0625/2.0) + trans.z);
+        m_marchingCubesObject->setSamplePos(0.505-(0.0625/2.0) - trans.x,0.506-(0.0625/2.0) + trans.z);
         m_marchingCubesObject->vMarchingCubes();
         m_moved = false;
     }

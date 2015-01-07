@@ -116,8 +116,8 @@ void main(void)
         float A,B,C;
         for(int i=0; i<numStrands;++i){
             //gen two phsuedo random numbers
-            float r1 = rand(vertTexCoord[0] * i);
-            float r2 = rand(vertTexCoord[1] * i);
+            float r1 = rand(gl_in[0].gl_Position.xy * i);
+            float r2 = rand(gl_in[1].gl_Position.yz * i);
 
             //calculate our barycentric coeficients
             if(r1+r2>1.0){
