@@ -114,7 +114,9 @@ void main(){
   vec3 texColour = texture(colourMap, texCoords).rgb;
 //  vec3 texColour = texture(geoTexture, texCoords).rgb;
 //  vec3 colour = calcFog(texColour);
-  vec3 colour = calcFog(vec3(calcColour()));
+
+  //vec3 colour = calcFog(vec3(calcColour()));
+  vec3 colour = calcNormals().rbg;
   fragColour = vec4(colour, 1.0);
 
   if (cutout){
