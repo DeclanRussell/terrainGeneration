@@ -968,8 +968,8 @@ void marchingCubes::vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fSca
                         if(m_sampleMode = MC_2DMATSTACK){
                             xTexPos = m_samplePos.first + (asEdgeVertex[iVertex].fX * m_samplePercent.first);
                             yTexPos = m_samplePos.second + (asEdgeVertex[iVertex].fZ * m_samplePercent.second);
-                            xTexPos*=4.0;
-                            yTexPos*=4.0;
+                            xTexPos*=10.0;
+                            yTexPos*=10.0;
 
                         }
                         else{

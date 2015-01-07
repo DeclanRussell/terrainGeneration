@@ -81,7 +81,7 @@ void OpenGLWidget::initializeGL(){
     m_marchingCubesObject->setSampleResolution(32);
 
     m_marchingCubesObject->setSampleSize(0.0625,0.0625);
-    m_marchingCubesObject->setSamplePos(0.5-(0.0625/2.0),0.5-(0.0625/2.0));
+    m_marchingCubesObject->setSamplePos(0.505-(0.0625/2.0),0.505-(0.0625/2.0));
     m_marchingCubesObject->vMarchingCubes();
 //    m_marchingCubesObject->exportGeometryObj("middleTerrain");
 
@@ -89,7 +89,7 @@ void OpenGLWidget::initializeGL(){
     m_grassHairFactory->setGrassSize(0.05);
     m_grassHairFactory->setMaxGrassHeight(0.45);
     m_grassHairFactory->setMinGrassHeight(0.38);
-    m_grassHairFactory->setMaxGrassAngle(30.0);
+    m_grassHairFactory->setMaxGrassAngle(60.0);
     m_grassHairFactory->setNumStrandsPerFace(3);
 
     // Crate the skybox object
