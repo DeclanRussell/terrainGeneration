@@ -197,6 +197,7 @@ public:
         s_caveThreshSpn = new QDoubleSpinBox(s_highLandOctLbl);
         s_caveThreshSpn->setObjectName(QStringLiteral("s_caveThreshSpn"));
         s_caveThreshSpn->setMaximum(1);
+        s_caveThreshSpn->setSingleStep(0.01);
         s_caveThreshSpn->setValue(0.48);
 
         gridLayout_2->addWidget(s_caveThreshSpn, 15, 2, 1, 1);
@@ -284,6 +285,7 @@ public:
         s_caveAppBiasSpn = new QDoubleSpinBox(s_highLandOctLbl);
         s_caveAppBiasSpn->setObjectName(QStringLiteral("s_caveAppBiasSpn"));
         s_caveAppBiasSpn->setMaximum(1);
+        s_caveAppBiasSpn->setSingleStep(0.01);
         s_caveAppBiasSpn->setValue(0.3);
 
         gridLayout_2->addWidget(s_caveAppBiasSpn, 13, 2, 1, 1);

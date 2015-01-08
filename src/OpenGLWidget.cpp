@@ -75,6 +75,8 @@ void OpenGLWidget::initializeGL(){
     m_water = new Water();
 
     m_marchingCubesObject = new marchingCubes();
+    m_marchingCubesObject->setBlendTex(QImage("textures/myPerlinHeightmap.bmp"));
+    m_marchingCubesObject->createShader();
     m_marchingCubesObject->setMode(marchingCubes::MC_2DMATSTACK);
     //std::cout<<m_terrainFactory->getSizeX()<<" "<<m_terrainFactory->getSizeY()<<std::endl;
     m_marchingCubesObject->setMatStack(m_terrainFactory->getData(),m_terrainFactory->getSizeX(),m_terrainFactory->getSizeY());
@@ -87,6 +89,7 @@ void OpenGLWidget::initializeGL(){
 
     m_grassHairFactory = new grassHair(m_marchingCubesObject->getVAO());
     m_grassHairFactory->setGrassSize(0.05);
+    m_grassHairFactory->setGrassHeight(0.05);
     m_grassHairFactory->setMaxGrassHeight(0.45);
     m_grassHairFactory->setMinGrassHeight(0.38);
     m_grassHairFactory->setMaxGrassAngle(60.0);
@@ -250,11 +253,11 @@ void OpenGLWidget::timerEvent(QTimerEvent *){
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::paintGL(){   
     glBindFramebuffer(GL_FRAMEBUFFER, m_reflectFB);
-    renderReflections();
+//    renderReflections();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_refractFB);
-    renderRefractions();
+//    renderRefractions();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     glViewport(0, 0, width()*devicePixelRatio(), height()*devicePixelRatio());
@@ -277,7 +280,7 @@ void OpenGLWidget::paintGL(){
         glm::vec3 trans = (m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
         trans/=(2*512*32);
         trans/= 32.0;
-        m_marchingCubesObject->setSamplePos(0.505-(0.0625/2.0) - trans.x,0.506-(0.0625/2.0) + trans.z);
+        m_marchingCubesObject->setSamplePos(0.505-(0.0625/2.0) - trans.x,0.505-(0.0625/2.0) + trans.z);
         m_marchingCubesObject->vMarchingCubes();
         m_moved = false;
     }
@@ -315,7 +318,7 @@ void OpenGLWidget::paintGL(){
     modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0, 1.5, 0.0));
     modelMatrix = glm::scale(modelMatrix, glm::vec3(8.0, 1.0, 8.0));
     m_water->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
-    m_water->render();
+//    m_water->render();
 }
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::mouseMoveEvent (QMouseEvent * _event)

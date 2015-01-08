@@ -607,33 +607,6 @@ void terrainGen::sortAllElements(){
     }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-void terrainGen::removeFloatingTerrain(int _sampleSize){
-
-    std::vector<std::vector<std::vector<voxelData> > > voxels;
-    voxels.resize(_sampleSize);
-    for(int x=0; x<_sampleSize;x++){
-        voxels[x].resize(_sampleSize);
-        for(int y=0;y<_sampleSize;y++){
-            voxels[x][y].resize(_sampleSize);
-        }
-    }
-
-    float height;
-    for(int x=0; x<_sampleSize;x++){
-    for(int y=0; y<_sampleSize;y++){
-    for(int z=0; z<_sampleSize;z++){
-        height = y*(1.0/(float)_sampleSize);
-        voxels[x][y][z].type = m_terrainData[x][z].matTypeAt(height);
-        voxels[x][y][z].arrayLoc = m_terrainData[x][z].arrayLocAt(height);
-    }
-    }
-    }
-
-//    int dataSetSizeX = m_sizeX/_sampleSize;
-//    int dataSetSizeY = m_sizeY/_sampleSize;
-
-}
 
 //----------------------------------------------------------------------------------------------------------------------
 QImage terrainGen::createHeightMap(int _sizeX, int _sizeY){

@@ -11,6 +11,7 @@ out vec4 fragNorm;
 out vec2 texCoord;
 
 uniform float grassSize;
+uniform float grassHeight;
 uniform int numStrands;
 
 in float vertHeight[];
@@ -135,8 +136,8 @@ void main(void)
 
             vec4 pos = (gl_in[0].gl_Position * A) + (gl_in[1].gl_Position * B) + (gl_in[2].gl_Position * C);
             //vec4 right = vec4(cross(vec3(gl_in[0].gl_Position),vec3(gl_in[1].gl_Position)),0.0) * grassSize;
-            vec4 up = (gl_in[0].gl_Position+ ((normal[0] * vertNormalY[0]) * grassSize))*A + (gl_in[1].gl_Position+ ((normal[1] * vertNormalY[1]) * grassSize))*B + (gl_in[2].gl_Position+ ((normal[2] * vertNormalY[2]) * grassSize))*C;
-            vec4 scale = ((normal[0] * vertNormalY[0]) * grassSize)*A + ((normal[1] * vertNormalY[1]) * grassSize)*B + ((normal[2] * vertNormalY[2]) * grassSize)*C;
+            vec4 up = (gl_in[0].gl_Position+ ((normal[0] * vertNormalY[0]) * grassHeight))*A + (gl_in[1].gl_Position+ ((normal[1] * vertNormalY[1]) * grassHeight))*B + (gl_in[2].gl_Position+ ((normal[2] * vertNormalY[2]) * grassHeight))*C;
+            //vec4 scale = ((normal[0] * vertNormalY[0]) * grassSize)*A + ((normal[1] * vertNormalY[1]) * grassSize)*B + ((normal[2] * vertNormalY[2]) * grassSize)*C;
             vec4 right = vec4(normalize(cross(vec3(gl_in[0].gl_Position),vec3(gl_in[1].gl_Position))),0.0) * grassSize;
             vec4 forward = vec4(normalize(cross(vec3(up),vec3(right))),0.0) * grassSize;
             //vec4 forward = vec4(cross(vec3(right),vec3(up)),0.0) * grassSize;

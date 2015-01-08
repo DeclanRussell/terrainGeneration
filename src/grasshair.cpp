@@ -6,6 +6,7 @@ grassHair::grassHair()
 {
     m_grassSize = 1.0;
     m_maxHeight = 1.0;
+    m_grassHeight = 1.0;
     m_minHeight = 0.0;
     m_maxAngle = 90.0;
     createShader();
@@ -14,6 +15,7 @@ grassHair::grassHair()
 grassHair::grassHair(GLuint _VAO){
     m_VAO = _VAO;
     m_grassSize = 1.0;
+    m_grassHeight = 1.0;
     m_maxHeight = 1.0;
     m_minHeight = 0.0;
     m_maxAngle = 90.0;
@@ -66,12 +68,14 @@ void grassHair::createShader(){
 
     //set our grass size
     GLuint grassSizeLoc = m_shaderProgram->getUniformLoc("grassSize");
+    GLuint grassHeightLoc = m_shaderProgram->getUniformLoc("grassHeight");
     m_timeLoc = m_shaderProgram->getUniformLoc("time");
     GLuint windDirLoc = m_shaderProgram->getUniformLoc("windDir");
     GLuint windStrengthLoc = m_shaderProgram->getUniformLoc("windStrength");
     glUniform1f(windStrengthLoc,0.01);
     glUniform3f(windDirLoc,1.0,0.0,0.0);
     glUniform1f(m_timeLoc,clock()/CLOCKS_PER_SEC);
+    glUniform1f(grassHeightLoc,m_grassHeight);
     glUniform1f(grassSizeLoc,m_grassSize);
 
     //set up our grass texture
@@ -119,12 +123,13 @@ void grassHair::loadMatricesToShader(glm::mat4 _modelMatrix, Camera *_cam){
     GLuint normalLoc = m_shaderProgram->getUniformLoc("normalMatrix");
     GLuint modelViewProjectionLoc = m_shaderProgram->getUniformLoc("modelViewProjectionMatrix");
     GLuint grassSizeLoc = m_shaderProgram->getUniformLoc("grassSize");
+    GLuint grassHeightLoc = m_shaderProgram->getUniformLoc("grassHeight");
     GLuint maxHeightLoc = m_shaderProgram->getUniformLoc("maxHeight");
     GLuint minHeightLoc = m_shaderProgram->getUniformLoc("minHeight");
     GLuint maxAngleLoc = m_shaderProgram->getUniformLoc("maxAngle");
     GLuint numStrandsLoc = m_shaderProgram->getUniformLoc("numStrands");
 
-
+    glUniform1f(grassHeightLoc,m_grassHeight);
     glUniform1i(numStrandsLoc,m_numStrandsPerFace);
     glUniform1f(maxHeightLoc,m_maxHeight);
     glUniform1f(minHeightLoc,m_minHeight);
