@@ -16,6 +16,7 @@ uniform int numStrands;
 
 uniform float maxHeight;
 uniform float minHeight;
+uniform float maxAngle;
 
 uniform vec3 windDir;
 uniform float windStrength;
@@ -106,15 +107,16 @@ void main(void)
     avgHeight/=3.0;
     vec4 avgPos = gl_in[0].gl_Position + gl_in[1].gl_Position + gl_in[2].gl_Position;
     avgPos/=3.0;
-    if (!((avgPos.x<=0.99 && avgPos.x>=-0.99) && (avgPos.z<=0.99 && avgPos.z>=-0.99)) )
-    if(avgHeight>minHeight && avgHeight < maxHeight){
-        vec3 e1 = vec3(gl_in[1].gl_Position - gl_in[0].gl_Position);
-        vec3 e2 = vec3(gl_in[2].gl_Position - gl_in[0].gl_Position);
+    vec3 e1 = vec3(gl_in[1].gl_Position - gl_in[0].gl_Position);
+    vec3 e2 = vec3(gl_in[2].gl_Position - gl_in[0].gl_Position);
 
-        vec3 normal = normalize(cross(e1,e2));
-        normal.x*=-1;
-        normal.y*=-1;
-        normal.z*=-1;
+    vec3 normal = normalize(cross(e1,e2));
+    normal.x*=-1;
+    normal.y*=-1;
+    normal.z*=-1;
+    float angle = (1.0-normal.y) * 90.0;
+    if (!((avgPos.x<=0.99 && avgPos.x>=-0.99) && (avgPos.z<=0.99 && avgPos.z>=-0.99)) )
+    if(avgHeight>minHeight && avgHeight < maxHeight && angle<maxAngle){
         float A,B,C;
         for(int i=0; i<numStrands;++i){
             //gen two phsuedo random numbers

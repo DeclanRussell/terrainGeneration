@@ -160,3 +160,13 @@ void MainWindow::on_s_marchingCubesResSdl_sliderReleased()
     m_openGLWidget->m_marchingCubesObject->setSampleResolution(ui->s_marchingCubesResSdl->value());
     m_openGLWidget->m_marchingCubesObject->vMarchingCubes();
 }
+
+void MainWindow::on_s_MacGrasDenSld_sliderMoved(int position)
+{
+    m_openGLWidget->m_grassHairClipmapFactory->setNumStrandsPerFace(position);
+}
+
+void MainWindow::on_s_macGrasDenSpn_valueChanged(int arg1)
+{
+    m_openGLWidget->m_grassHairClipmapFactory->setNumStrandsPerFace(arg1);
+}

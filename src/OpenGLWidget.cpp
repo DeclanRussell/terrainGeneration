@@ -92,15 +92,16 @@ void OpenGLWidget::initializeGL(){
     m_grassHairFactory->setGrassHeight(0.05);
     m_grassHairFactory->setMaxGrassHeight(0.43);
     m_grassHairFactory->setMinGrassHeight(0.36);
-    m_grassHairFactory->setMaxGrassAngle(100.0);
+    m_grassHairFactory->setMaxGrassAngle(60.0);
     m_grassHairFactory->setNumStrandsPerFace(3);
 
     m_grassHairClipmapFactory = new grassHairClipmap(m_geometryClipmap->m_VAO,QImage("textures/myPerlinHeightmap.bmp"));
     m_grassHairClipmapFactory->setGrassSize(0.2);
     m_grassHairClipmapFactory->setGrassHeight(0.2);
+    m_grassHairClipmapFactory->setMaxGrassAngle(60.0);
     m_grassHairClipmapFactory->setMaxGrassHeight(0.46);
-    m_grassHairClipmapFactory->setMinGrassHeight(0.36);
-    m_grassHairClipmapFactory->setNumStrandsPerFace(3);
+    m_grassHairClipmapFactory->setMinGrassHeight(0.38);
+    m_grassHairClipmapFactory->setNumStrandsPerFace(2);
 
     // Crate the skybox object
     m_skybox = new Skybox();
