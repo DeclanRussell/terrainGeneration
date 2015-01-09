@@ -33,7 +33,8 @@ SOURCES += \
     src/noiseutils.cpp \
     src/Bmp.cpp \
     src/Skybox.cpp \
-    src/Water.cpp
+    src/Water.cpp \
+    src/grasshairclipmap.cpp
 
 HEADERS += \
     include/mainwindow.h \
@@ -55,7 +56,8 @@ HEADERS += \
     include/noiseutils.h \
     include/Bmp.h \
     include/Skybox.h \
-    include/Water.h
+    include/Water.h \
+    include/grasshairclipmap.h
 
 HEADERS+=accidentalnoise/include/*.h
 #HEADERS-=accidentalnoise/include/*.h
@@ -128,4 +130,7 @@ OTHER_FILES += \
     textures/water_dudv.jpg \
     textures/water_normal.jpg \
     shaders/GeometryClippedVert.glsl \
-    textures/grassTexture.jpg
+    textures/grassTexture.jpg \
+    shaders/grassHairClipmapFrag.glsl \
+    shaders/grassHairClipmapGeom.glsl \
+    shaders/grassHairClipmapVert.glsl

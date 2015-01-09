@@ -20,5 +20,5 @@ void main(void)
     vertNormalY = vertexNormal.y;
     vertTexCoord = texCoord;
     normal = vec4(vertexNormal,0.0);
-    gl_Position = vec4(vertexPosition,1.0);
+    gl_Position = vec4(vertexPosition.x,vertexPosition.y+0.025,vertexPosition.z,1.0);
 }

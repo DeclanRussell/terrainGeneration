@@ -34,19 +34,18 @@ void main(){
        else if(vertexPosition.x>0.95){
            interp = vertexPosition.x - 0.95;
        }
-       else if(vertexPosition.z>0.95){
+       else if(vertexPosition.z>0.9){
            interp = vertexPosition.z - 0.95;
        }
 
-       height = mix(height,vertexPosition.y,interp);
-
+       height = mix(height,vertexPosition.y+0.025,interp);
        position = vec3(modelViewMatrix * vec4(vertexPosition.x,height,vertexPosition.z, 1.0));
        gl_Position = modelViewProjectionMatrix * vec4(vertexPosition.x,height,vertexPosition.z, 1.0);
    }
    else{
-       height = vertexPosition.y;
-       position = vec3(modelViewMatrix * vec4(vertexPosition, 1.0));
-       gl_Position = modelViewProjectionMatrix * vec4(vertexPosition,1.0);
+       height = vertexPosition.y + 0.025;
+       position = vec3(modelViewMatrix * vec4(vertexPosition.x,vertexPosition.y+0.025,vertexPosition.z, 1.0));
+       gl_Position = modelViewProjectionMatrix * vec4(vertexPosition.x,vertexPosition.y+0.025,vertexPosition.z,1.0);
    }
    angle = (1.0 - vertexNormal.y)*90.0;
    TexCoords = texCoord;

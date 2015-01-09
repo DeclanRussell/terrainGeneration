@@ -90,10 +90,17 @@ void OpenGLWidget::initializeGL(){
     m_grassHairFactory = new grassHair(m_marchingCubesObject->getVAO());
     m_grassHairFactory->setGrassSize(0.05);
     m_grassHairFactory->setGrassHeight(0.05);
-    m_grassHairFactory->setMaxGrassHeight(0.45);
-    m_grassHairFactory->setMinGrassHeight(0.38);
-    m_grassHairFactory->setMaxGrassAngle(60.0);
+    m_grassHairFactory->setMaxGrassHeight(0.43);
+    m_grassHairFactory->setMinGrassHeight(0.36);
+    m_grassHairFactory->setMaxGrassAngle(100.0);
     m_grassHairFactory->setNumStrandsPerFace(3);
+
+    m_grassHairClipmapFactory = new grassHairClipmap(m_geometryClipmap->m_VAO,QImage("textures/myPerlinHeightmap.bmp"));
+    m_grassHairClipmapFactory->setGrassSize(0.2);
+    m_grassHairClipmapFactory->setGrassHeight(0.2);
+    m_grassHairClipmapFactory->setMaxGrassHeight(0.46);
+    m_grassHairClipmapFactory->setMinGrassHeight(0.36);
+    m_grassHairClipmapFactory->setNumStrandsPerFace(3);
 
     // Crate the skybox object
     m_skybox = new Skybox();
@@ -253,11 +260,11 @@ void OpenGLWidget::timerEvent(QTimerEvent *){
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::paintGL(){   
     glBindFramebuffer(GL_FRAMEBUFFER, m_reflectFB);
-//    renderReflections();
+    renderReflections();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     glBindFramebuffer(GL_FRAMEBUFFER, m_refractFB);
-//    renderRefractions();
+    renderRefractions();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
     glViewport(0, 0, width()*devicePixelRatio(), height()*devicePixelRatio());
@@ -287,8 +294,6 @@ void OpenGLWidget::paintGL(){
     mesoModelMat = glm::scale(mesoModelMat,glm::vec3(2.0,4.0,2.0));
     mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5,0.0,-0.5));
 
-    //draw our meso terrain
-    m_marchingCubesObject->draw(mesoModelMat, m_cam);
 
     glm::mat4 macroModelMat = m_mouseGlobalTX;
 
@@ -303,8 +308,14 @@ void OpenGLWidget::paintGL(){
     //m_geometryClipmap->setCutOutPos(glm::vec2(-m_modelPos.x,m_modelPos.z));
     m_geometryClipmap->render();
 
+    //draw our meso terrain
+    m_marchingCubesObject->draw(mesoModelMat, m_cam);
+
     //draw our grass
     m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
+    m_grassHairClipmapFactory->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
+    m_grassHairClipmapFactory->draw(macroModelMat,m_cam,m_geometryClipmap->m_vert.size());
+
 
     glm::mat4 modelMatrix = glm::mat4(1.0);
     modelMatrix = m_mouseGlobalTX;
@@ -318,7 +329,7 @@ void OpenGLWidget::paintGL(){
     modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0, 1.5, 0.0));
     modelMatrix = glm::scale(modelMatrix, glm::vec3(8.0, 1.0, 8.0));
     m_water->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
-//    m_water->render();
+    m_water->render();
 }
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::mouseMoveEvent (QMouseEvent * _event)

@@ -66,10 +66,11 @@ void MainWindow::on_s_genTerrainBtn_clicked()
 {
     m_openGLWidget->m_terrainFactory->setProgressBar(m_progressBar);
     m_openGLWidget->m_terrainFactory->createTerrainFromNoise();
-    QImage heightMap = m_openGLWidget->m_terrainFactory->createHeightMap(128,128);
+    QImage heightMap = m_openGLWidget->m_terrainFactory->createHeightMap(256,256);
     m_openGLWidget->m_marchingCubesObject->setBlendTex(heightMap);
     m_openGLWidget->m_marchingCubesObject->vMarchingCubes();
     m_openGLWidget->m_geometryClipmap->setHeightMap(heightMap);
+    m_openGLWidget->m_grassHairClipmapFactory->setHeightMap(heightMap);
 
 
 }

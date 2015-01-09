@@ -66,6 +66,7 @@ SOURCES       = src/main.cpp \
 		src/Bmp.cpp \
 		src/Skybox.cpp \
 		src/Water.cpp \
+		src/grasshairclipmap.cpp \
 		accidentalnoise/src/arrayoperations.cpp \
 		accidentalnoise/src/cellulargen.cpp \
 		accidentalnoise/src/hsv.cpp \
@@ -140,6 +141,7 @@ OBJECTS       = obj/main.o \
 		obj/Bmp.o \
 		obj/Skybox.o \
 		obj/Water.o \
+		obj/grasshairclipmap.o \
 		obj/arrayoperations.o \
 		obj/cellulargen.o \
 		obj/hsv.o \
@@ -559,7 +561,7 @@ qmake_all: FORCE
 
 dist: 
 	@test -d obj/terrainGen1.0.0 || mkdir -p obj/terrainGen1.0.0
-	$(COPY_FILE) --parents $(SOURCES) $(DIST) obj/terrainGen1.0.0/ && $(COPY_FILE) --parents include/mainwindow.h include/Camera.h include/ShaderUtils.h include/TextureUtils.h include/ShaderProgram.h include/Texture.h include/OpenGLWidget.h include/Shader.h include/marchingcubes.h include/perlinnoise.h include/terraingen.h include/Trees.h include/Grass.h include/Model.h include/grasshair.h include/GeometryClipmap.h include/noiseutils.h include/Bmp.h include/Skybox.h include/Water.h accidentalnoise/include/anl.h accidentalnoise/include/arrayoperations.h accidentalnoise/include/cellulargen.h accidentalnoise/include/hsv.h accidentalnoise/include/implicitautocorrect.h accidentalnoise/include/implicitbasisfunction.h accidentalnoise/include/implicitbias.h accidentalnoise/include/implicitblend.h accidentalnoise/include/implicitbrightcontrast.h accidentalnoise/include/implicitcache.h accidentalnoise/include/implicitcellular.h accidentalnoise/include/implicitclamp.h accidentalnoise/include/implicitcombiner.h accidentalnoise/include/implicitconstant.h accidentalnoise/include/implicitcos.h accidentalnoise/include/implicitcurve.h accidentalnoise/include/implicitextractrgbachannel.h accidentalnoise/include/implicitfloor.h accidentalnoise/include/implicitfractal.h accidentalnoise/include/implicitfunctiongradient.h accidentalnoise/include/implicitgain.h accidentalnoise/include/implicitgradient.h accidentalnoise/include/implicitmagnitude.h accidentalnoise/include/implicitmodifier.h accidentalnoise/include/implicitmodulebase.h accidentalnoise/include/implicitnormalizecoords.h accidentalnoise/include/implicitpow.h accidentalnoise/include/implicitrgbadotproduct.h accidentalnoise/include/implicitrotatedomain.h accidentalnoise/include/implicitsawtooth.h accidentalnoise/include/implicitscaledomain.h accidentalnoise/include/implicitscaleoffset.h accidentalnoise/include/implicitselect.h accidentalnoise/include/implicitsin.h accidentalnoise/include/implicitsphere.h accidentalnoise/include/implicittiers.h accidentalnoise/include/implicittransform.h accidentalnoise/include/implicittranslatedomain.h accidentalnoise/include/implicittriangle.h accidentalnoise/include/mapping.h accidentalnoise/include/noise_gen.h accidentalnoise/include/noise_lut.h accidentalnoise/include/noiselut.h accidentalnoise/include/random_gen.h accidentalnoise/include/rasterization.h accidentalnoise/include/rgba.h accidentalnoise/include/rgbablend.h accidentalnoise/include/rgbablendops.h accidentalnoise/include/rgbacolorops.h accidentalnoise/include/rgbacomposechannels.h accidentalnoise/include/rgbaconstant.h accidentalnoise/include/rgbacurve.h accidentalnoise/include/rgbahsvtorgba.h accidentalnoise/include/rgbaimplicitgrayscale.h accidentalnoise/include/rgbamodulebase.h accidentalnoise/include/rgbanormalize.h accidentalnoise/include/rgbargbatohsv.h accidentalnoise/include/rgbarotatecolor.h accidentalnoise/include/rgbaselect.h accidentalnoise/include/utility.h accidentalnoise/include/vectortypes.h obj/terrainGen1.0.0/ && $(COPY_FILE) --parents src/main.cpp src/mainwindow.cpp src/Camera.cpp src/ShaderUtils.cpp src/TextureUtils.cpp src/ShaderProgram.cpp src/Texture.cpp src/OpenGLWidget.cpp src/Shader.cpp src/marchingcubes.cpp src/perlinnoise.cpp src/terraingen.cpp src/Grass.cpp src/Trees.cpp src/Model.cpp src/grasshair.cpp src/GeometryClipmap.cpp src/noiseutils.cpp src/Bmp.cpp src/Skybox.cpp src/Water.cpp accidentalnoise/src/arrayoperations.cpp accidentalnoise/src/cellulargen.cpp accidentalnoise/src/hsv.cpp accidentalnoise/src/implicitautocorrect.cpp accidentalnoise/src/implicitbasisfunction.cpp accidentalnoise/src/implicitbias.cpp accidentalnoise/src/implicitblend.cpp accidentalnoise/src/implicitbrightcontrast.cpp accidentalnoise/src/implicitcache.cpp accidentalnoise/src/implicitcellular.cpp accidentalnoise/src/implicitclamp.cpp accidentalnoise/src/implicitcombiner.cpp accidentalnoise/src/implicitconstant.cpp accidentalnoise/src/implicitcos.cpp accidentalnoise/src/implicitcurve.cpp accidentalnoise/src/implicitextractrgbachannel.cpp accidentalnoise/src/implicitfloor.cpp accidentalnoise/src/implicitfractal.cpp accidentalnoise/src/implicitfunctiongradient.cpp accidentalnoise/src/implicitgain.cpp accidentalnoise/src/implicitgradient.cpp accidentalnoise/src/implicitmagnitude.cpp accidentalnoise/src/implicitmodulebase.cpp accidentalnoise/src/implicitnormalizecoords.cpp accidentalnoise/src/implicitpow.cpp accidentalnoise/src/implicitrgbadotproduct.cpp accidentalnoise/src/implicitrotatedomain.cpp accidentalnoise/src/implicitsawtooth.cpp accidentalnoise/src/implicitscaledomain.cpp accidentalnoise/src/implicitscaleoffset.cpp accidentalnoise/src/implicitselect.cpp accidentalnoise/src/implicitsin.cpp accidentalnoise/src/implicitsphere.cpp accidentalnoise/src/implicittiers.cpp accidentalnoise/src/implicittranslatedomain.cpp accidentalnoise/src/implicittriangle.cpp accidentalnoise/src/mapping.cpp accidentalnoise/src/noise_gen.cpp accidentalnoise/src/noise_lut.cpp accidentalnoise/src/rasterization.cpp accidentalnoise/src/rgbablend.cpp accidentalnoise/src/rgbablendops.cpp accidentalnoise/src/rgbacolorops.cpp accidentalnoise/src/rgbacomposechannels.cpp accidentalnoise/src/rgbaconstant.cpp accidentalnoise/src/rgbacurve.cpp accidentalnoise/src/rgbahsvtorgba.cpp accidentalnoise/src/rgbaimplicitgrayscale.cpp accidentalnoise/src/rgbanormalize.cpp accidentalnoise/src/rgbargbatohsv.cpp accidentalnoise/src/rgbarotatecolor.cpp accidentalnoise/src/rgbaselect.cpp obj/terrainGen1.0.0/ && $(COPY_FILE) --parents ui/mainwindow.ui obj/terrainGen1.0.0/ && (cd `dirname obj/terrainGen1.0.0` && $(TAR) terrainGen1.0.0.tar terrainGen1.0.0 && $(COMPRESS) terrainGen1.0.0.tar) && $(MOVE) `dirname obj/terrainGen1.0.0`/terrainGen1.0.0.tar.gz . && $(DEL_FILE) -r obj/terrainGen1.0.0
+	$(COPY_FILE) --parents $(SOURCES) $(DIST) obj/terrainGen1.0.0/ && $(COPY_FILE) --parents include/mainwindow.h include/Camera.h include/ShaderUtils.h include/TextureUtils.h include/ShaderProgram.h include/Texture.h include/OpenGLWidget.h include/Shader.h include/marchingcubes.h include/perlinnoise.h include/terraingen.h include/Trees.h include/Grass.h include/Model.h include/grasshair.h include/GeometryClipmap.h include/noiseutils.h include/Bmp.h include/Skybox.h include/Water.h include/grasshairclipmap.h accidentalnoise/include/anl.h accidentalnoise/include/arrayoperations.h accidentalnoise/include/cellulargen.h accidentalnoise/include/hsv.h accidentalnoise/include/implicitautocorrect.h accidentalnoise/include/implicitbasisfunction.h accidentalnoise/include/implicitbias.h accidentalnoise/include/implicitblend.h accidentalnoise/include/implicitbrightcontrast.h accidentalnoise/include/implicitcache.h accidentalnoise/include/implicitcellular.h accidentalnoise/include/implicitclamp.h accidentalnoise/include/implicitcombiner.h accidentalnoise/include/implicitconstant.h accidentalnoise/include/implicitcos.h accidentalnoise/include/implicitcurve.h accidentalnoise/include/implicitextractrgbachannel.h accidentalnoise/include/implicitfloor.h accidentalnoise/include/implicitfractal.h accidentalnoise/include/implicitfunctiongradient.h accidentalnoise/include/implicitgain.h accidentalnoise/include/implicitgradient.h accidentalnoise/include/implicitmagnitude.h accidentalnoise/include/implicitmodifier.h accidentalnoise/include/implicitmodulebase.h accidentalnoise/include/implicitnormalizecoords.h accidentalnoise/include/implicitpow.h accidentalnoise/include/implicitrgbadotproduct.h accidentalnoise/include/implicitrotatedomain.h accidentalnoise/include/implicitsawtooth.h accidentalnoise/include/implicitscaledomain.h accidentalnoise/include/implicitscaleoffset.h accidentalnoise/include/implicitselect.h accidentalnoise/include/implicitsin.h accidentalnoise/include/implicitsphere.h accidentalnoise/include/implicittiers.h accidentalnoise/include/implicittransform.h accidentalnoise/include/implicittranslatedomain.h accidentalnoise/include/implicittriangle.h accidentalnoise/include/mapping.h accidentalnoise/include/noise_gen.h accidentalnoise/include/noise_lut.h accidentalnoise/include/noiselut.h accidentalnoise/include/random_gen.h accidentalnoise/include/rasterization.h accidentalnoise/include/rgba.h accidentalnoise/include/rgbablend.h accidentalnoise/include/rgbablendops.h accidentalnoise/include/rgbacolorops.h accidentalnoise/include/rgbacomposechannels.h accidentalnoise/include/rgbaconstant.h accidentalnoise/include/rgbacurve.h accidentalnoise/include/rgbahsvtorgba.h accidentalnoise/include/rgbaimplicitgrayscale.h accidentalnoise/include/rgbamodulebase.h accidentalnoise/include/rgbanormalize.h accidentalnoise/include/rgbargbatohsv.h accidentalnoise/include/rgbarotatecolor.h accidentalnoise/include/rgbaselect.h accidentalnoise/include/utility.h accidentalnoise/include/vectortypes.h obj/terrainGen1.0.0/ && $(COPY_FILE) --parents src/main.cpp src/mainwindow.cpp src/Camera.cpp src/ShaderUtils.cpp src/TextureUtils.cpp src/ShaderProgram.cpp src/Texture.cpp src/OpenGLWidget.cpp src/Shader.cpp src/marchingcubes.cpp src/perlinnoise.cpp src/terraingen.cpp src/Grass.cpp src/Trees.cpp src/Model.cpp src/grasshair.cpp src/GeometryClipmap.cpp src/noiseutils.cpp src/Bmp.cpp src/Skybox.cpp src/Water.cpp src/grasshairclipmap.cpp accidentalnoise/src/arrayoperations.cpp accidentalnoise/src/cellulargen.cpp accidentalnoise/src/hsv.cpp accidentalnoise/src/implicitautocorrect.cpp accidentalnoise/src/implicitbasisfunction.cpp accidentalnoise/src/implicitbias.cpp accidentalnoise/src/implicitblend.cpp accidentalnoise/src/implicitbrightcontrast.cpp accidentalnoise/src/implicitcache.cpp accidentalnoise/src/implicitcellular.cpp accidentalnoise/src/implicitclamp.cpp accidentalnoise/src/implicitcombiner.cpp accidentalnoise/src/implicitconstant.cpp accidentalnoise/src/implicitcos.cpp accidentalnoise/src/implicitcurve.cpp accidentalnoise/src/implicitextractrgbachannel.cpp accidentalnoise/src/implicitfloor.cpp accidentalnoise/src/implicitfractal.cpp accidentalnoise/src/implicitfunctiongradient.cpp accidentalnoise/src/implicitgain.cpp accidentalnoise/src/implicitgradient.cpp accidentalnoise/src/implicitmagnitude.cpp accidentalnoise/src/implicitmodulebase.cpp accidentalnoise/src/implicitnormalizecoords.cpp accidentalnoise/src/implicitpow.cpp accidentalnoise/src/implicitrgbadotproduct.cpp accidentalnoise/src/implicitrotatedomain.cpp accidentalnoise/src/implicitsawtooth.cpp accidentalnoise/src/implicitscaledomain.cpp accidentalnoise/src/implicitscaleoffset.cpp accidentalnoise/src/implicitselect.cpp accidentalnoise/src/implicitsin.cpp accidentalnoise/src/implicitsphere.cpp accidentalnoise/src/implicittiers.cpp accidentalnoise/src/implicittranslatedomain.cpp accidentalnoise/src/implicittriangle.cpp accidentalnoise/src/mapping.cpp accidentalnoise/src/noise_gen.cpp accidentalnoise/src/noise_lut.cpp accidentalnoise/src/rasterization.cpp accidentalnoise/src/rgbablend.cpp accidentalnoise/src/rgbablendops.cpp accidentalnoise/src/rgbacolorops.cpp accidentalnoise/src/rgbacomposechannels.cpp accidentalnoise/src/rgbaconstant.cpp accidentalnoise/src/rgbacurve.cpp accidentalnoise/src/rgbahsvtorgba.cpp accidentalnoise/src/rgbaimplicitgrayscale.cpp accidentalnoise/src/rgbanormalize.cpp accidentalnoise/src/rgbargbatohsv.cpp accidentalnoise/src/rgbarotatecolor.cpp accidentalnoise/src/rgbaselect.cpp obj/terrainGen1.0.0/ && $(COPY_FILE) --parents ui/mainwindow.ui obj/terrainGen1.0.0/ && (cd `dirname obj/terrainGen1.0.0` && $(TAR) terrainGen1.0.0.tar terrainGen1.0.0 && $(COMPRESS) terrainGen1.0.0.tar) && $(MOVE) `dirname obj/terrainGen1.0.0`/terrainGen1.0.0.tar.gz . && $(DEL_FILE) -r obj/terrainGen1.0.0
 
 
 clean:compiler_clean 
@@ -796,6 +798,7 @@ moc/moc_mainwindow.cpp: /opt/Qt/5.2.1/gcc_64/include/QtWidgets/QMainWindow \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/QTime \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/qdatetime.h \
 		include/Skybox.h \
+		include/grasshairclipmap.h \
 		include/mainwindow.h
 	/opt/Qt/5.2.1/gcc_64/bin/moc $(DEFINES) $(INCPATH) include/mainwindow.h -o moc/moc_mainwindow.cpp
 
@@ -1005,6 +1008,7 @@ moc/moc_OpenGLWidget.cpp: /opt/Qt/5.2.1/gcc_64/include/QtOpenGL/QGLWidget \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/QTime \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/qdatetime.h \
 		include/Skybox.h \
+		include/grasshairclipmap.h \
 		include/OpenGLWidget.h
 	/opt/Qt/5.2.1/gcc_64/bin/moc $(DEFINES) $(INCPATH) include/OpenGLWidget.h -o moc/moc_OpenGLWidget.cpp
 
@@ -1244,7 +1248,8 @@ obj/main.o: src/main.cpp /opt/Qt/5.2.1/gcc_64/include/QtWidgets/QApplication \
 		include/Water.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/QTime \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/qdatetime.h \
-		include/Skybox.h
+		include/Skybox.h \
+		include/grasshairclipmap.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/mainwindow.o: src/mainwindow.cpp include/mainwindow.h \
@@ -1459,6 +1464,7 @@ obj/mainwindow.o: src/mainwindow.cpp include/mainwindow.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/QTime \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/qdatetime.h \
 		include/Skybox.h \
+		include/grasshairclipmap.h \
 		ui_mainwindow.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/QVariant \
 		/opt/Qt/5.2.1/gcc_64/include/QtWidgets/QAction \
@@ -1949,6 +1955,7 @@ obj/OpenGLWidget.o: src/OpenGLWidget.cpp /opt/Qt/5.2.1/gcc_64/include/QtGui/QGui
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/QTime \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/qdatetime.h \
 		include/Skybox.h \
+		include/grasshairclipmap.h \
 		include/perlinnoise.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/OpenGLWidget.o src/OpenGLWidget.cpp
 
@@ -3192,6 +3199,91 @@ obj/Water.o: src/Water.cpp include/Water.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/qsharedpointer_impl.h \
 		/opt/Qt/5.2.1/gcc_64/include/QtCore/qhash.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Water.o src/Water.cpp
+
+obj/grasshairclipmap.o: src/grasshairclipmap.cpp include/grasshairclipmap.h \
+		include/ShaderProgram.h \
+		include/Shader.h \
+		include/Texture.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/QImage \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/qimage.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/qtransform.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/qmatrix.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/qpolygon.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qvector.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qalgorithms.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qglobal.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qconfig.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qfeatures.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qsystemdetection.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qprocessordetection.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qcompilerdetection.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qglobalstatic.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qbasicatomic.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_bootstrap.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qgenericatomic.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_msvc.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_integrity.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qoldbasicatomic.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_vxworks.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_power.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_alpha.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_armv7.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_armv6.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_armv5.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_bfin.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_ia64.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_mips.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_s390.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_sh4a.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_sparc.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_x86.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_cxx11.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_gcc.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qatomic_unix.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qmutex.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qlogging.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qflags.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qtypeinfo.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qtypetraits.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qsysinfo.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qiterator.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qlist.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qrefcount.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qarraydata.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qpoint.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qnamespace.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qrect.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qsize.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/qregion.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/qwindowdefs.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qobjectdefs.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qobjectdefs_impl.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/qwindowdefs_win.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qdatastream.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qscopedpointer.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qiodevice.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qobject.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qstring.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qchar.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qbytearray.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qstringbuilder.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qcoreevent.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qmetatype.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qvarlengtharray.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qcontainerfwd.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qisenum.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qobject_impl.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qpair.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qline.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/qpainterpath.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/qpaintdevice.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtGui/qrgb.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qstringlist.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qregexp.h \
+		/opt/Qt/5.2.1/gcc_64/include/QtCore/qstringmatcher.h \
+		include/Camera.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/grasshairclipmap.o src/grasshairclipmap.cpp
 
 obj/arrayoperations.o: accidentalnoise/src/arrayoperations.cpp accidentalnoise/include/arrayoperations.h \
 		accidentalnoise/include/mapping.h \

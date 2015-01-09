@@ -129,7 +129,7 @@ void marchingCubes::createShader(){
 
     //set our mix threshhold to set the bounds that we want to blend between 2 materials
     GLuint mixThreshhold = m_shaderProgram->getUniformLoc("mixThreshhold");
-    glUniform1f(mixThreshhold, 0.1);
+    glUniform1f(mixThreshhold, 0.05);
 }
 //----------------------------------------------------------------------------------------------------------------------
 void marchingCubes::allocateGeomtryData(){

@@ -51,11 +51,11 @@ public:
     inline void setViewPos(glm::vec3 _viewPos){m_viewPos = _viewPos;}
     // VAO to store the geometry
     GLuint m_VAO;
+    // holds vertices
+    std::vector<glm::vec3> m_vert;
 private:
     // the location of our cut out
     glm::vec2 m_cutOutPos;
-    // holds vertices
-    std::vector<glm::vec3> m_vert;
     // size of the grid
     GLuint m_gridSize;
     // number of levels of detail
