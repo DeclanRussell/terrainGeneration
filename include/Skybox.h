@@ -5,9 +5,11 @@
 #include <glm/gtc/type_ptr.hpp>
 #include <string>
 #include <IL/il.h>
+#include <QTime>
 
 #include "ShaderProgram.h"
 #include "Model.h"
+#include "Texture.h"
 
 class Skybox {
 public:
@@ -62,6 +64,9 @@ private:
     void update();
     /// @brief texId
     GLuint m_texID;
+    GLuint m_cloudTexID;
+    Texture *m_cloudTex;
+    QTime m_timer;
 };
 
 #endif

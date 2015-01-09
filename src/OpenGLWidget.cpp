@@ -8,7 +8,7 @@
 const static float INCREMENT=0.01;
 const static float ZOOM = 0.1;
 
-OpenGLWidget::OpenGLWidget(const QGLFormat _format, QWidget *_parent) : QGLWidget(_format,_parent){
+OpenGLWidget::OpenGLWidget(const QGLFormat _format, QWidget *_parent) : QGLWidget(_format,_parent), m_drawGrass(true){
     // set this widget to have the initial keyboard focus
     setFocus();
     setFocusPolicy( Qt::StrongFocus );
@@ -60,7 +60,7 @@ void OpenGLWidget::initializeGL(){
     m_modelMatrix = glm::mat4(1.0);
 
     // Initialize the camera
-    glm::vec3 pos(0.0, 5.0, 0.1);
+    glm::vec3 pos(0.0, 5.0, 5.0);
     m_cam = new Camera(pos);
 
     //create our volumetric data
@@ -78,14 +78,12 @@ void OpenGLWidget::initializeGL(){
     m_marchingCubesObject->setBlendTex(QImage("textures/myPerlinHeightmap.bmp"));
     m_marchingCubesObject->createShader();
     m_marchingCubesObject->setMode(marchingCubes::MC_2DMATSTACK);
-    //std::cout<<m_terrainFactory->getSizeX()<<" "<<m_terrainFactory->getSizeY()<<std::endl;
     m_marchingCubesObject->setMatStack(m_terrainFactory->getData(),m_terrainFactory->getSizeX(),m_terrainFactory->getSizeY());
     m_marchingCubesObject->setSampleResolution(32);
 
     m_marchingCubesObject->setSampleSize(0.0625,0.0625);
     m_marchingCubesObject->setSamplePos(0.505-(0.0625/2.0),0.505-(0.0625/2.0));
     m_marchingCubesObject->vMarchingCubes();
-//    m_marchingCubesObject->exportGeometryObj("middleTerrain");
 
     m_grassHairFactory = new grassHair(m_marchingCubesObject->getVAO());
     m_grassHairFactory->setGrassSize(0.05);
@@ -181,9 +179,7 @@ void OpenGLWidget::renderReflections(){
 
     m_geometryClipmap->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
     m_geometryClipmap->loadClippedMatricesToShader(macroModelMat, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
-    m_geometryClipmap->setWireframe(false);
     m_geometryClipmap->setCutout(false);
-    //m_geometryClipmap->setCutOutPos(glm::vec2(-m_modelPos.x,m_modelPos.z));
     m_geometryClipmap->render();
 
 }
@@ -233,9 +229,7 @@ void OpenGLWidget::renderRefractions(){
 
     m_geometryClipmap->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
     m_geometryClipmap->loadMatricesToShader(macroModelMat, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
-    m_geometryClipmap->setWireframe(false);
     m_geometryClipmap->setCutout(false);
-    //m_geometryClipmap->setCutOutPos(glm::vec2(-m_modelPos.x,m_modelPos.z));
     m_geometryClipmap->render();
 
     //draw our grass
@@ -279,7 +273,6 @@ void OpenGLWidget::paintGL(){
     roty = glm::rotate(roty, m_spinYFace, glm::vec3(0.0, 1.0, 0.0));
 
     m_mouseGlobalTX = rotx*roty;
-//    m_mouseGlobalTX = glm::translate(m_mouseGlobalTX, glm::vec3(0.0, m_modelPos.y, 0.0));
     m_mouseGlobalTX[3][1] = m_modelPos.y;
 
     glm::mat4 mesoModelMat = m_mouseGlobalTX;
@@ -292,6 +285,13 @@ void OpenGLWidget::paintGL(){
         m_marchingCubesObject->vMarchingCubes();
         m_moved = false;
     }
+    glm::mat4 modelMatrix = glm::mat4(1.0);
+    modelMatrix = m_mouseGlobalTX;
+    modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0, 3.0, 0.0));
+    modelMatrix = glm::scale(modelMatrix , glm::vec3(100.0, 100.0, 100.0));
+    m_skybox->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
+    m_skybox->render();
+
     mesoModelMat = glm::scale(mesoModelMat,glm::vec3(2.0,4.0,2.0));
     mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5,0.0,-0.5));
 
@@ -304,26 +304,20 @@ void OpenGLWidget::paintGL(){
 
     m_geometryClipmap->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
     m_geometryClipmap->loadMatricesToShader(macroModelMat, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
-    m_geometryClipmap->setWireframe(false);
     m_geometryClipmap->setCutout(true);
-    //m_geometryClipmap->setCutOutPos(glm::vec2(-m_modelPos.x,m_modelPos.z));
+    glEnable(GL_BLEND);
+    glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     m_geometryClipmap->render();
 
     //draw our meso terrain
     m_marchingCubesObject->draw(mesoModelMat, m_cam);
 
     //draw our grass
-    m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
-    m_grassHairClipmapFactory->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
-    m_grassHairClipmapFactory->draw(macroModelMat,m_cam,m_geometryClipmap->m_vert.size());
-
-
-    glm::mat4 modelMatrix = glm::mat4(1.0);
-    modelMatrix = m_mouseGlobalTX;
-    modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0, 3.0, 0.0));
-    modelMatrix = glm::scale(modelMatrix , glm::vec3(100.0, 100.0, 100.0));
-    m_skybox->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
-    m_skybox->render();
+    if (m_drawGrass){
+        m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
+        m_grassHairClipmapFactory->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
+        m_grassHairClipmapFactory->draw(macroModelMat,m_cam,m_geometryClipmap->m_vert.size());
+    }
 
     modelMatrix = glm::mat4(1.0);
     modelMatrix = m_mouseGlobalTX;
@@ -331,6 +325,8 @@ void OpenGLWidget::paintGL(){
     modelMatrix = glm::scale(modelMatrix, glm::vec3(8.0, 1.0, 8.0));
     m_water->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
     m_water->render();
+
+    glDisable(GL_BLEND);
 }
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::mouseMoveEvent (QMouseEvent * _event)
@@ -365,7 +361,6 @@ void OpenGLWidget::mouseMoveEvent (QMouseEvent * _event)
     glm::vec4 forwardVec4(forwards,1.0);
     glm::vec4 upVec4(up,1.0);
     glm::mat4 rotFinal;
-
 
     rotx = glm::rotate(rotx, (float)(-1.0*m_spinXFace), glm::vec3(1.0, 0.0, 0.0));
     roty = glm::rotate(roty, (float)(-1.0*m_spinYFace), glm::vec3(0.0, 1.0, 0.0));
@@ -518,6 +513,20 @@ void OpenGLWidget::keyPressEvent(QKeyEvent *_event){
             m_modelPos.x-= strafe.x;
             m_modelPos.z-= strafe.z;
             m_moved = true;
+        break;
+        case Qt::Key_4:
+            m_geometryClipmap->setWireframe(true);
+            m_water->setWireframe(true);
+            m_marchingCubesObject->setWireframe(true);
+            m_drawGrass = false;
+        break;
+        case Qt::Key_5:
+            m_geometryClipmap->setWireframe(false);
+            m_water->setWireframe(false);
+            m_marchingCubesObject->setWireframe(false);
+            m_drawGrass = true;
+        break;
+        default:
         break;
 
     }

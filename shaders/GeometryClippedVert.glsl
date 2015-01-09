@@ -28,7 +28,7 @@ void main(){
    height = pos.y;
    pos.y*=heightScale;
    texCoords = (pos_map.xz*10.0);
-   position = MV * vec4(pos.x, 1.0, pos.z, pos.w);
+   position = vec4(pos.x, 1.0, pos.z, pos.w);
    vertPos = pos.xz;
    gl_Position = MVP * pos;
    gl_ClipDistance[0] = dot(pos, vec4(0.0, 1.0, 0.0, -1.6));

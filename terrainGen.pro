@@ -133,4 +133,11 @@ OTHER_FILES += \
     textures/grassTexture.jpg \
     shaders/grassHairClipmapFrag.glsl \
     shaders/grassHairClipmapGeom.glsl \
-    shaders/grassHairClipmapVert.glsl
+    shaders/grassHairClipmapVert.glsl \
+    textures/skyCubeMap_negx.png \
+    textures/skyCubeMap_negy.png \
+    textures/skyCubeMap_negz.png \
+    textures/skyCubeMap_posx.png \
+    textures/skyCubeMap_posy.png \
+    textures/skyCubeMap_posz.png \
+    models/sphere.obj

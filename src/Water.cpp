@@ -1,7 +1,7 @@
 #include "Water.h"
 #include <glm/gtc/type_ptr.hpp>
 
-Water::Water(){
+Water::Water():m_wireframe(false){
     createShader();
     init();
 }
@@ -52,8 +52,8 @@ void Water::createShader(){
     GLuint dudvLoc = m_shaderProgram->getUniformLoc("dudv");
     GLuint viewPosLoc = m_shaderProgram->getUniformLoc("viewPos");
 
-    glUniform1f(fogMaxLoc, 60.0);
-    glUniform1f(fogMinLoc, 30.0);
+    glUniform1f(fogMaxLoc, 4.0/8.0);
+    glUniform1f(fogMinLoc, 3.0/8.0);
     glUniform1i(reflectLoc, 0);
     glUniform1i(refractLoc, 1);
     glUniform1i(normalLoc, 2);
@@ -94,6 +94,12 @@ void Water::render(){
     glUniform1f(m_timeLoc, m_timer.elapsed());
 
     glBindVertexArray(m_model->getVAO());
+    if (m_wireframe){
+        glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+    }
+    else{
+        glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+    }
     glDrawArrays(GL_TRIANGLES, 0, m_model->getNumVerts());
     glBindVertexArray(0);
 }

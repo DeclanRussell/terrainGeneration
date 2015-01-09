@@ -92,6 +92,13 @@ void grassHairClipmap::createShader(){
     m_heightmapTex->bind(2);
     glUniform1i(heightMapLoc,2);
 
+    // fog uniforms
+    GLuint fogMaxLoc = m_shaderProgram->getUniformLoc("fogMax");
+    GLuint fogMinLoc = m_shaderProgram->getUniformLoc("fogMin");
+
+    glUniform1f(fogMaxLoc, 4.0);
+    glUniform1f(fogMinLoc, 3.0);
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------

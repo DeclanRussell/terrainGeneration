@@ -18,7 +18,7 @@ void main()
 {
   viewPos = vertexPosition;
   vec4 vertex = vec4(vertexPosition, 1.0);
-  position = MV * vec4(vertexPosition, 1.0);
+  position = vec4(vertexPosition, 1.0);
   gl_Position = MVP * vec4(vertexPosition, 1.0);
 
   vec4 newPos = vec4(vertexPosition.x, vertexPosition.y, vertexPosition.z, 1.0);

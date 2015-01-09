@@ -1,4 +1,4 @@
-#ifndef __WATER_H_
+    #ifndef __WATER_H_
 #define __WATER_H_
 
 #include <glm/glm.hpp>
@@ -15,6 +15,7 @@ public:
     void render();
     GLuint* getReflectTex(){return &m_reflectTex;}
     GLuint* getRefractTex(){return &m_refractTex;}
+    void setWireframe(bool _wireframe){m_wireframe = _wireframe;}
 private:
     void createShader();
     Model *m_model;
@@ -27,6 +28,7 @@ private:
     Texture *m_dudv;
     QTime m_timer;
     GLuint m_timeLoc;
+    bool m_wireframe;
 };
 
 #endif

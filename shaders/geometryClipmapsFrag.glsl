@@ -101,8 +101,8 @@ vec3 calcFog(vec3 texColour){
   vec3 sunDir = vec3(0.0, -0.3, -1.0);
   float fogAmount = exp( 1.0 -dist*1.0 );
   float sunAmount = max(dot( rayDir, sunDir ), 0.0 );
-  vec3  fogColour  = mix(vec3(0.6, 0.7, 0.8), vec3(1.0,0.9, 0.7), pow(sunAmount,8.0) );
-
+//  vec3  fogColour  = mix(vec3(0.6, 0.7, 0.8), vec3(1.0,0.9, 0.7), pow(sunAmount,8.0) );
+  vec3 fogColour = vec3(0.6, 0.7, 0.8);
   float fogFactor = (fogMax - dist) / (fogMax - fogMin);
   fogFactor = clamp(fogFactor, 0.0, 1.0);
   //fogColour = vec3(1.0, 1.0, 1.0);
@@ -110,11 +110,19 @@ vec3 calcFog(vec3 texColour){
 
 }
 
+float calcAlpha(){
+  float alpha;
+  float dist = length(position.xyz);
+  alpha = (fogMax - dist) / (fogMax - fogMin);
+  alpha = clamp(alpha, 0.0, 1.0);
+  return alpha;
+}
+
 void main(){
-  vec3 texColour = texture(colourMap, texCoords).rgb;
-  vec3 colour = calcFog(vec3(calcColour()));
-//  vec3 colour = vec3(calcColour());
-  fragColour = vec4(colour, 1.0);
+//  vec3 colour = calcFog(vec3(calcColour()));
+  vec3 colour = vec3(calcColour());
+  float alpha = calcAlpha();
+  fragColour = vec4(colour, alpha);
 
   if (cutout){
     vec2 dist = vertPos - cutOutLoc;

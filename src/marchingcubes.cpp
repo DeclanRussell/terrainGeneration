@@ -3,7 +3,7 @@
 #include <QColor>
 #include <glm/glm.hpp>
 
-marchingCubes::marchingCubes()
+marchingCubes::marchingCubes() : m_wireframe(false)
 {
     iDataSetSize = 128;
     fStepSize = 1.0/(float)iDataSetSize;
@@ -190,9 +190,12 @@ void marchingCubes::draw(glm::mat4 _modelMatrix, Camera *_cam){
     m_snowTex->bind(3);
     m_blendTexture->bind(4);
 
-
-//    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+//    if (m_wireframe){
+//        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+//    }
+//    else{
+//        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+//    }
     glBindVertexArray(m_mCubesVAO);
     glDrawArrays(GL_TRIANGLES, 0, m_position.size());
     glBindVertexArray(0);

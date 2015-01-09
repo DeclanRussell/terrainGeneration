@@ -2,6 +2,8 @@
 
 #include <QGLWidget>
 #include <glm/gtc/matrix_inverse.hpp>
+#include <noise/noise.h>
+#include <noiseutils.h>
 
 Skybox::Skybox(){
     initSkybox();
@@ -13,10 +15,14 @@ Skybox::~Skybox(){
     delete m_model;
     // Delete skybox shader program
     delete m_shaderProgram;
+    delete m_cloudTex;
 }
 
 void Skybox::initSkybox(){
-    m_model = new Model("models/skyBox.obj");
+    m_model = new Model("models/sphere.obj");
+
+    m_timer.start();
+
 }
 
 GLuint Skybox::loadCubeMap(std::string _pathToFile){
@@ -85,7 +91,7 @@ void Skybox::createShader(){
     };
 
     for (int i =0; i<6; i++){
-       std::string texName = std::string("textures/skyCubeMap") + "_" + suffixes[i] + ".png";
+       std::string texName = std::string("textures/skyMap") + "_" + suffixes[i] + ".png";
        ILuint image = ilGenImage();
        ilBindImage(image);
        ILboolean loadSuccess = ilLoadImage(texName.c_str());
@@ -109,14 +115,98 @@ void Skybox::createShader(){
     glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
     glTexParameterf(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+//    int height = 512;
+//    int width = 512;
+
+//    noise::module::Perlin perlin;
+
+//    perlin.SetFrequency(10.0);
+//    GLubyte *data = new GLubyte[width * height * 4];
+//    double xRange = 1.0;
+//    double yRange = 1.0;
+//    double xFactor = xRange / width;
+//    double yFactor = yRange / height;
+
+//    for (int oct = 0; oct<4; oct++){
+//        perlin.SetOctaveCount(oct+1);
+//        for (int i = 0; i<width; i++){
+//            for (int j = 0; j<height; j++){
+//                double x = xFactor * i;
+//                double y = yFactor * j;
+//                double z = 0.0;
+//                float val = 0.0f;
+//                double a, b, c, d;
+//                a = perlin.GetValue(x, y, z);
+//                b = perlin.GetValue(x+xRange, y, z);
+//                c = perlin.GetValue(x, y+yRange, z);
+//                d = perlin.GetValue(x+xRange, y+yRange, z);
+//                double xmix = 1.0 - x / xRange;
+//                double ymix = 1.0 - y / yRange;
+//                double x1 = glm::mix(a, b, xmix);
+//                double x2 = glm::mix(c, d, ymix);
+//                val = glm::mix(x1, x2, ymix);
+//                // Scale roughly between 0 and 1
+//                val = (val + 1.0f) * 0.5f;
+//                // Clamp strictly between 0 and 1
+//                val = val > 1.0 ? 1.0 :val;
+//                val = val < 0.0 ? 0.0 :val;
+//                // Store in texture
+//                data [((j * width + i) * 4) + oct] = (GLubyte) (val * 255.0f);
+//            }
+//        }
+//    }
+
+//    glGenTextures(1, &m_cloudTexID);
+//    glBindTexture(GL_TEXTURE_2D, m_cloudTexID);
+
+//    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+//    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+
+//    delete [] data;
+
+    noise::module::Perlin perlin;
+    noise::utils::NoiseMap heightMap;
+    noise::utils::NoiseMapBuilderSphere heightMapBuilder;
+    heightMapBuilder.SetSourceModule (perlin);
+    heightMapBuilder.SetDestNoiseMap (heightMap);
+    heightMapBuilder.SetDestSize (512, 256);
+    heightMapBuilder.SetBounds (-90.0, 90.0, -180.0, 180.0);
+    heightMapBuilder.Build ();
+
+    noise::utils::RendererImage renderer;
+    noise::utils::Image image;
+    renderer.SetSourceNoiseMap (heightMap);
+    renderer.SetDestImage (image);
+    renderer.Render ();
+
+    noise::utils::WriterBMP writer;
+    writer.SetSourceImage (image);
+    writer.SetDestFilename ("textures/clouds.bmp");
+    writer.WriteDestFile ();
+
+    m_cloudTex = new Texture("textures/clouds.bmp");
+
 }
 
 void Skybox::update(){
     glActiveTexture(GL_TEXTURE0);
-    glBindTexture(GL_TEXTURE_2D, m_texID);
+    glBindTexture(GL_TEXTURE_CUBE_MAP, m_texID);
+    glActiveTexture(GL_TEXTURE1);
+    glBindTexture(GL_TEXTURE_2D, m_cloudTex->getTextureID());
 
     GLuint cubeMapLoc = m_shaderProgram->getUniformLoc("cubeMapTex");
     glUniform1i(cubeMapLoc, 0);
+
+    GLuint cloudLoc = m_shaderProgram->getUniformLoc("cloudTex");
+    glUniform1i(cloudLoc, 1);
+
+    // Time uniform
+    GLuint timeLoc = m_shaderProgram->getUniformLoc("time");
+    glUniform1f(timeLoc, m_timer.elapsed());
 }
 
 void Skybox::loadMatricesToShader(glm::mat4 _modelMatrix, glm::mat4 _viewMatrix, glm::mat4 _projectionMatrix){
@@ -137,6 +227,7 @@ void Skybox::loadMatricesToShader(glm::mat4 _modelMatrix, glm::mat4 _viewMatrix,
 void Skybox::render(){
     update();
     glBindVertexArray(m_model->getVAO());
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     glDrawArrays(GL_TRIANGLES, 0, m_model->getNumVerts());
     glBindVertexArray(0);
 }
