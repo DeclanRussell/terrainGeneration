@@ -14,6 +14,9 @@ public:
     /// @brief defult constructor, initializes our data structure
     //----------------------------------------------------------------------------------------------------------------------
     terrainGen(int _sizeX, int _sizeY);
+    /// @dtor
+    //----------------------------------------------------------------------------------------------------------------------
+    ~terrainGen();
     //----------------------------------------------------------------------------------------------------------------------
     /// @brief enumorator of the type of material
     //----------------------------------------------------------------------------------------------------------------------
@@ -62,14 +65,42 @@ public:
                     return sum;
             }
         }
-
-        int arrayLocAt(float _y){
-            float sum=0.0;
+        float amountOfMatBetween(float _y0,float _y1){
+            float sum=0;
+            float sumMat=0;
+            int idx = 0;
             for(unsigned int i=0; i<properties.size();i++){
                 sum+=properties[i].height;
-                if(_y<sum)
-                    return i;
+                if(_y0<sum){
+                    idx = i;
+                    break;
+                }
             }
+            if(_y1<sum)
+                if(properties[idx].type!=AIR)
+                    return _y1-_y0;
+                else
+                    return 0;
+            if(properties[idx].type != AIR)
+                sumMat = _y0-sum;
+            for(unsigned int i=idx+1; i<properties.size();i++){
+                if(_y1<(sum+properties[i].height)){
+                    if(properties[i].type!=AIR){
+                        sumMat+=_y1-sum;
+                        return sumMat;
+                    }
+                    else{
+                        return sumMat;
+                    }
+                }
+                else{
+                    sum+=properties[i].height;
+                    if(properties[i].type!=AIR)
+                        sumMat+=properties[i].height;
+                }
+            }
+
+
         }
     }ElmT;
     //----------------------------------------------------------------------------------------------------------------------

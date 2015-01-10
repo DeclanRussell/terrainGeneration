@@ -23,7 +23,7 @@ uniform sampler2D dudv;
 // Constants //
 float kDistortion = 0.015;
 float kReflection = 0.01;
-vec4 baseColour = vec4(1.0, 1.0 ,1.0, 1.0);
+vec4 baseColour = vec4(136.0/255.0, 151.0/255.0, 186.0/255.0, 1.0);
 
 vec4 tangent = vec4(1.0, 0.0, 0.0, 0.0);
 vec4 lightNormal = vec4(0.0, 1.0, 0.0, 0.0);
@@ -42,6 +42,15 @@ vec4 calcFog(vec4 texColour){
   return vec4(mix(fogColour, texColour.xyz, fogFactor), 0.81);
 
 }
+
+float calcAlpha(){
+  float alpha;
+  float dist = length(position.xyz);
+  alpha = (fogMax - dist) / (fogMax - fogMin);
+  alpha = clamp(alpha, 0.0, 1.0);
+  return alpha;
+}
+
 void main(){
   // Light tangent space
   vec4 lightDir = normalize(vec4(LightDirection.xyz, 1.0));
@@ -74,14 +83,14 @@ void main(){
 
   // Refraction
   vec4 refractionColour = texture(refractMap, projCoord.xy);
-  vec4 depthValue = vec4(0.1, 0.1, 0.1, 1.0);
+  vec4 depthValue = vec4(0.05, 0.05, 0.05, 1.0);
   vec4 invDepth = 1.0 - depthValue;
 
   refractionColour *= invertedFresnal * invDepth;
   refractionColour += baseColour * depthValue * invertedFresnal;
 
-  fragColour = calcFog(reflectionColour + refractionColour);
-//  fragColour = texture(reflectMap, TexCoords);
-//  fragColour = texture(refractMap, TexCoords);
+  float alpha = calcAlpha();
+
+  fragColour = vec4(refractionColour.xyz + reflectionColour.xyz, alpha);
 }
 

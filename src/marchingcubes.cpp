@@ -3,7 +3,7 @@
 #include <QColor>
 #include <glm/glm.hpp>
 
-marchingCubes::marchingCubes()
+marchingCubes::marchingCubes() : m_wireframe(false)
 {
     iDataSetSize = 128;
     fStepSize = 1.0/(float)iDataSetSize;
@@ -18,7 +18,7 @@ marchingCubes::marchingCubes()
     m_normals.clear();
     m_texCoords.clear();
     m_allocatedData = false;
-    createShader();
+    m_blendTexSet = false;
 }
 marchingCubes::~marchingCubes(){
     delete m_shaderProgram;
@@ -87,21 +87,22 @@ void marchingCubes::createShader(){
     glUniform3f(kdLoc, 0.5, 0.5, 0.5);
     glUniform3f(kaLoc, 0.5, 0.5, 0.5);
     glUniform3f(ksLoc, 0.5, 0.5, 0.5);
-    glUniform1f(shininessLoc, 10.0);
+    glUniform1f(shininessLoc, 1.0);
 
     // create our textures
-    m_mudTex = new Texture("textures/mudTexture.png");
+    m_mudTex = new Texture("textures/mudTexture");
     m_mudTex->bind(0);
 
-    m_grassTex = new Texture("textures/grassTexture.jpg");
+    m_grassTex = new Texture("textures/grassTexture");
     m_grassTex->bind(1);
 
-    m_rockTex = new Texture("textures/rockTexture.jpg");
+    m_rockTex = new Texture("textures/rockTexture");
     m_rockTex->bind(2);
 
-    m_snowTex = new Texture("textures/snowTexture.jpg");
+    m_snowTex = new Texture("textures/snowTexture");
     m_snowTex->bind(3);
 
+    m_blendTexture->bind(4);
 
     // Set our mesh colouring information based on texture splatting
     GLuint mudHeight = m_shaderProgram->getUniformLoc("mudHeight");
@@ -118,15 +119,17 @@ void marchingCubes::createShader(){
     GLuint grassTexLoc = m_shaderProgram->getUniformLoc("grassTexture");
     GLuint rockTexLoc = m_shaderProgram->getUniformLoc("rockTexture");
     GLuint snowTexLoc = m_shaderProgram->getUniformLoc("snowTexture");
+    GLuint blendTexLoc = m_shaderProgram->getUniformLoc("blendTexture");
 
     glUniform1i(mudTexLoc, 0);
     glUniform1i(grassTexLoc, 1);
     glUniform1i(rockTexLoc, 2);
     glUniform1i(snowTexLoc, 3);
+    glUniform1i(blendTexLoc,4);
 
     //set our mix threshhold to set the bounds that we want to blend between 2 materials
     GLuint mixThreshhold = m_shaderProgram->getUniformLoc("mixThreshhold");
-    glUniform1f(mixThreshhold, 0.1);
+    glUniform1f(mixThreshhold, 0.05);
 }
 //----------------------------------------------------------------------------------------------------------------------
 void marchingCubes::allocateGeomtryData(){
@@ -185,10 +188,14 @@ void marchingCubes::draw(glm::mat4 _modelMatrix, Camera *_cam){
     m_grassTex->bind(1);
     m_rockTex->bind(2);
     m_snowTex->bind(3);
+    m_blendTexture->bind(4);
 
-
-//    glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
-    glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+//    if (m_wireframe){
+//        glPolygonMode(GL_FRONT_AND_BACK,GL_LINE);
+//    }
+//    else{
+//        glPolygonMode(GL_FRONT_AND_BACK,GL_FILL);
+//    }
     glBindVertexArray(m_mCubesVAO);
     glDrawArrays(GL_TRIANGLES, 0, m_position.size());
     glBindVertexArray(0);
@@ -228,14 +235,14 @@ void marchingCubes::loadMatricesToShader(glm::mat4 _modelMatrix, Camera *_cam){
 // rather than in pages and pages of unrolled code.
 
 //a2fVertexOffset lists the positions, relative to vertex0, of each of the 8 vertices of a cube
-static const GLfloat a2fVertexOffset[8][3]
+static const GLfloat a2fVertexOffset[8][3] =
 {
     {0.0, 0.0, 0.0},{1.0, 0.0, 0.0},{1.0, 1.0, 0.0},{0.0, 1.0, 0.0},
     {0.0, 0.0, 1.0},{1.0, 0.0, 1.0},{1.0, 1.0, 1.0},{0.0, 1.0, 1.0}
 };
 //----------------------------------------------------------------------------------------------------------------------
 //a2iEdgeConnection lists the index of the endpoint vertices for each of the 12 edges of the cube
-static const GLint a2iEdgeConnection[12][2]
+static const GLint a2iEdgeConnection[12][2] =
 {
         {0,1}, {1,2}, {2,3}, {3,0},
         {4,5}, {5,6}, {6,7}, {7,4},
@@ -243,7 +250,7 @@ static const GLint a2iEdgeConnection[12][2]
 };
 //----------------------------------------------------------------------------------------------------------------------
 //a2fEdgeDirection lists the direction vector (vertex1-vertex0) for each edge in the cube
-static const GLfloat a2fEdgeDirection[12][3]
+static const GLfloat a2fEdgeDirection[12][3] =
 {
         {1.0, 0.0, 0.0},{0.0, 1.0, 0.0},{-1.0, 0.0, 0.0},{0.0, -1.0, 0.0},
         {1.0, 0.0, 0.0},{0.0, 1.0, 0.0},{-1.0, 0.0, 0.0},{0.0, -1.0, 0.0},
@@ -251,14 +258,14 @@ static const GLfloat a2fEdgeDirection[12][3]
 };
 //----------------------------------------------------------------------------------------------------------------------
 //a2iTetrahedronEdgeConnection lists the index of the endpoint vertices for each of the 6 edges of the tetrahedron
-static const GLint a2iTetrahedronEdgeConnection[6][2]
+static const GLint a2iTetrahedronEdgeConnection[6][2] =
 {
         {0,1},  {1,2},  {2,0},  {0,3},  {1,3},  {2,3}
 };
 //----------------------------------------------------------------------------------------------------------------------
 //a2iTetrahedronEdgeConnection lists the index of verticies from a cube
 // that made up each of the six tetrahedrons within the cube
-static const GLint a2iTetrahedronsInACube[6][4]
+static const GLint a2iTetrahedronsInACube[6][4] =
 {
         {0,5,1,6},
         {0,1,2,6},
@@ -659,43 +666,99 @@ GLfloat marchingCubes::matStackSample(GLfloat fX, GLfloat fY, GLfloat fZ){
     if(xPos>(m_matStackSizeX-1)){ std::cout<<xPos<<" "<<fX<<std::endl; xPos = (m_matStackSizeX-1); }
     if(yPos>(m_matStackSizeY-1)){ std::cout<<yPos<<" "<<fZ<<std::endl; yPos = (m_matStackSizeY-1); }
 
-    int floorX,floorY,xNext,yNext;
-    floorX = floor(xPos);
-    floorY = floor(yPos);
-    (floorX+1>m_matStackSizeX-1) ? xNext = floorX: xNext = floorX+1;
-    (floorY+1>m_matStackSizeY-1) ? yNext = floorY: yNext = floorY+1;
+    float y0,y1;
+    float radius = fStepSize;
+    (fY-(radius)<0) ? y0 = 0 : y0 = fY-(radius);
+    (fY+(radius)>1) ? y1 = 1 : y1 = fY+(radius);
 
-    float n1,n2,n3,n4;
-    terrainGen::terrainType materialType = m_matStackData[floorX][floorY].matTypeAt(fY);
-    switch(materialType){
-    case(terrainGen::AIR): n1= 1; break;
-    default: n1 = -1; break;
-    }
-    materialType = m_matStackData[xNext][floorY].matTypeAt(fY);
-    switch(materialType){
-    case(terrainGen::AIR): n2= 1; break;
-    default: n2 = -1; break;
-    }
-    materialType = m_matStackData[floorX][yNext].matTypeAt(fY);
-    switch(materialType){
-    case(terrainGen::AIR): n3= 1; break;
-    default: n3 = -1; break;
-    }
-    materialType = m_matStackData[xNext][yNext].matTypeAt(fY);
-    switch(materialType){
-    case(terrainGen::AIR): n4= 1; break;
-    default: n4 = -1; break;
+    glm::vec2 kernalBoxMin(xPos-radius,yPos-radius);
+    glm::vec2 kernalBoxMax(xPos+radius,yPos+radius);
+//    std::cout<<"kernalBoxMin "<<kernalBoxMin.x<<","<<kernalBoxMin.y<<std::endl;
+    float tempMatVol = 0;
+    float matVolTotal = 0;
+    float dimX,dimY;
+    int floorMinX = floor(kernalBoxMin.x);
+    int floorMinY = floor(kernalBoxMin.y);
+    int ceilMinX = ceil(kernalBoxMin.x);
+    int ceilMinY = ceil(kernalBoxMin.y);
+    int floorMaxX = floor(kernalBoxMax.x);
+    int floorMaxY = floor(kernalBoxMax.y);
+    int ceilMaxX = ceil(kernalBoxMax.x);
+    int ceilMaxY = ceil(kernalBoxMax.y);
+
+    for(int x=floorMinX; x<ceilMaxX+1;x++)
+    for(int y=floorMinY; y<ceilMaxY+1;y++){
+        if(floorMinX==ceilMinX){
+            dimX = kernalBoxMax.x - kernalBoxMin.x;
+        }
+        else if(x==floorMinX)
+            dimX = (float)ceilMinX - kernalBoxMin.x;
+        else if(x==ceilMaxX)
+            dimX = kernalBoxMax.x - (float)floorMaxX;
+        else
+            dimX = 1.0/(float)m_matStackSizeX;
+        if(floorMinY==ceilMaxY){
+            dimY = kernalBoxMax.y - kernalBoxMin.y;
+        }
+        else if(y==floorMinY)
+            dimY = (float)ceilMinY - kernalBoxMin.y;
+        else if(y==ceilMaxY)
+            dimY = kernalBoxMax.y - (float)floorMaxY;
+        else
+            dimY = 1.0/(float)m_matStackSizeY;
+
+        if(dimX==0||dimY==0)
+            std::cout<<"one is 0 fuck! "<<xPos<<" xmin "<<kernalBoxMin.x<<","<<kernalBoxMax.x<<std::endl;
+        tempMatVol = m_matStackData[x][y].amountOfMatBetween(y0,y1);
+        tempMatVol *= dimX * dimY;
+        matVolTotal+= tempMatVol;
     }
 
 
-    //bilinear interpoloation
-    float result = n1*(xNext - xPos)*(yNext - yPos) + n2*(xPos - floorX)*(yNext - yPos) + n3*(xNext - xPos)*(yPos-floorY) + n4*(xPos-floorX)*(yPos-floorY);
-    if(result==0)
-        return 0;
-    if(result>0)
-        return 1;
-    else
-        return -1;
+//std::cout<<(2*(matVolTotal/((2.0*radius)*(2.0*radius)*(2.0*radius)))) -1.0<<std::endl;
+
+//    float volumeMat = m_matStackData[(int)xPos][(int)yPos].amountOfMatBetween(y0,y1);
+    return (2*(matVolTotal/((2.0*radius)*(2.0*radius)*(2.0*radius)))) -1.0;
+
+
+
+//    int floorX,floorY,xNext,yNext;
+//    floorX = floor(xPos);
+//    floorY = floor(yPos);
+//    (floorX+1>m_matStackSizeX-1) ? xNext = floorX: xNext = floorX+1;
+//    (floorY+1>m_matStackSizeY-1) ? yNext = floorY: yNext = floorY+1;
+
+//    float n1,n2,n3,n4;
+//    terrainGen::terrainType materialType = m_matStackData[floorX][floorY].matTypeAt(fY);
+//    switch(materialType){
+//    case(terrainGen::AIR): n1= 1; break;
+//    default: n1 = -1; break;
+//    }
+//    materialType = m_matStackData[xNext][floorY].matTypeAt(fY);
+//    switch(materialType){
+//    case(terrainGen::AIR): n2= 1; break;
+//    default: n2 = -1; break;
+//    }
+//    materialType = m_matStackData[floorX][yNext].matTypeAt(fY);
+//    switch(materialType){
+//    case(terrainGen::AIR): n3= 1; break;
+//    default: n3 = -1; break;
+//    }
+//    materialType = m_matStackData[xNext][yNext].matTypeAt(fY);
+//    switch(materialType){
+//    case(terrainGen::AIR): n4= 1; break;
+//    default: n4 = -1; break;
+//    }
+
+
+//    //bilinear interpoloation
+//    float result = n1*(xNext - xPos)*(yNext - yPos) + n2*(xPos - floorX)*(yNext - yPos) + n3*(xNext - xPos)*(yPos-floorY) + n4*(xPos-floorX)*(yPos-floorY);
+//    if(result==0)
+//        return 0;
+//    if(result>0)
+//        return 1;
+//    else
+//        return -1;
 
 
 }
@@ -963,13 +1026,13 @@ void marchingCubes::vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fSca
 //                        glVertex3f(asEdgeVertex[iVertex].fX, asEdgeVertex[iVertex].fY, asEdgeVertex[iVertex].fZ);
 
                         m_position.push_back(glm::vec3(asEdgeVertex[iVertex].fX, asEdgeVertex[iVertex].fY, asEdgeVertex[iVertex].fZ));
-                        m_normals.push_back(glm::vec3(asEdgeNorm[iVertex].fX,   asEdgeNorm[iVertex].fY,   asEdgeNorm[iVertex].fZ));
+                        //m_normals.push_back(glm::vec3(asEdgeNorm[iVertex].fX,   asEdgeNorm[iVertex].fY,   asEdgeNorm[iVertex].fZ));
                         float xTexPos = 0, yTexPos = 0;
                         if(m_sampleMode = MC_2DMATSTACK){
                             xTexPos = m_samplePos.first + (asEdgeVertex[iVertex].fX * m_samplePercent.first);
                             yTexPos = m_samplePos.second + (asEdgeVertex[iVertex].fZ * m_samplePercent.second);
-                            xTexPos*=4.0;
-                            yTexPos*=4.0;
+                            xTexPos*=10.0;
+                            yTexPos*=10.0;
 
                         }
                         else{
@@ -978,6 +1041,16 @@ void marchingCubes::vMarchCube1(GLfloat fX, GLfloat fY, GLfloat fZ, GLfloat fSca
                         }
                         m_texCoords.push_back(glm::vec2(xTexPos,yTexPos));
                 }
+                glm::vec3 v1 = m_position[m_position.size()-1];
+                glm::vec3 v2 = m_position[m_position.size()-2];
+                glm::vec3 v3 = m_position[m_position.size()-3];
+                glm::vec3 e1 = v2-v1;
+                glm::vec3 e2 = v3-v1;
+                glm::vec3 normal = glm::normalize(glm::cross(e1,e2));
+                normal*=-1.0;
+                m_normals.push_back(normal);
+                m_normals.push_back(normal);
+                m_normals.push_back(normal);
         }
 }
 //----------------------------------------------------------------------------------------------------------------------

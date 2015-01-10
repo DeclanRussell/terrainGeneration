@@ -63,6 +63,10 @@ private slots:
 
     void on_s_marchingCubesResSdl_sliderReleased();
 
+    void on_s_MacGrasDenSld_sliderMoved(int position);
+
+    void on_s_macGrasDenSpn_valueChanged(int arg1);
+
 private:
     Ui::MainWindow *ui;
     OpenGLWidget *m_openGLWidget;

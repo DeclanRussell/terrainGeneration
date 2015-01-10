@@ -17,7 +17,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->gridLayout->addWidget(m_progressBar,1,1,1,1);
     m_progressBar->setVisible(false);
 
-
+    ui->checkBox_2->setChecked(true);
+    connect(ui->checkBox, SIGNAL(clicked(bool)), m_openGLWidget, SLOT(setWireframe(bool)));
+    connect(ui->checkBox_2, SIGNAL(clicked(bool)), m_openGLWidget, SLOT(drawGrass(bool)));
 }
 
 MainWindow::~MainWindow(){
@@ -66,8 +68,12 @@ void MainWindow::on_s_genTerrainBtn_clicked()
 {
     m_openGLWidget->m_terrainFactory->setProgressBar(m_progressBar);
     m_openGLWidget->m_terrainFactory->createTerrainFromNoise();
+    QImage heightMap = m_openGLWidget->m_terrainFactory->createHeightMap(256,256);
+    m_openGLWidget->m_marchingCubesObject->setBlendTex(heightMap);
     m_openGLWidget->m_marchingCubesObject->vMarchingCubes();
-    m_openGLWidget->m_geometryClipmap->setHeightMap(m_openGLWidget->m_terrainFactory->createHeightMap(512,512));
+    m_openGLWidget->m_geometryClipmap->setHeightMap(heightMap);
+    m_openGLWidget->m_grassHairClipmapFactory->setHeightMap(heightMap);
+
 
 }
 
@@ -155,4 +161,14 @@ void MainWindow::on_s_marchingCubesResSdl_sliderReleased()
 {
     m_openGLWidget->m_marchingCubesObject->setSampleResolution(ui->s_marchingCubesResSdl->value());
     m_openGLWidget->m_marchingCubesObject->vMarchingCubes();
+}
+
+void MainWindow::on_s_MacGrasDenSld_sliderMoved(int position)
+{
+    m_openGLWidget->m_grassHairClipmapFactory->setNumStrandsPerFace(position);
+}
+
+void MainWindow::on_s_macGrasDenSpn_valueChanged(int arg1)
+{
+    m_openGLWidget->m_grassHairClipmapFactory->setNumStrandsPerFace(arg1);
 }

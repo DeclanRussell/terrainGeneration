@@ -16,10 +16,11 @@ vec3 calcFog(vec3 texColour){
 
   float fogFactor = (fogMax - dist) / (fogMax - fogMin);
   fogFactor = clamp(fogFactor, 0.0, 1.0);
-  //vec3 fogColour = vec3(1.0, 1.0, 1.0);
   return mix(fogColour, texColour, 1.0);
 
 }
+
+
 void main(){
   float dist = length(position.xyz);
   vec3 rayDir = normalize(-position.xyz);
@@ -33,9 +34,6 @@ void main(){
   vec3 colour = mix(fogColour, vec3(0.0, 0.0, 1.0), fogFactor);
   fragColour = vec4(57.0/255.0, 84.0/255.0, 101.0/255.0, 1.0);
 
-  if (fogFactor <= 0.3){
-    discard;
-  }
 
 
 }

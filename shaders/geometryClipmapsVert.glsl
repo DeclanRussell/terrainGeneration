@@ -2,7 +2,7 @@
 layout (location = 0) in vec3 vertexPosition;
 
 uniform sampler2D geoTexture;
-
+uniform mat4 modelMatrix;
 uniform vec4 map_position;
 uniform vec4 offset;
 uniform vec4 scale;
@@ -25,8 +25,8 @@ void main(){
    pos.y/=3.0;
    height = pos.y;
    pos.y*=heightScale;
-   texCoords = (pos_map.xz*4.0);
-   position =  vec4(pos.x, 1.0, pos.z, pos.w);
+   texCoords = (pos_map.xz*10.0);
+   position = vec4(pos.x, 1.0, pos.z, pos.w);
    vertPos = pos.xz;
    gl_Position = MVP * pos;
 }

@@ -30,9 +30,11 @@ SOURCES += \
     src/Model.cpp \
     src/grasshair.cpp \
     src/GeometryClipmap.cpp \
-    src/Water.cpp \
     src/noiseutils.cpp \
-    src/Bmp.cpp
+    src/Bmp.cpp \
+    src/Skybox.cpp \
+    src/Water.cpp \
+    src/grasshairclipmap.cpp
 
 HEADERS += \
     include/mainwindow.h \
@@ -51,17 +53,20 @@ HEADERS += \
     include/Model.h \
     include/grasshair.h \
     include/GeometryClipmap.h \
-    include/Water.h \
     include/noiseutils.h \
-    include/Bmp.h
+    include/Bmp.h \
+    include/Skybox.h \
+    include/Water.h \
+    include/grasshairclipmap.h
 
 HEADERS+=accidentalnoise/include/*.h
 #HEADERS-=accidentalnoise/include/*.h
 SOURCES+=accidentalnoise/src/*.cpp
 #SOURCES-=accidentalnoise/src/*.cpp
 
-INCLUDEPATH +=./include /opt/local/include  /home/i7709212/customlibs/glm ./accidentalnoise/include
-LIBS += -L/opt/local/lib -lGLEW -lassimp -lnoise
+INCLUDEPATH +=./include /opt/local/include  /home/i7709212/customlibs/glm ./accidentalnoise/include /usr/local/include
+LIBS += -L/opt/local/lib -lassimp -lnoise -lIL
+linux:LIBS += -lGLEW
 DESTDIR=./
 
 CONFIG += console
@@ -97,7 +102,6 @@ OTHER_FILES += \
     shaders/terrainVert.glsl \
     shaders/textureTerrainFrag.glsl \
     shaders/textureTerrainVert.glsl \
-    textures/grassTexture.jpg \
     textures/rockTexture.jpg \
     textures/snowTexture.jpg \
     textures/mudTexture.png \
@@ -114,4 +118,27 @@ OTHER_FILES += \
     shaders/geometryClipmapsFrag.glsl \
     shaders/geometryClipmapsVert.glsl \
     shaders/waterFrag.glsl \
-    shaders/waterVert.glsl
+    shaders/waterVert.glsl \
+    textures/myPerlinHeightmap.bmp \
+    shaders/skyboxFrag.glsl \
+    shaders/skyboxVert.glsl \
+    models/skyBox.obj \
+    textures/tnd.jpg \
+    models/water.obj \
+    shaders/ripplesFrag.glsl \
+    shaders/ripplesVert.glsl \
+    textures/water_dudv.jpg \
+    textures/water_normal.jpg \
+    shaders/GeometryClippedVert.glsl \
+    textures/grassTexture.jpg \
+    shaders/grassHairClipmapFrag.glsl \
+    shaders/grassHairClipmapGeom.glsl \
+    shaders/grassHairClipmapVert.glsl \
+    textures/skyCubeMap_negx.png \
+    textures/skyCubeMap_negy.png \
+    textures/skyCubeMap_negz.png \
+    textures/skyCubeMap_posx.png \
+    textures/skyCubeMap_posy.png \
+    textures/skyCubeMap_posz.png \
+    models/sphere.obj \
+    styleSheet/darkOrange

@@ -25,6 +25,11 @@ terrainGen::terrainGen(int _sizeX, int _sizeY)
     m_progressBarSet = false;
 
 }
+
+terrainGen::~terrainGen(){
+    delete m_terrainData;
+}
+
 //----------------------------------------------------------------------------------------------------------------------
 void terrainGen::createTerrainFromNoise(){
     //make sure our data structure is clear
@@ -602,50 +607,40 @@ void terrainGen::sortAllElements(){
     }
 }
 
-//----------------------------------------------------------------------------------------------------------------------
-void terrainGen::removeFloatingTerrain(int _sampleSize){
-
-    std::vector<std::vector<std::vector<voxelData> > > voxels;
-    voxels.resize(_sampleSize);
-    for(int x=0; x<_sampleSize;x++){
-        voxels[x].resize(_sampleSize);
-        for(int y=0;y<_sampleSize;y++){
-            voxels[x][y].resize(_sampleSize);
-        }
-    }
-
-    float height;
-    for(int x=0; x<_sampleSize;x++){
-    for(int y=0; y<_sampleSize;y++){
-    for(int z=0; z<_sampleSize;z++){
-        height = y*(1.0/(float)_sampleSize);
-        voxels[x][y][z].type = m_terrainData[x][z].matTypeAt(height);
-        voxels[x][y][z].arrayLoc = m_terrainData[x][z].arrayLocAt(height);
-    }
-    }
-    }
-
-//    int dataSetSizeX = m_sizeX/_sampleSize;
-//    int dataSetSizeY = m_sizeY/_sampleSize;
-
-}
 
 //----------------------------------------------------------------------------------------------------------------------
 QImage terrainGen::createHeightMap(int _sizeX, int _sizeY){
     QImage img(_sizeX,_sizeY,QImage::Format_RGB32);
-    int xPos,yPos;
+    float xPos,yPos;
+    int floorX,floorY,xNext,yNext;
+    float h1,h2,h3,h4;
     float colour;
     QColor finColour;
     for(int x=0; x<_sizeX; x++){
     for(int y=0; y<_sizeY; y++){
-        xPos = ((float)x/(float)_sizeX)*(m_sizeX-1);
-        yPos = ((float)y/(float)_sizeY)*(m_sizeY-1);
-        colour = m_terrainData[xPos][yPos].totalHeight();
+        xPos = ((float)x/(float)_sizeX);
+        yPos = ((float)y/(float)_sizeY);
+        xPos *= (float)m_sizeX;
+        yPos *= (float)m_sizeY;
+        floorX = floor(xPos);
+        floorY = floor(yPos);
+        (floorX+1>m_sizeX-1) ? xNext = floorX: xNext = floorX+1;
+        (floorY+1>m_sizeY-1) ? yNext = floorY: yNext = floorY+1;
+
+        h1 = m_terrainData[floorX][floorY].totalHeight();
+        h2 = m_terrainData[xNext][floorY].totalHeight();
+        h3 = m_terrainData[floorX][yNext].totalHeight();
+        h4 = m_terrainData[xNext][yNext].totalHeight();
+
+        //bilinear interpoloation
+        colour = h1*(xNext - xPos)*(yNext - yPos) + h2*(xPos - floorX)*(yNext - yPos) + h3*(xNext - xPos)*(yPos-floorY) + h4*(xPos-floorX)*(yPos-floorY);
         colour *= 255.0;
-        finColour.setRgb(colour,colour,colour);
+        if(colour>255) colour = 255;
+        finColour.setRgb((int)colour,(int)colour,(int)colour);
         img.setPixel(x,y, finColour.rgb());
     }
     }
+    //img.save("binInterpImg.png","PNG");
     return img;
 }
 
