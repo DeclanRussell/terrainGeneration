@@ -50,7 +50,7 @@
          </property>
         </widget>
        </item>
-       <item row="23" column="1">
+       <item row="24" column="1">
         <widget class="QLabel" name="s_terrainPreviewLbl">
          <property name="minimumSize">
           <size>
@@ -131,7 +131,7 @@
          </property>
         </widget>
        </item>
-       <item row="24" column="1">
+       <item row="25" column="1">
         <widget class="QPushButton" name="s_genPreviewBtn">
          <property name="text">
           <string>Generate Preview</string>
@@ -237,7 +237,7 @@
          </property>
         </widget>
        </item>
-       <item row="26" column="1">
+       <item row="27" column="1">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -364,6 +364,13 @@
          </property>
         </widget>
        </item>
+       <item row="22" column="1">
+        <widget class="QCheckBox" name="checkBox">
+         <property name="text">
+          <string>Wireframe</string>
+         </property>
+        </widget>
+       </item>
        <item row="7" column="1">
         <widget class="QSlider" name="s_highLandNoiseFreqSld">
          <property name="maximum">
@@ -397,7 +404,7 @@
          </property>
         </widget>
        </item>
-       <item row="25" column="1">
+       <item row="26" column="1">
         <widget class="QPushButton" name="s_genTerrainBtn">
          <property name="text">
           <string>Generate Terrain</string>
@@ -431,10 +438,10 @@
          </property>
         </widget>
        </item>
-       <item row="22" column="1">
-        <widget class="QCheckBox" name="checkBox">
+       <item row="23" column="1">
+        <widget class="QCheckBox" name="checkBox_2">
          <property name="text">
-          <string>Wireframe</string>
+          <string>Grass</string>
          </property>
         </widget>
        </item>

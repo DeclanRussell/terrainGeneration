@@ -295,11 +295,13 @@ void OpenGLWidget::paintGL(){
     mesoModelMat = glm::scale(mesoModelMat,glm::vec3(2.0,4.0,2.0));
     mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5,0.0,-0.5));
 
+
     glm::mat4 macroModelMat = m_mouseGlobalTX;
 
     //now draw toby's geomtry clipmap
     macroModelMat = glm::scale(macroModelMat, glm::vec3(-1.0, 1.0, 1.0));
     macroModelMat = glm::rotate(macroModelMat, pi, glm::vec3(0.0,1.0,0.0));
+
 
     m_geometryClipmap->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
     m_geometryClipmap->loadMatricesToShader(macroModelMat, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
@@ -312,16 +314,17 @@ void OpenGLWidget::paintGL(){
     m_marchingCubesObject->draw(mesoModelMat, m_cam);
 
     //draw our grass
-//    if (m_drawGrass){
-//        m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
-//        m_grassHairClipmapFactory->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
-//        m_grassHairClipmapFactory->draw(macroModelMat,m_cam,m_geometryClipmap->m_vert.size());
-//    }
+    if (m_drawGrass){
+        m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
+        m_grassHairClipmapFactory->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
+        m_grassHairClipmapFactory->draw(macroModelMat,m_cam,m_geometryClipmap->m_vert.size());
+    }
 
     modelMatrix = glm::mat4(1.0);
     modelMatrix = m_mouseGlobalTX;
     modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0, 1.5, 0.0));
     modelMatrix = glm::scale(modelMatrix, glm::vec3(8.0, 1.0, 8.0));
+
     m_water->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
     m_water->render();
 
@@ -574,6 +577,15 @@ void OpenGLWidget::setWireframe(bool _wireframe){
         m_water->setWireframe(false);
         m_marchingCubesObject->setWireframe(false);
         m_drawGrass = true;
+    }
+}
+
+void OpenGLWidget::drawGrass(bool _draw){
+    if (_draw){
+        m_drawGrass = true;
+    }
+    else{
+        m_drawGrass = false;
     }
 }
 

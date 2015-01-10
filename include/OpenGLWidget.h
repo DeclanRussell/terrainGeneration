@@ -273,6 +273,7 @@ private:
     //----------------------------------------------------------------------------------------------------------------------
 public slots:
     void setWireframe(bool _wireframe);
+    void drawGrass(bool _draw);
 };
 
 #endif // OPENGLWIDGET_H

@@ -17,9 +17,9 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->gridLayout->addWidget(m_progressBar,1,1,1,1);
     m_progressBar->setVisible(false);
 
+    ui->checkBox_2->setChecked(true);
     connect(ui->checkBox, SIGNAL(clicked(bool)), m_openGLWidget, SLOT(setWireframe(bool)));
-
-
+    connect(ui->checkBox_2, SIGNAL(clicked(bool)), m_openGLWidget, SLOT(drawGrass(bool)));
 }
 
 MainWindow::~MainWindow(){

@@ -68,6 +68,7 @@ public:
     QLabel *s_caveAppBiasLbl;
     QDoubleSpinBox *s_caveAppBiasSpn;
     QLabel *s_caveThresholdLbl;
+    QCheckBox *checkBox;
     QSlider *s_highLandNoiseFreqSld;
     QDoubleSpinBox *s_lowLandNoiseFreqSpn;
     QLabel *s_lowLandOctLbl;
@@ -75,7 +76,7 @@ public:
     QLabel *s_moutainNoiseFreqLbl;
     QLabel *label;
     QSlider *s_lowLandOctSld;
-    QCheckBox *checkBox;
+    QCheckBox *checkBox_2;
     QSpacerItem *horizontalSpacer_2;
     QMenuBar *menubar;
     QStatusBar *statusbar;
@@ -109,7 +110,7 @@ public:
         s_terrainPreviewLbl->setObjectName(QStringLiteral("s_terrainPreviewLbl"));
         s_terrainPreviewLbl->setMinimumSize(QSize(128, 128));
 
-        gridLayout_2->addWidget(s_terrainPreviewLbl, 23, 1, 1, 1);
+        gridLayout_2->addWidget(s_terrainPreviewLbl, 24, 1, 1, 1);
 
         horizontalSlider = new QSlider(s_highLandOctLbl);
         horizontalSlider->setObjectName(QStringLiteral("horizontalSlider"));
@@ -155,7 +156,7 @@ public:
         s_genPreviewBtn = new QPushButton(s_highLandOctLbl);
         s_genPreviewBtn->setObjectName(QStringLiteral("s_genPreviewBtn"));
 
-        gridLayout_2->addWidget(s_genPreviewBtn, 24, 1, 1, 1);
+        gridLayout_2->addWidget(s_genPreviewBtn, 25, 1, 1, 1);
 
         spinBox_2 = new QSpinBox(s_highLandOctLbl);
         spinBox_2->setObjectName(QStringLiteral("spinBox_2"));
@@ -223,7 +224,7 @@ public:
 
         verticalSpacer = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
 
-        gridLayout_2->addItem(verticalSpacer, 26, 1, 1, 1);
+        gridLayout_2->addItem(verticalSpacer, 27, 1, 1, 1);
 
         s_marcoGrassDenLbl = new QLabel(s_highLandOctLbl);
         s_marcoGrassDenLbl->setObjectName(QStringLiteral("s_marcoGrassDenLbl"));
@@ -301,6 +302,11 @@ public:
 
         gridLayout_2->addWidget(s_caveThresholdLbl, 14, 1, 1, 1);
 
+        checkBox = new QCheckBox(s_highLandOctLbl);
+        checkBox->setObjectName(QStringLiteral("checkBox"));
+
+        gridLayout_2->addWidget(checkBox, 22, 1, 1, 1);
+
         s_highLandNoiseFreqSld = new QSlider(s_highLandOctLbl);
         s_highLandNoiseFreqSld->setObjectName(QStringLiteral("s_highLandNoiseFreqSld"));
         s_highLandNoiseFreqSld->setMaximum(300);
@@ -325,7 +331,7 @@ public:
         s_genTerrainBtn = new QPushButton(s_highLandOctLbl);
         s_genTerrainBtn->setObjectName(QStringLiteral("s_genTerrainBtn"));
 
-        gridLayout_2->addWidget(s_genTerrainBtn, 25, 1, 1, 1);
+        gridLayout_2->addWidget(s_genTerrainBtn, 26, 1, 1, 1);
 
         s_moutainNoiseFreqLbl = new QLabel(s_highLandOctLbl);
         s_moutainNoiseFreqLbl->setObjectName(QStringLiteral("s_moutainNoiseFreqLbl"));
@@ -345,10 +351,10 @@ public:
 
         gridLayout_2->addWidget(s_lowLandOctSld, 1, 1, 1, 1);
 
-        checkBox = new QCheckBox(s_highLandOctLbl);
-        checkBox->setObjectName(QStringLiteral("checkBox"));
+        checkBox_2 = new QCheckBox(s_highLandOctLbl);
+        checkBox_2->setObjectName(QStringLiteral("checkBox_2"));
 
-        gridLayout_2->addWidget(checkBox, 22, 1, 1, 1);
+        gridLayout_2->addWidget(checkBox_2, 23, 1, 1, 1);
 
 
         gridLayout->addWidget(s_highLandOctLbl, 0, 2, 1, 1);
@@ -395,11 +401,12 @@ public:
         s_mountainNoiseOctLbl->setText(QApplication::translate("MainWindow", "Mountain Noise Octaves", 0));
         s_caveAppBiasLbl->setText(QApplication::translate("MainWindow", "Cave Attenuate Bias", 0));
         s_caveThresholdLbl->setText(QApplication::translate("MainWindow", "Cave Threshhold", 0));
+        checkBox->setText(QApplication::translate("MainWindow", "Wireframe", 0));
         s_lowLandOctLbl->setText(QApplication::translate("MainWindow", "Low Land Noise Octaves", 0));
         s_genTerrainBtn->setText(QApplication::translate("MainWindow", "Generate Terrain", 0));
         s_moutainNoiseFreqLbl->setText(QApplication::translate("MainWindow", "Mountain Noise Frequency", 0));
         label->setText(QApplication::translate("MainWindow", "High Land Noise Octaves", 0));
-        checkBox->setText(QApplication::translate("MainWindow", "Wireframe", 0));
+        checkBox_2->setText(QApplication::translate("MainWindow", "Grass", 0));
     } // retranslateUi
 
 };
