@@ -2,7 +2,12 @@
 
 #include <QGLWidget>
 #include <glm/gtc/matrix_inverse.hpp>
-#include <noise/noise.h>
+#ifdef DARWIN
+    #include <noise/noise.h>
+#else
+    #include <libnoise/noise.h>
+#endif
+
 #include <noiseutils.h>
 
 Skybox::Skybox(){

@@ -293,7 +293,7 @@ void OpenGLWidget::paintGL(){
     m_skybox->render();
 
     mesoModelMat = glm::scale(mesoModelMat,glm::vec3(2.0,4.0,2.0));
-    mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5,0.0,-0.5));
+    mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5,-0.5,-0.5));
 
 
     glm::mat4 macroModelMat = m_mouseGlobalTX;
@@ -301,6 +301,7 @@ void OpenGLWidget::paintGL(){
     //now draw toby's geomtry clipmap
     macroModelMat = glm::scale(macroModelMat, glm::vec3(-1.0, 1.0, 1.0));
     macroModelMat = glm::rotate(macroModelMat, pi, glm::vec3(0.0,1.0,0.0));
+    macroModelMat = glm::translate(macroModelMat,glm::vec3(0,-2.0,0));
 
 
     m_geometryClipmap->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
@@ -322,7 +323,7 @@ void OpenGLWidget::paintGL(){
 
     modelMatrix = glm::mat4(1.0);
     modelMatrix = m_mouseGlobalTX;
-    modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0, 1.5, 0.0));
+    modelMatrix = glm::translate(modelMatrix, glm::vec3(0.0, -0.5, 0.0));
     modelMatrix = glm::scale(modelMatrix, glm::vec3(8.0, 1.0, 8.0));
 
     m_water->loadMatricesToShader(modelMatrix, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
