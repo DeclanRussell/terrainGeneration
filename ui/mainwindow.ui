@@ -40,6 +40,174 @@
        <string>Terrain Properties</string>
       </property>
       <layout class="QGridLayout" name="gridLayout_2">
+       <item row="5" column="2">
+        <widget class="QSpinBox" name="spinBox">
+         <property name="maximum">
+          <number>8</number>
+         </property>
+         <property name="value">
+          <number>4</number>
+         </property>
+        </widget>
+       </item>
+       <item row="23" column="1">
+        <widget class="QLabel" name="s_terrainPreviewLbl">
+         <property name="minimumSize">
+          <size>
+           <width>128</width>
+           <height>128</height>
+          </size>
+         </property>
+         <property name="text">
+          <string/>
+         </property>
+        </widget>
+       </item>
+       <item row="5" column="1">
+        <widget class="QSlider" name="horizontalSlider">
+         <property name="maximum">
+          <number>8</number>
+         </property>
+         <property name="singleStep">
+          <number>1</number>
+         </property>
+         <property name="value">
+          <number>4</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="21" column="1">
+        <widget class="QSlider" name="s_MacGrasDenSld">
+         <property name="maximum">
+          <number>3</number>
+         </property>
+         <property name="value">
+          <number>2</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="1">
+        <widget class="QSlider" name="s_mountainNoiseSld">
+         <property name="maximum">
+          <number>300</number>
+         </property>
+         <property name="value">
+          <number>100</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="11" column="2">
+        <widget class="QDoubleSpinBox" name="s_mountainNoiseFreqSpn">
+         <property name="maximum">
+          <double>3.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
+         </property>
+         <property name="value">
+          <double>1.000000000000000</double>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="1">
+        <widget class="QSlider" name="horizontalSlider_2">
+         <property name="maximum">
+          <number>8</number>
+         </property>
+         <property name="value">
+          <number>8</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="24" column="1">
+        <widget class="QPushButton" name="s_genPreviewBtn">
+         <property name="text">
+          <string>Generate Preview</string>
+         </property>
+        </widget>
+       </item>
+       <item row="9" column="2">
+        <widget class="QSpinBox" name="spinBox_2">
+         <property name="maximum">
+          <number>8</number>
+         </property>
+         <property name="value">
+          <number>8</number>
+         </property>
+        </widget>
+       </item>
+       <item row="19" column="1">
+        <widget class="QSlider" name="s_grassDenceSld">
+         <property name="maximum">
+          <number>3</number>
+         </property>
+         <property name="value">
+          <number>3</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="17" column="2">
+        <widget class="QSpinBox" name="s_marchResSpn">
+         <property name="maximum">
+          <number>128</number>
+         </property>
+         <property name="value">
+          <number>32</number>
+         </property>
+        </widget>
+       </item>
+       <item row="15" column="1">
+        <widget class="QSlider" name="s_caveThreshSld">
+         <property name="maximum">
+          <number>100</number>
+         </property>
+         <property name="value">
+          <number>48</number>
+         </property>
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+        </widget>
+       </item>
+       <item row="21" column="2">
+        <widget class="QSpinBox" name="s_macGrasDenSpn">
+         <property name="maximum">
+          <number>3</number>
+         </property>
+         <property name="value">
+          <number>2</number>
+         </property>
+        </widget>
+       </item>
+       <item row="16" column="1">
+        <widget class="QLabel" name="s_marchResLbl">
+         <property name="text">
+          <string>Marching Cubes Resolution</string>
+         </property>
+        </widget>
+       </item>
+       <item row="18" column="1">
+        <widget class="QLabel" name="s_grassDenseLbl">
+         <property name="text">
+          <string>Meso Grass Density</string>
+         </property>
+        </widget>
+       </item>
        <item row="3" column="1">
         <widget class="QSlider" name="s_lowLandNoiseFreqSld">
          <property name="maximum">
@@ -69,7 +237,7 @@
          </property>
         </widget>
        </item>
-       <item row="25" column="1">
+       <item row="26" column="1">
         <spacer name="verticalSpacer">
          <property name="orientation">
           <enum>Qt::Vertical</enum>
@@ -96,145 +264,17 @@
          </property>
         </widget>
        </item>
-       <item row="1" column="2">
-        <widget class="QSpinBox" name="s_lowLandOctSpn">
-         <property name="maximum">
-          <number>8</number>
-         </property>
-         <property name="value">
-          <number>2</number>
-         </property>
-        </widget>
-       </item>
-       <item row="1" column="1">
-        <widget class="QSlider" name="s_lowLandOctSld">
-         <property name="maximum">
-          <number>8</number>
-         </property>
-         <property name="value">
-          <number>2</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="4" column="1">
-        <widget class="QLabel" name="label">
+       <item row="2" column="1">
+        <widget class="QLabel" name="s_lowLandNoiseFreqLbl">
          <property name="text">
-          <string>High Land Noise Octaves</string>
+          <string>Low Land Noise Frequency</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QLabel" name="s_lowLandOctLbl">
+       <item row="8" column="1">
+        <widget class="QLabel" name="s_mountainNoiseOctLbl">
          <property name="text">
-          <string>Low Land Noise Octaves</string>
-         </property>
-        </widget>
-       </item>
-       <item row="24" column="1">
-        <widget class="QPushButton" name="s_genTerrainBtn">
-         <property name="text">
-          <string>Generate Terrain</string>
-         </property>
-        </widget>
-       </item>
-       <item row="10" column="1">
-        <widget class="QLabel" name="s_moutainNoiseFreqLbl">
-         <property name="text">
-          <string>Mountain Noise Frequency</string>
-         </property>
-        </widget>
-       </item>
-       <item row="3" column="2">
-        <widget class="QDoubleSpinBox" name="s_lowLandNoiseFreqSpn">
-         <property name="maximum">
-          <double>3.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.010000000000000</double>
-         </property>
-         <property name="value">
-          <double>0.250000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="7" column="1">
-        <widget class="QSlider" name="s_highLandNoiseFreqSld">
-         <property name="maximum">
-          <number>300</number>
-         </property>
-         <property name="value">
-          <number>200</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="22" column="1">
-        <widget class="QLabel" name="s_terrainPreviewLbl">
-         <property name="minimumSize">
-          <size>
-           <width>128</width>
-           <height>128</height>
-          </size>
-         </property>
-         <property name="text">
-          <string/>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="2">
-        <widget class="QSpinBox" name="spinBox">
-         <property name="maximum">
-          <number>8</number>
-         </property>
-         <property name="value">
-          <number>4</number>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="2">
-        <widget class="QDoubleSpinBox" name="s_mountainNoiseFreqSpn">
-         <property name="maximum">
-          <double>3.000000000000000</double>
-         </property>
-         <property name="singleStep">
-          <double>0.010000000000000</double>
-         </property>
-         <property name="value">
-          <double>1.000000000000000</double>
-         </property>
-        </widget>
-       </item>
-       <item row="5" column="1">
-        <widget class="QSlider" name="horizontalSlider">
-         <property name="maximum">
-          <number>8</number>
-         </property>
-         <property name="singleStep">
-          <number>1</number>
-         </property>
-         <property name="value">
-          <number>4</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-        </widget>
-       </item>
-       <item row="11" column="1">
-        <widget class="QSlider" name="s_mountainNoiseSld">
-         <property name="maximum">
-          <number>300</number>
-         </property>
-         <property name="value">
-          <number>100</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <string>Mountain Noise Octaves</string>
          </property>
         </widget>
        </item>
@@ -251,30 +291,6 @@
          </property>
         </widget>
        </item>
-       <item row="2" column="1">
-        <widget class="QLabel" name="s_lowLandNoiseFreqLbl">
-         <property name="text">
-          <string>Low Land Noise Frequency</string>
-         </property>
-        </widget>
-       </item>
-       <item row="8" column="1">
-        <widget class="QLabel" name="s_mountainNoiseOctLbl">
-         <property name="text">
-          <string>Mountain Noise Octaves</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="2">
-        <widget class="QSpinBox" name="spinBox_2">
-         <property name="maximum">
-          <number>8</number>
-         </property>
-         <property name="value">
-          <number>8</number>
-         </property>
-        </widget>
-       </item>
        <item row="17" column="1">
         <widget class="QSlider" name="s_marchingCubesResSdl">
          <property name="maximum">
@@ -288,37 +304,23 @@
          </property>
         </widget>
        </item>
-       <item row="23" column="1">
-        <widget class="QPushButton" name="s_genPreviewBtn">
-         <property name="text">
-          <string>Generate Preview</string>
-         </property>
-        </widget>
-       </item>
-       <item row="9" column="1">
-        <widget class="QSlider" name="horizontalSlider_2">
+       <item row="1" column="2">
+        <widget class="QSpinBox" name="s_lowLandOctSpn">
          <property name="maximum">
           <number>8</number>
          </property>
          <property name="value">
-          <number>8</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <number>2</number>
          </property>
         </widget>
        </item>
-       <item row="18" column="1">
-        <widget class="QLabel" name="s_grassDenseLbl">
-         <property name="text">
-          <string>Meso Grass Density</string>
+       <item row="19" column="2">
+        <widget class="QSpinBox" name="s_grassDenseSpn">
+         <property name="maximum">
+          <number>3</number>
          </property>
-        </widget>
-       </item>
-       <item row="16" column="1">
-        <widget class="QLabel" name="s_marchResLbl">
-         <property name="text">
-          <string>Marching Cubes Resolution</string>
+         <property name="value">
+          <number>3</number>
          </property>
         </widget>
        </item>
@@ -342,13 +344,6 @@
          </property>
         </widget>
        </item>
-       <item row="14" column="1">
-        <widget class="QLabel" name="s_caveThresholdLbl">
-         <property name="text">
-          <string>Cave Threshhold</string>
-         </property>
-        </widget>
-       </item>
        <item row="13" column="2">
         <widget class="QDoubleSpinBox" name="s_caveAppBiasSpn">
          <property name="maximum">
@@ -362,56 +357,71 @@
          </property>
         </widget>
        </item>
-       <item row="17" column="2">
-        <widget class="QSpinBox" name="s_marchResSpn">
-         <property name="maximum">
-          <number>128</number>
-         </property>
-         <property name="value">
-          <number>32</number>
+       <item row="14" column="1">
+        <widget class="QLabel" name="s_caveThresholdLbl">
+         <property name="text">
+          <string>Cave Threshhold</string>
          </property>
         </widget>
        </item>
-       <item row="19" column="1">
-        <widget class="QSlider" name="s_grassDenceSld">
+       <item row="7" column="1">
+        <widget class="QSlider" name="s_highLandNoiseFreqSld">
          <property name="maximum">
-          <number>3</number>
+          <number>300</number>
          </property>
          <property name="value">
-          <number>3</number>
+          <number>200</number>
          </property>
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
          </property>
         </widget>
        </item>
-       <item row="15" column="1">
-        <widget class="QSlider" name="s_caveThreshSld">
+       <item row="3" column="2">
+        <widget class="QDoubleSpinBox" name="s_lowLandNoiseFreqSpn">
          <property name="maximum">
-          <number>100</number>
+          <double>3.000000000000000</double>
+         </property>
+         <property name="singleStep">
+          <double>0.010000000000000</double>
          </property>
          <property name="value">
-          <number>48</number>
-         </property>
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <double>0.250000000000000</double>
          </property>
         </widget>
        </item>
-       <item row="19" column="2">
-        <widget class="QSpinBox" name="s_grassDenseSpn">
-         <property name="maximum">
-          <number>3</number>
-         </property>
-         <property name="value">
-          <number>3</number>
+       <item row="0" column="1">
+        <widget class="QLabel" name="s_lowLandOctLbl">
+         <property name="text">
+          <string>Low Land Noise Octaves</string>
          </property>
         </widget>
        </item>
-       <item row="21" column="1">
-        <widget class="QSlider" name="s_MacGrasDenSld">
+       <item row="25" column="1">
+        <widget class="QPushButton" name="s_genTerrainBtn">
+         <property name="text">
+          <string>Generate Terrain</string>
+         </property>
+        </widget>
+       </item>
+       <item row="10" column="1">
+        <widget class="QLabel" name="s_moutainNoiseFreqLbl">
+         <property name="text">
+          <string>Mountain Noise Frequency</string>
+         </property>
+        </widget>
+       </item>
+       <item row="4" column="1">
+        <widget class="QLabel" name="label">
+         <property name="text">
+          <string>High Land Noise Octaves</string>
+         </property>
+        </widget>
+       </item>
+       <item row="1" column="1">
+        <widget class="QSlider" name="s_lowLandOctSld">
          <property name="maximum">
-          <number>3</number>
+          <number>8</number>
          </property>
          <property name="value">
           <number>2</number>
@@ -421,13 +431,10 @@
          </property>
         </widget>
        </item>
-       <item row="21" column="2">
-        <widget class="QSpinBox" name="s_macGrasDenSpn">
-         <property name="maximum">
-          <number>3</number>
-         </property>
-         <property name="value">
-          <number>2</number>
+       <item row="22" column="1">
+        <widget class="QCheckBox" name="checkBox">
+         <property name="text">
+          <string>Wireframe</string>
          </property>
         </widget>
        </item>
@@ -455,7 +462,7 @@
      <x>0</x>
      <y>0</y>
      <width>1201</width>
-     <height>25</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>

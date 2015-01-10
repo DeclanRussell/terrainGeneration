@@ -60,7 +60,7 @@ void OpenGLWidget::initializeGL(){
     m_modelMatrix = glm::mat4(1.0);
 
     // Initialize the camera
-    glm::vec3 pos(0.0, 5.0, 5.0);
+    glm::vec3 pos(0.0, 5.0, 0.1);
     m_cam = new Camera(pos);
 
     //create our volumetric data
@@ -295,7 +295,6 @@ void OpenGLWidget::paintGL(){
     mesoModelMat = glm::scale(mesoModelMat,glm::vec3(2.0,4.0,2.0));
     mesoModelMat = glm::translate(mesoModelMat,glm::vec3(-0.5,0.0,-0.5));
 
-
     glm::mat4 macroModelMat = m_mouseGlobalTX;
 
     //now draw toby's geomtry clipmap
@@ -313,11 +312,11 @@ void OpenGLWidget::paintGL(){
     m_marchingCubesObject->draw(mesoModelMat, m_cam);
 
     //draw our grass
-    if (m_drawGrass){
-        m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
-        m_grassHairClipmapFactory->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
-        m_grassHairClipmapFactory->draw(macroModelMat,m_cam,m_geometryClipmap->m_vert.size());
-    }
+//    if (m_drawGrass){
+//        m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
+//        m_grassHairClipmapFactory->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
+//        m_grassHairClipmapFactory->draw(macroModelMat,m_cam,m_geometryClipmap->m_vert.size());
+//    }
 
     modelMatrix = glm::mat4(1.0);
     modelMatrix = m_mouseGlobalTX;
@@ -559,5 +558,22 @@ void OpenGLWidget::loadMatricesToShader(ShaderProgram *_currentShader){
     glUniformMatrix4fv(m_projLoc, 1, false, glm::value_ptr(projectionMatrix));
     glUniformMatrix3fv(m_normalLoc, 1, false, glm::value_ptr(m_normalMatrix));
     glUniformMatrix4fv(m_modelViewProjectionLoc, 1, false, glm::value_ptr(m_modelViewProjectionMatrix));
+}
+//------------------------------------------------------------------------------------------------------------------------
+//------------------------------------------------------SLOTS-------------------------------------------------------------
+//------------------------------------------------------------------------------------------------------------------------
+void OpenGLWidget::setWireframe(bool _wireframe){
+    if (_wireframe){
+        m_geometryClipmap->setWireframe(true);
+        m_water->setWireframe(true);
+        m_marchingCubesObject->setWireframe(true);
+        m_drawGrass = false;
+    }
+    else{
+        m_geometryClipmap->setWireframe(false);
+        m_water->setWireframe(false);
+        m_marchingCubesObject->setWireframe(false);
+        m_drawGrass = true;
+    }
 }
 

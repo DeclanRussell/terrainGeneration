@@ -1323,7 +1323,9 @@ obj/main.o: src/main.cpp /Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtWidgets.framew
 		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qdatetime.h \
 		include/Skybox.h \
 		/opt/local/include/IL/il.h \
-		include/grasshairclipmap.h
+		include/grasshairclipmap.h \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QFile \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qfile.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/main.o src/main.cpp
 
 obj/mainwindow.o: src/mainwindow.cpp include/mainwindow.h \
@@ -3286,6 +3288,8 @@ obj/Skybox.o: src/Skybox.cpp include/Skybox.h \
 		/opt/local/include/glm/gtc/quaternion.inl \
 		/opt/local/include/glm/gtc/type_ptr.inl \
 		/opt/local/include/IL/il.h \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/QTime \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtCore.framework/Versions/5/Headers/qdatetime.h \
 		include/ShaderProgram.h \
 		/opt/local/include/GLFW/glfw3.h \
 		/opt/local/include/GL/gl.h \
@@ -3295,6 +3299,9 @@ obj/Skybox.o: src/Skybox.cpp include/Skybox.h \
 		/opt/local/include/GL/glu_mangle.h \
 		include/Shader.h \
 		include/Model.h \
+		include/Texture.h \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/QImage \
+		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtGui.framework/Versions/5/Headers/qimage.h \
 		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtOpenGL.framework/Versions/5/Headers/QGLWidget \
 		/Users/Toby/Qt5.2.1/5.2.1/clang_64/lib/QtOpenGL.framework/Versions/5/Headers/qgl.h \
 		/opt/local/include/glm/gtc/matrix_inverse.hpp \
@@ -3338,7 +3345,8 @@ obj/Skybox.o: src/Skybox.cpp include/Skybox.h \
 		/usr/local/include/noise/model/line.h \
 		/usr/local/include/noise/model/plane.h \
 		/usr/local/include/noise/model/sphere.h \
-		/usr/local/include/noise/misc.h
+		/usr/local/include/noise/misc.h \
+		include/noiseutils.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o obj/Skybox.o src/Skybox.cpp
 
 obj/Water.o: src/Water.cpp include/Water.h \

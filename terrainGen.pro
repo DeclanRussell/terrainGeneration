@@ -140,4 +140,5 @@ OTHER_FILES += \
     textures/skyCubeMap_posx.png \
     textures/skyCubeMap_posy.png \
     textures/skyCubeMap_posz.png \
-    models/sphere.obj
+    models/sphere.obj \
+    styleSheet/darkOrange

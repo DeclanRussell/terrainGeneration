@@ -17,6 +17,8 @@ MainWindow::MainWindow(QWidget *parent) : QMainWindow(parent), ui(new Ui::MainWi
     ui->gridLayout->addWidget(m_progressBar,1,1,1,1);
     m_progressBar->setVisible(false);
 
+    connect(ui->checkBox, SIGNAL(clicked(bool)), m_openGLWidget, SLOT(setWireframe(bool)));
+
 
 }
 
