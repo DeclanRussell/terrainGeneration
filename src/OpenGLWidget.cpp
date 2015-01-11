@@ -108,6 +108,8 @@ void OpenGLWidget::initializeGL(){
 
     genFBOs();
 
+    m_currentTime = m_currentTime.currentTime();
+
     startTimer(0);
 }
 //----------------------------------------------------------------------------------------------------------------------
@@ -237,6 +239,19 @@ void OpenGLWidget::timerEvent(QTimerEvent *){
 }
 //----------------------------------------------------------------------------------------------------------------------
 void OpenGLWidget::paintGL(){   
+
+    // calculate the frame rate
+    QTime newTime = m_currentTime.currentTime();
+    int msecsPassed = m_currentTime.msecsTo(newTime);
+    m_currentTime = newTime;
+
+    int numTriangles = m_geometryClipmap->m_vert.size()/3.0;
+    numTriangles*=48;
+    numTriangles+=m_marchingCubesObject->m_position.size()/3.0;
+    int numGrassStrands = numTriangles*m_grassHairClipmapFactory->getNumStrandsPerFace();
+    numGrassStrands+=(m_marchingCubesObject->m_position.size()/3.0)*m_grassHairFactory->getNumStrandsPerFace();
+    std::cout<<"Framerate is: "<<1000.0/msecsPassed<<" with "<<numGrassStrands<<" billboards of grass"<<std::endl;
+
     glBindFramebuffer(GL_FRAMEBUFFER, m_reflectFB);
     renderReflections();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);

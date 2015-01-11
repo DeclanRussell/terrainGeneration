@@ -108,6 +108,10 @@ public:
     //----------------------------------------------------------------------------------------------------------------------
     QImage createHeightMap(int _sizeX, int _sizeY);
     //----------------------------------------------------------------------------------------------------------------------
+    /// @brief a function purly implimented for the paper creating sample noise images
+    //----------------------------------------------------------------------------------------------------------------------
+    void createExampleImages();
+    //----------------------------------------------------------------------------------------------------------------------
     /// @brief a function that generates our terrain from 3 dimentional noise created with the ANL library
     /// @brief the method used is adopted from http://accidentalnoise.sourceforge.net/minecraftworlds.html
     //----------------------------------------------------------------------------------------------------------------------

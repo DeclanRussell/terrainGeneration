@@ -3,6 +3,11 @@
 #include <iostream>
 #include <algorithm>
 #include "math.h"
+#include <time.h>
+
+/// @todo in the create noise function you do not purturb in the x direction, not sure if I should or not means adding lots more sliders and other
+/// @todo leborious shit!
+
 //----------------------------------------------------------------------------------------------------------------------
 terrainGen::terrainGen(int _sizeX, int _sizeY)
 {
@@ -24,10 +29,115 @@ terrainGen::terrainGen(int _sizeX, int _sizeY)
     m_mountainFreq = 1.0;
     m_progressBarSet = false;
 
+    createExampleImages();
+
 }
 
 terrainGen::~terrainGen(){
     delete m_terrainData;
+}
+//----------------------------------------------------------------------------------------------------------------------
+void terrainGen::createExampleImages(){
+    //create our image
+    anl::TArray2D<TVec4D<float> > img(512,512);
+
+    anl::CRGBACompositeChannels compose1(anl::RGB);
+    anl::SMappingRanges ranges;
+
+
+    // divide the heavens from the earth by creating a gradient from 0 to 1
+    anl::CImplicitGradient ground_Gradient;
+    ground_Gradient.setGradient(0.0,0.0,0.0,1.0);
+
+    //set up our high land function
+    anl::CImplicitFractal highland_shape_fractal(anl::FBM, anl::GRADIENT, anl::QUINTIC);
+    highland_shape_fractal.setNumOctaves(6);
+    highland_shape_fractal.setFrequency(2);
+
+    anl::CImplicitAutoCorrect highland_autocorrect;
+    highland_autocorrect.setSource(&highland_shape_fractal);
+    highland_autocorrect.setRange(0.0,1.0);
+
+    anl::CImplicitScaleOffset highland_scale(0.5,0.0);
+    highland_scale.setSource(&highland_autocorrect);
+
+    anl::CImplicitScaleDomain highland_y_scale;
+    highland_y_scale.setSource(&highland_scale);
+    highland_y_scale.setYScale(0.0);
+
+    anl::CImplicitTranslateDomain highland_terrain;
+    highland_terrain.setSource(&ground_Gradient);
+    highland_terrain.setYAxisSource(&highland_y_scale);
+
+    anl::CImplicitFractal ground_overhang_fractal(anl::FBM,anl::GRADIENT,anl::QUINTIC);
+    ground_overhang_fractal.setNumOctaves(6);
+    ground_overhang_fractal.setFrequency(2);
+
+    anl::CImplicitScaleOffset ground_overhang_scale(0.2,0);
+    ground_overhang_scale.setSource(&ground_overhang_fractal);
+
+    anl::CImplicitTranslateDomain ground_overhang_perturb;
+    ground_overhang_perturb.setSource(&highland_terrain);
+    ground_overhang_perturb.setXAxisSource(&ground_overhang_scale);
+
+    // clamp our values to white of black
+    anl::CImplicitSelect ground_select;
+    ground_select.setLowSource(0.0);
+    ground_select.setHighSource(1.0);
+    ground_select.setThreshold(0.5);
+    ground_select.setControlSource(&ground_overhang_perturb);
+
+
+    //now to create our caves
+    anl::CImplicitBias cave_attenuate_bias(m_caveAttenuateBias);
+    cave_attenuate_bias.setSource(&ground_select);
+
+    anl::CImplicitFractal cave_shape1(anl::RIDGEDMULTI,anl::GRADIENT,anl::QUINTIC);
+    cave_shape1.setNumOctaves(1.0);
+    cave_shape1.setFrequency(4);
+
+
+    anl::CImplicitFractal cave_shape2(anl::RIDGEDMULTI,anl::GRADIENT,anl::QUINTIC);
+    cave_shape2.setNumOctaves(1.0);
+    cave_shape2.setFrequency(4);
+
+    anl::CImplicitCombiner cave_shape_attenuate(anl::MULT);
+    cave_shape_attenuate.setSource(0,&cave_shape1);
+    cave_shape_attenuate.setSource(1,&cave_attenuate_bias);
+    cave_shape_attenuate.setSource(2,&cave_shape2);
+
+
+    anl::CImplicitFractal cave_perturb_fractal(anl::FBM, anl::GRADIENT, anl::QUINTIC);
+    cave_perturb_fractal.setNumOctaves(6);
+    cave_perturb_fractal.setFrequency(5);
+
+    anl::CImplicitScaleOffset cave_perturb_scale(1.0,0.0);
+    cave_perturb_scale.setSource(&cave_perturb_fractal);
+
+    anl::CImplicitTranslateDomain cave_perturb;
+    cave_perturb.setSource(&cave_shape_attenuate);
+    cave_perturb.setXAxisSource(&cave_perturb_scale);
+
+
+    anl::CImplicitSelect cave_select;
+    cave_select.setLowSource(1.0);
+    cave_select.setHighSource(0.0);
+    cave_select.setControlSource(&cave_shape2);
+    cave_select.setThreshold(0.9);
+
+    compose1.setRedSource(&cave_select);
+    compose1.setGreenSource(&cave_select);
+    compose1.setBlueSource(&cave_select);
+    compose1.setAlphaSource(1.0);
+
+    anl::mapRGBA2D(anl::SEAMLESS_NONE,img,compose1,ranges,0);
+    anl::saveRGBAArray((char*)"ExampleImages/clampCaves2.tga",&img);
+
+    //finally combine our caves with our terrain
+    anl::CImplicitCombiner ground_cave_multiply(anl::MULT);
+    ground_cave_multiply.setSource(0,&cave_select);
+    ground_cave_multiply.setSource(1,&ground_select);
+
 }
 
 //----------------------------------------------------------------------------------------------------------------------
@@ -181,12 +291,12 @@ void terrainGen::createTerrainFromNoise(){
     ground_cave_multiply.setSource(0,&cave_select);
     ground_cave_multiply.setSource(1,&ground_select);
 
-
+    int startTime = time(NULL);
     //now sample our function and pack the data into our data structure
     int height = (m_sizeX+m_sizeY)/2;
     int layer;
     float stepSize = 1.0/height;
-
+    int terrainSizeInBytes = 0;
     terrainType currentType, sampleType;
     data material;
     if(m_progressBarSet){
@@ -232,6 +342,7 @@ void terrainGen::createTerrainFromNoise(){
                 layer++;
             }
         }
+        terrainSizeInBytes+=sizeof(m_terrainData[x][y].properties);
     }
         if(m_progressBarSet){
             m_progressBar->setValue(x);
@@ -241,7 +352,8 @@ void terrainGen::createTerrainFromNoise(){
     if(m_progressBarSet)
         m_progressBar->setVisible(false);
 
-
+    std::cout<<"Data structure of "<<m_sizeX<<" x "<<m_sizeY<<" x "<<height<<" is "<<terrainSizeInBytes<<" bytes"<<std::endl;
+    std::cout<<"It took "<<time(NULL) - startTime<<" seconds to generate"<<std::endl;
 //    std::cout<<"the size of out vector at 0,0 is "<<m_terrainData[0][0].properties.size()<<std::endl;
 
 //    anl::TArray2D<TVec4D<float> > img(m_sizeX,m_sizeY);
@@ -262,63 +374,6 @@ void terrainGen::createTerrainFromNoise(){
 
 //    anl::mapRGBA2D(anl::SEAMLESS_NONE,img,compose1,ranges,0);
 //    anl::saveRGBAArray((char*)"cave_multi.tga",&img);
-
-//    compose1.setRedSource(&lowland_terrain);
-//    compose1.setGreenSource(&lowland_terrain);
-//    compose1.setBlueSource(&lowland_terrain);
-//    compose1.setAlphaSource(1.0);
-
-//    anl::mapRGBA2D(anl::SEAMLESS_NONE,img,compose1,ranges,0);
-//    anl::saveRGBAArray((char*)"lowLand.tga",&img);
-
-//    compose1.setRedSource(&highland_terrain);
-//    compose1.setGreenSource(&highland_terrain);
-//    compose1.setBlueSource(&highland_terrain);
-//    compose1.setAlphaSource(1.0);
-
-//    anl::mapRGBA2D(anl::SEAMLESS_NONE,img,compose1,ranges,0);
-//    anl::saveRGBAArray((char*)"HighLand.tga",&img);
-
-//    compose1.setRedSource(&mountain_terrain);
-//    compose1.setGreenSource(&mountain_terrain);
-//    compose1.setBlueSource(&mountain_terrain);
-//    compose1.setAlphaSource(1.0);
-
-//    anl::mapRGBA2D(anl::SEAMLESS_NONE,img,compose1,ranges,0);
-//    anl::saveRGBAArray((char*)"moutainLand.tga",&img);
-
-//    compose1.setRedSource(&mountain_terrain);
-//    compose1.setGreenSource(&mountain_terrain);
-//    compose1.setBlueSource(&mountain_terrain);
-//    compose1.setAlphaSource(1.0);
-
-//    anl::mapRGBA2D(anl::SEAMLESS_NONE,img,compose1,ranges,0);
-//    anl::saveRGBAArray((char*)"moutainLand.tga",&img);
-
-
-//    compose1.setRedSource(&ground_select);
-//    compose1.setGreenSource(&ground_select);
-//    compose1.setBlueSource(&ground_select);
-//    compose1.setAlphaSource(1.0);
-
-//    anl::mapRGBA2D(anl::SEAMLESS_NONE,img,compose1,ranges,0);
-//    anl::saveRGBAArray((char*)"ground_select.tga",&img);
-
-//    compose1.setRedSource(&cave_shape1);
-//    compose1.setGreenSource(&cave_shape1);
-//    compose1.setBlueSource(&cave_shape1);
-//    compose1.setAlphaSource(1.0);
-
-//    anl::mapRGBA2D(anl::SEAMLESS_NONE,img,compose1,ranges,0);
-//    anl::saveRGBAArray((char*)"cave_shape.tga",&img);
-
-//    compose1.setRedSource(&cave_select);
-//    compose1.setGreenSource(&cave_select);
-//    compose1.setBlueSource(&cave_select);
-//    compose1.setAlphaSource(1.0);
-
-//    anl::mapRGBA2D(anl::SEAMLESS_NONE,img,compose1,ranges,0);
-//    anl::saveRGBAArray((char*)"cave_shape.tga",&img);
 
 
 
@@ -491,6 +546,7 @@ QImage terrainGen::create2DNoise(){
         m_progressBar->setVisible(false);
     tex.save("sample2DTEx","PNG");
     std::cout<<"texture created"<<std::endl;
+    tex.save("ExampleImages/terrainPreview","PNG");
     return tex;
 
 }
@@ -616,6 +672,17 @@ QImage terrainGen::createHeightMap(int _sizeX, int _sizeY){
     float h1,h2,h3,h4;
     float colour;
     QColor finColour;
+    QImage img2(m_sizeX,m_sizeY,QImage::Format_RGB32);
+    for(int x=0; x<m_sizeX; x++){
+    for(int y=0; y<m_sizeY; y++){
+        float colour = m_terrainData[x][y].totalHeight();
+        colour *= 255.0;
+        finColour.setRgb((int)colour,(int)colour,(int)colour);
+        img2.setPixel(x,y,finColour.rgb());
+    }
+    }
+    img2.save("ExampleImages/noInterpHeight","PNG");
+
     for(int x=0; x<_sizeX; x++){
     for(int y=0; y<_sizeY; y++){
         xPos = ((float)x/(float)_sizeX);
@@ -640,7 +707,7 @@ QImage terrainGen::createHeightMap(int _sizeX, int _sizeY){
         img.setPixel(x,y, finColour.rgb());
     }
     }
-    //img.save("binInterpImg.png","PNG");
+    img.save("ExampleImages/binInterpImg.png","PNG");
     return img;
 }
 
