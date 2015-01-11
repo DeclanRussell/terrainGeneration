@@ -1,12 +1,12 @@
 #include <QApplication>
 #include "mainwindow.h"
-#include "QFile"
+#include <QFile>
 
 int main(int argc, char **argv)
 {
     QApplication app(argc,argv);
     MainWindow w;
-    QFile file("stylesheet/darkOrange");
+    QFile file("styleSheet/darkOrange");
     file.open(QFile::ReadOnly);
     QString styleSheet = QLatin1String(file.readAll());
     w.setStyleSheet(styleSheet);

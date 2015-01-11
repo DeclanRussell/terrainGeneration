@@ -17,6 +17,7 @@ uniform int numStrands;
 uniform float maxHeight;
 uniform float minHeight;
 uniform float maxAngle;
+uniform bool cutout;
 
 uniform vec3 windDir;
 uniform float windStrength;
@@ -115,7 +116,7 @@ void main(void)
     normal.y*=-1;
     normal.z*=-1;
     float angle = (1.0-normal.y) * 90.0;
-    if (!((avgPos.x<=0.99 && avgPos.x>=-0.99) && (avgPos.z<=0.99 && avgPos.z>=-0.99)) )
+    if (!((avgPos.x<=0.99 && avgPos.x>=-0.99) && (avgPos.z<=0.99 && avgPos.z>=-0.99)) || !cutout )
     if(avgHeight>minHeight && avgHeight < maxHeight && angle<maxAngle){
         float A,B,C;
         for(int i=0; i<numStrands;++i){
