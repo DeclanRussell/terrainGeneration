@@ -7,6 +7,7 @@ grassHairClipmap::grassHairClipmap()
     m_grassHeight = 1.0;
     m_minHeight = 0.0;
     m_maxAngle = 90.0;
+    m_cutout = true;
     createShader();
 }
 //----------------------------------------------------------------------------------------------------------------------
@@ -19,6 +20,7 @@ grassHairClipmap::grassHairClipmap(GLuint _VAO,QImage _heightMap){
     m_maxAngle = 90.0;
     m_heightmapTex = new Texture(_heightMap);
     m_heightMapSet = true;
+    m_cutout = true;
     createShader();
 }
 grassHairClipmap::~grassHairClipmap(){
@@ -177,7 +179,9 @@ void grassHairClipmap::loadMatricesToShader(glm::mat4 _modelMatrix, Camera *_cam
     GLuint minHeightLoc = m_shaderProgram->getUniformLoc("minHeight");
     GLuint maxAngleLoc = m_shaderProgram->getUniformLoc("maxAngle");
     GLuint numStrandsLoc = m_shaderProgram->getUniformLoc("numStrands");
+    GLuint cutoutLoc = m_shaderProgram->getUniformLoc("cutout");
 
+    glUniform1i(cutoutLoc,m_cutout);
     glUniform1f(grassHeightLoc,m_grassHeight);
     glUniform1i(numStrandsLoc,m_numStrandsPerFace);
     glUniform1f(maxHeightLoc,m_maxHeight);

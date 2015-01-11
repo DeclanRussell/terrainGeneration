@@ -64,7 +64,7 @@ void OpenGLWidget::initializeGL(){
     m_cam = new Camera(pos);
 
     //create our volumetric data
-    m_terrainFactory = new terrainGen(128,128);
+    m_terrainFactory = new terrainGen(256,256);
     m_terrainFactory->addLayerFromTexture(QImage("textures/myPerlinHeightmap"),terrainGen::BEDROCK);
 
     // Create Geometry
@@ -236,7 +236,7 @@ void OpenGLWidget::timerEvent(QTimerEvent *){
     updateGL();
 }
 //----------------------------------------------------------------------------------------------------------------------
-void OpenGLWidget::paintGL(){   
+void OpenGLWidget::paintGL(){
     glBindFramebuffer(GL_FRAMEBUFFER, m_reflectFB);
     renderReflections();
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
@@ -289,17 +289,29 @@ void OpenGLWidget::paintGL(){
 
     m_geometryClipmap->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
     m_geometryClipmap->loadMatricesToShader(macroModelMat, m_cam->getViewMatrix(), m_cam->getProjectionMatrix());
-    m_geometryClipmap->setCutout(true);
+    if(m_modelPos.y >= -0.5){
+        m_geometryClipmap->setCutout(true);
+    }
+    else{
+        m_geometryClipmap->setCutout(false);
+    }
     glEnable(GL_BLEND);
     glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
     m_geometryClipmap->render();
 
     //draw our meso terrain
-    m_marchingCubesObject->draw(mesoModelMat, m_cam);
-
+    if(m_modelPos.y >= -0.5){
+        m_grassHairClipmapFactory->setCutOut(true);
+        m_marchingCubesObject->draw(mesoModelMat, m_cam);
+    }
+    else{
+        m_grassHairClipmapFactory->setCutOut(false);
+    }
     //draw our grass
-    if (m_drawGrass){
-        m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
+    if (m_drawGrass ){
+        if(m_modelPos.y >= -0.5){
+            m_grassHairFactory->draw(mesoModelMat, m_cam, m_marchingCubesObject->m_position.size());
+        }
         m_grassHairClipmapFactory->setViewPos(m_modelPos*glm::vec3(10000.0,10000.0,-10000.0));
         m_grassHairClipmapFactory->draw(macroModelMat,m_cam,m_geometryClipmap->m_vert.size());
     }
